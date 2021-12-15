@@ -34,6 +34,11 @@ export const Many2OneInput = (props: Many2OneInputProps) => {
       searching={searching}
       value={inputTextRef.current}
       onChange={(name: string) => {
+        if (value && value.id) {
+          inputTextRef.current = "";
+          onChange({ id: undefined, name: "" });
+          return;
+        }
         inputTextRef.current = name;
         onChange({ id: undefined, name });
       }}
