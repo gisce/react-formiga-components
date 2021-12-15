@@ -22,8 +22,7 @@
     "test": "jest",
     "test:generate-output": "jest --json --outputFile=.jest-test-results.json",
     "test:watch": "jest --watch",
-    "predeploy": "npm run build:storybook",
-    "deploy": "gh-pages -d storybook-static/"
+    "prepublishOnly": "npm run test && npm run build"
   },
   "dependencies": {
     "antd": "^4.17.2",
