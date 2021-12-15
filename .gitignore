@@ -28,3 +28,5 @@ package-lock.json
 .vscode/
 
 .jest-test-results.json
+
+/storybook-static
