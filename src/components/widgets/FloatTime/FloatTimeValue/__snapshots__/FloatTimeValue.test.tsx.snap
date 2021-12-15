@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FloatTimeValue Renders Basic story 1`] = `
+<body>
+  <div>
+    00:00
+  </div>
+</body>
+`;
+
+exports[`FloatTimeValue Renders WithValue story 1`] = `
+<body>
+  <div>
+    02:30
+  </div>
+</body>
+`;

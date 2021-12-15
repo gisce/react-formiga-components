@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BooleanInput Renders Basic story 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+<body>
+  <div>
+    <div
+      class="c0"
+      data-testid="checkbox_container"
+    >
+      <label
+        class="ant-checkbox-wrapper"
+      >
+        <span
+          class="ant-checkbox"
+        >
+          <input
+            class="ant-checkbox-input"
+            data-testid="checkbox_input"
+            type="checkbox"
+            value=""
+          />
+          <span
+            class="ant-checkbox-inner"
+          />
+        </span>
+      </label>
+    </div>
+  </div>
+</body>
+`;

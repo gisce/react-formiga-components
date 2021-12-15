@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CharSearch Renders Basic story 1`] = `
+<body>
+  <div>
+    <input
+      class="ant-input"
+      type="text"
+      value=""
+    />
+  </div>
+</body>
+`;

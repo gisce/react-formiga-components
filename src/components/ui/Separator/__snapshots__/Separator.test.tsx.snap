@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Separator Renders Basic story 1`] = `
+<body>
+  <div>
+    <div
+      class="ant-divider ant-divider-horizontal ant-divider-with-text ant-divider-with-text-left text-sm"
+      role="separator"
+    >
+      <span
+        class="ant-divider-inner-text"
+      >
+        Separator label
+      </span>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`Separator Renders WithoutLabel story 1`] = `
+<body>
+  <div>
+    <div
+      class="ant-divider ant-divider-horizontal text-sm"
+      role="separator"
+    />
+  </div>
+</body>
+`;

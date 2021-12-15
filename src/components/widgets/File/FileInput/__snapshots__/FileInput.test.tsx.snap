@@ -1,0 +1,434 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FileInput Renders Basic story 1`] = `
+<body>
+  <div>
+    <div
+      class="ant-row ant-row-no-wrap"
+      style="margin-left: -4px; margin-right: -4px;"
+    >
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px;"
+      >
+        <input
+          id="file"
+          style="display: none;"
+          type="file"
+        />
+        <input
+          class="ant-input ant-input-disabled"
+          disabled=""
+          type="text"
+          value="5.22 KB"
+        />
+      </div>
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px;"
+      >
+        <div
+          class="ant-space ant-space-horizontal ant-space-align-center"
+        >
+          <div
+            class="ant-space-item"
+            style="margin-right: 8px;"
+          >
+            <button
+              class="ant-btn"
+              type="button"
+            >
+              <span
+                aria-label="folder-open"
+                class="anticon anticon-folder-open"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="folder-open"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <path
+                    d="M928 444H820V330.4c0-17.7-14.3-32-32-32H473L355.7 186.2a8.15 8.15 0 00-5.5-2.2H96c-17.7 0-32 14.3-32 32v592c0 17.7 14.3 32 32 32h698c13 0 24.8-7.9 29.7-20l134-332c1.5-3.8 2.3-7.9 2.3-12 0-17.7-14.3-32-32-32zM136 256h188.5l119.6 114.4H748V444H238c-13 0-24.8 7.9-29.7 20L136 643.2V256zm635.3 512H159l103.3-256h612.4L771.3 768z"
+                  />
+                </svg>
+              </span>
+              <span>
+                Select
+              </span>
+            </button>
+          </div>
+          <div
+            class="ant-space-item"
+            style="margin-right: 8px;"
+          >
+            <button
+              class="ant-btn"
+              type="button"
+            >
+              <span
+                aria-label="eye"
+                class="anticon anticon-eye"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="eye"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <path
+                    d="M942.2 486.2C847.4 286.5 704.1 186 512 186c-192.2 0-335.4 100.5-430.2 300.3a60.3 60.3 0 000 51.5C176.6 737.5 319.9 838 512 838c192.2 0 335.4-100.5 430.2-300.3 7.7-16.2 7.7-35 0-51.5zM512 766c-161.3 0-279.4-81.8-362.7-254C232.6 339.8 350.7 258 512 258c161.3 0 279.4 81.8 362.7 254C791.5 684.2 673.4 766 512 766zm-4-430c-97.2 0-176 78.8-176 176s78.8 176 176 176 176-78.8 176-176-78.8-176-176-176zm0 288c-61.9 0-112-50.1-112-112s50.1-112 112-112 112 50.1 112 112-50.1 112-112 112z"
+                  />
+                </svg>
+              </span>
+              <span>
+                Open
+              </span>
+            </button>
+          </div>
+          <div
+            class="ant-space-item"
+            style="margin-right: 8px;"
+          >
+            <button
+              class="ant-btn ant-btn-icon-only"
+              tooltip="Download"
+              type="button"
+            >
+              <span
+                aria-label="download"
+                class="anticon anticon-download"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="download"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <path
+                    d="M505.7 661a8 8 0 0012.6 0l112-141.7c4.1-5.2.4-12.9-6.3-12.9h-74.1V168c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v338.3H400c-6.7 0-10.4 7.7-6.3 12.9l112 141.8zM878 626h-60c-4.4 0-8 3.6-8 8v154H214V634c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v198c0 17.7 14.3 32 32 32h684c17.7 0 32-14.3 32-32V634c0-4.4-3.6-8-8-8z"
+                  />
+                </svg>
+              </span>
+            </button>
+          </div>
+          <div
+            class="ant-space-item"
+          >
+            <button
+              class="ant-btn ant-btn-icon-only"
+              tooltip="Clear"
+              type="button"
+            >
+              <span
+                aria-label="clear"
+                class="anticon anticon-clear"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="clear"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <defs>
+                    <style />
+                  </defs>
+                  <path
+                    d="M899.1 869.6l-53-305.6H864c14.4 0 26-11.6 26-26V346c0-14.4-11.6-26-26-26H618V138c0-14.4-11.6-26-26-26H432c-14.4 0-26 11.6-26 26v182H160c-14.4 0-26 11.6-26 26v192c0 14.4 11.6 26 26 26h17.9l-53 305.6a25.95 25.95 0 0025.6 30.4h723c1.5 0 3-.1 4.4-.4a25.88 25.88 0 0021.2-30zM204 390h272V182h72v208h272v104H204V390zm468 440V674c0-4.4-3.6-8-8-8h-48c-4.4 0-8 3.6-8 8v156H416V674c0-4.4-3.6-8-8-8h-48c-4.4 0-8 3.6-8 8v156H202.8l45.1-260H776l45.1 260H672z"
+                  />
+                </svg>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`FileInput Renders ReadOnly story 1`] = `
+<body>
+  <div>
+    <div
+      class="ant-row ant-row-no-wrap"
+      style="margin-left: -4px; margin-right: -4px;"
+    >
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px;"
+      >
+        <input
+          id="file"
+          style="display: none;"
+          type="file"
+        />
+        <input
+          class="ant-input ant-input-disabled"
+          disabled=""
+          type="text"
+          value="5.22 KB"
+        />
+      </div>
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px;"
+      >
+        <div
+          class="ant-space ant-space-horizontal ant-space-align-center"
+        >
+          <div
+            class="ant-space-item"
+            style="margin-right: 8px;"
+          >
+            <button
+              class="ant-btn"
+              type="button"
+            >
+              <span
+                aria-label="eye"
+                class="anticon anticon-eye"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="eye"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <path
+                    d="M942.2 486.2C847.4 286.5 704.1 186 512 186c-192.2 0-335.4 100.5-430.2 300.3a60.3 60.3 0 000 51.5C176.6 737.5 319.9 838 512 838c192.2 0 335.4-100.5 430.2-300.3 7.7-16.2 7.7-35 0-51.5zM512 766c-161.3 0-279.4-81.8-362.7-254C232.6 339.8 350.7 258 512 258c161.3 0 279.4 81.8 362.7 254C791.5 684.2 673.4 766 512 766zm-4-430c-97.2 0-176 78.8-176 176s78.8 176 176 176 176-78.8 176-176-78.8-176-176-176zm0 288c-61.9 0-112-50.1-112-112s50.1-112 112-112 112 50.1 112 112-50.1 112-112 112z"
+                  />
+                </svg>
+              </span>
+              <span>
+                Open
+              </span>
+            </button>
+          </div>
+          <div
+            class="ant-space-item"
+          >
+            <button
+              class="ant-btn ant-btn-icon-only"
+              tooltip="Download"
+              type="button"
+            >
+              <span
+                aria-label="download"
+                class="anticon anticon-download"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="download"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <path
+                    d="M505.7 661a8 8 0 0012.6 0l112-141.7c4.1-5.2.4-12.9-6.3-12.9h-74.1V168c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v338.3H400c-6.7 0-10.4 7.7-6.3 12.9l112 141.8zM878 626h-60c-4.4 0-8 3.6-8 8v154H214V634c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v198c0 17.7 14.3 32 32 32h684c17.7 0 32-14.3 32-32V634c0-4.4-3.6-8-8-8z"
+                  />
+                </svg>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`FileInput Renders Required story 1`] = `
+.c0 {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgba(219,234,254,var(--tw-bg-opacity)) !important;
+}
+
+.c0 .ant-input {
+  background-color: rgba(219,234,254,var(--tw-bg-opacity)) !important;
+}
+
+<body>
+  <div>
+    <div
+      class="ant-row ant-row-no-wrap"
+      style="margin-left: -4px; margin-right: -4px;"
+    >
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px;"
+      >
+        <input
+          id="file"
+          style="display: none;"
+          type="file"
+        />
+        <input
+          class="ant-input ant-input-disabled c0"
+          disabled=""
+          type="text"
+          value="5.22 KB"
+        />
+      </div>
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px;"
+      >
+        <div
+          class="ant-space ant-space-horizontal ant-space-align-center"
+        >
+          <div
+            class="ant-space-item"
+            style="margin-right: 8px;"
+          >
+            <button
+              class="ant-btn"
+              type="button"
+            >
+              <span
+                aria-label="folder-open"
+                class="anticon anticon-folder-open"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="folder-open"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <path
+                    d="M928 444H820V330.4c0-17.7-14.3-32-32-32H473L355.7 186.2a8.15 8.15 0 00-5.5-2.2H96c-17.7 0-32 14.3-32 32v592c0 17.7 14.3 32 32 32h698c13 0 24.8-7.9 29.7-20l134-332c1.5-3.8 2.3-7.9 2.3-12 0-17.7-14.3-32-32-32zM136 256h188.5l119.6 114.4H748V444H238c-13 0-24.8 7.9-29.7 20L136 643.2V256zm635.3 512H159l103.3-256h612.4L771.3 768z"
+                  />
+                </svg>
+              </span>
+              <span>
+                Select
+              </span>
+            </button>
+          </div>
+          <div
+            class="ant-space-item"
+            style="margin-right: 8px;"
+          >
+            <button
+              class="ant-btn"
+              type="button"
+            >
+              <span
+                aria-label="eye"
+                class="anticon anticon-eye"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="eye"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <path
+                    d="M942.2 486.2C847.4 286.5 704.1 186 512 186c-192.2 0-335.4 100.5-430.2 300.3a60.3 60.3 0 000 51.5C176.6 737.5 319.9 838 512 838c192.2 0 335.4-100.5 430.2-300.3 7.7-16.2 7.7-35 0-51.5zM512 766c-161.3 0-279.4-81.8-362.7-254C232.6 339.8 350.7 258 512 258c161.3 0 279.4 81.8 362.7 254C791.5 684.2 673.4 766 512 766zm-4-430c-97.2 0-176 78.8-176 176s78.8 176 176 176 176-78.8 176-176-78.8-176-176-176zm0 288c-61.9 0-112-50.1-112-112s50.1-112 112-112 112 50.1 112 112-50.1 112-112 112z"
+                  />
+                </svg>
+              </span>
+              <span>
+                Open
+              </span>
+            </button>
+          </div>
+          <div
+            class="ant-space-item"
+            style="margin-right: 8px;"
+          >
+            <button
+              class="ant-btn ant-btn-icon-only"
+              tooltip="Download"
+              type="button"
+            >
+              <span
+                aria-label="download"
+                class="anticon anticon-download"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="download"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <path
+                    d="M505.7 661a8 8 0 0012.6 0l112-141.7c4.1-5.2.4-12.9-6.3-12.9h-74.1V168c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v338.3H400c-6.7 0-10.4 7.7-6.3 12.9l112 141.8zM878 626h-60c-4.4 0-8 3.6-8 8v154H214V634c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v198c0 17.7 14.3 32 32 32h684c17.7 0 32-14.3 32-32V634c0-4.4-3.6-8-8-8z"
+                  />
+                </svg>
+              </span>
+            </button>
+          </div>
+          <div
+            class="ant-space-item"
+          >
+            <button
+              class="ant-btn ant-btn-icon-only"
+              tooltip="Clear"
+              type="button"
+            >
+              <span
+                aria-label="clear"
+                class="anticon anticon-clear"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="clear"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <defs>
+                    <style />
+                  </defs>
+                  <path
+                    d="M899.1 869.6l-53-305.6H864c14.4 0 26-11.6 26-26V346c0-14.4-11.6-26-26-26H618V138c0-14.4-11.6-26-26-26H432c-14.4 0-26 11.6-26 26v182H160c-14.4 0-26 11.6-26 26v192c0 14.4 11.6 26 26 26h17.9l-53 305.6a25.95 25.95 0 0025.6 30.4h723c1.5 0 3-.1 4.4-.4a25.88 25.88 0 0021.2-30zM204 390h272V182h72v208h272v104H204V390zm468 440V674c0-4.4-3.6-8-8-8h-48c-4.4 0-8 3.6-8 8v156H416V674c0-4.4-3.6-8-8-8h-48c-4.4 0-8 3.6-8 8v156H202.8l45.1-260H776l45.1 260H672z"
+                  />
+                </svg>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;

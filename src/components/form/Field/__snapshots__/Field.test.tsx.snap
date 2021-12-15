@@ -1,0 +1,499 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Field Renders Basic story 1`] = `
+.c0 {
+  margin-bottom: 0;
+}
+
+<body>
+  <div>
+    <form
+      class="ant-form ant-form-horizontal"
+    >
+      <div
+        class="ant-row ant-form-item c0"
+      >
+        <div
+          class="ant-col ant-form-item-control"
+        >
+          <div
+            class="ant-form-item-control-input"
+          >
+            <div
+              class="ant-form-item-control-input-content"
+            >
+              <input
+                class="ant-input"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</body>
+`;
+
+exports[`Field Renders BasicWithLabel story 1`] = `
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-bottom: 0.25rem;
+  padding-top: 0.25rem;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
+.c4 {
+  padding-right: 0.5rem;
+  text-align: right;
+}
+
+.c0 {
+  padding-bottom: 0.25rem;
+  padding-top: 0.25rem;
+}
+
+.c1 {
+  margin-left: 0.5rem;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+}
+
+.c5 {
+  margin-bottom: 0;
+}
+
+<body>
+  <div>
+    <form
+      class="ant-form ant-form-horizontal"
+    >
+      <div
+        class="ant-row ant-row-middle c0"
+      >
+        <div
+          class="ant-col c1"
+          style="flex: 0 0 7rem;"
+        >
+          <div
+            class="c2"
+          >
+            <div
+              class="c3"
+            >
+              <span
+                class="c4"
+              >
+                Example form field :
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="ant-col"
+          style="flex-basis: auto;"
+        >
+          <div
+            class="ant-row ant-form-item c5"
+          >
+            <div
+              class="ant-col ant-form-item-control"
+            >
+              <div
+                class="ant-form-item-control-input"
+              >
+                <div
+                  class="ant-form-item-control-input-content"
+                >
+                  <input
+                    class="ant-input"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</body>
+`;
+
+exports[`Field Renders BasicWithLabelAndTooltip story 1`] = `
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-bottom: 0.25rem;
+  padding-top: 0.25rem;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
+.c4 {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  --tw-text-opacity: 1;
+  color: rgba(96,165,250,var(--tw-text-opacity));
+  padding-right: 0.25rem;
+}
+
+.c5 {
+  padding-right: 0.5rem;
+  text-align: right;
+}
+
+.c0 {
+  padding-bottom: 0.25rem;
+  padding-top: 0.25rem;
+}
+
+.c1 {
+  margin-left: 0.5rem;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+}
+
+.c6 {
+  margin-bottom: 0;
+}
+
+<body>
+  <div>
+    <form
+      class="ant-form ant-form-horizontal"
+    >
+      <div
+        class="ant-row ant-row-middle c0"
+      >
+        <div
+          class="ant-col c1"
+          style="flex: 0 0 7rem;"
+        >
+          <div
+            class="c2"
+          >
+            <div
+              class="c3"
+            >
+              <span
+                aria-label="question-circle"
+                class="anticon anticon-question-circle c4"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="question-circle"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <path
+                    d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"
+                  />
+                  <path
+                    d="M623.6 316.7C593.6 290.4 554 276 512 276s-81.6 14.5-111.6 40.7C369.2 344 352 380.7 352 420v7.6c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V420c0-44.1 43.1-80 96-80s96 35.9 96 80c0 31.1-22 59.6-56.1 72.7-21.2 8.1-39.2 22.3-52.1 40.9-13.1 19-19.9 41.8-19.9 64.9V620c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8v-22.7a48.3 48.3 0 0130.9-44.8c59-22.7 97.1-74.7 97.1-132.5.1-39.3-17.1-76-48.3-103.3zM472 732a40 40 0 1080 0 40 40 0 10-80 0z"
+                  />
+                </svg>
+              </span>
+              <span
+                class="c5"
+              >
+                Example form field :
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="ant-col"
+          style="flex-basis: auto;"
+        >
+          <div
+            class="ant-row ant-form-item c6"
+          >
+            <div
+              class="ant-col ant-form-item-control"
+            >
+              <div
+                class="ant-form-item-control-input"
+              >
+                <div
+                  class="ant-form-item-control-input-content"
+                >
+                  <input
+                    class="ant-input"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</body>
+`;
+
+exports[`Field Renders BasicWithLabelVerticalCenter story 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-bottom: 0.25rem;
+  padding-top: 0.25rem;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c1 {
+  padding-right: 0.5rem;
+  text-align: right;
+}
+
+.c2 {
+  margin-bottom: 0;
+}
+
+<body>
+  <div>
+    <form
+      class="ant-form ant-form-horizontal"
+    >
+      <div
+        class="c0"
+      >
+        <span
+          class="c1"
+        >
+          Example form field :
+        </span>
+      </div>
+      <div
+        class="ant-row ant-form-item c2"
+      >
+        <div
+          class="ant-col ant-form-item-control"
+        >
+          <div
+            class="ant-form-item-control-input"
+          >
+            <div
+              class="ant-form-item-control-input-content"
+            >
+              <input
+                class="ant-input"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</body>
+`;
+
+exports[`Field Renders BasicWithLabelVerticalLeft story 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-bottom: 0.25rem;
+  padding-top: 0.25rem;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
+.c1 {
+  padding-right: 0.5rem;
+  text-align: right;
+}
+
+.c2 {
+  margin-bottom: 0;
+}
+
+<body>
+  <div>
+    <form
+      class="ant-form ant-form-horizontal"
+    >
+      <div
+        class="c0"
+      >
+        <span
+          class="c1"
+        >
+          Example form field :
+        </span>
+      </div>
+      <div
+        class="ant-row ant-form-item c2"
+      >
+        <div
+          class="ant-col ant-form-item-control"
+        >
+          <div
+            class="ant-form-item-control-input"
+          >
+            <div
+              class="ant-form-item-control-input-content"
+            >
+              <input
+                class="ant-input"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</body>
+`;
+
+exports[`Field Renders BasicWithLabelVerticalRight story 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-bottom: 0.25rem;
+  padding-top: 0.25rem;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+
+.c1 {
+  padding-right: 0.5rem;
+  text-align: right;
+}
+
+.c2 {
+  margin-bottom: 0;
+}
+
+<body>
+  <div>
+    <form
+      class="ant-form ant-form-horizontal"
+    >
+      <div
+        class="c0"
+      >
+        <span
+          class="c1"
+        >
+          Example form field :
+        </span>
+      </div>
+      <div
+        class="ant-row ant-form-item c2"
+      >
+        <div
+          class="ant-col ant-form-item-control"
+        >
+          <div
+            class="ant-form-item-control-input"
+          >
+            <div
+              class="ant-form-item-control-input-content"
+            >
+              <input
+                class="ant-input"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</body>
+`;

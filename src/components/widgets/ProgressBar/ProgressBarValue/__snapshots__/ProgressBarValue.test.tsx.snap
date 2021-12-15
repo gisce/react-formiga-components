@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProgressBarValue Renders Basic story 1`] = `
+.c0 .ant-progress-outer {
+  margin-right: 0px;
+  padding-right: 0px;
+}
+
+.c0 .ant-progress-text {
+  display: none;
+}
+
+<body>
+  <div>
+    <div
+      style="flex: 1; display: flex; align-items: center;"
+    >
+      <div
+        class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-show-info ant-progress-default c0"
+      >
+        <div
+          class="ant-progress-outer"
+        >
+          <div
+            class="ant-progress-inner"
+          >
+            <div
+              class="ant-progress-bg"
+              style="width: 0%; height: 8px;"
+            />
+          </div>
+        </div>
+        <span
+          class="ant-progress-text"
+          title="0%"
+        >
+          0%
+        </span>
+      </div>
+      <div
+        style="flex-grow: 1; padding-left: 10px;"
+      >
+        0%
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`ProgressBarValue Renders WithValue story 1`] = `
+.c0 .ant-progress-outer {
+  margin-right: 0px;
+  padding-right: 0px;
+}
+
+.c0 .ant-progress-text {
+  display: none;
+}
+
+<body>
+  <div>
+    <div
+      style="flex: 1; display: flex; align-items: center;"
+    >
+      <div
+        class="ant-progress ant-progress-line ant-progress-status-normal ant-progress-show-info ant-progress-default c0"
+      >
+        <div
+          class="ant-progress-outer"
+        >
+          <div
+            class="ant-progress-inner"
+          >
+            <div
+              class="ant-progress-bg"
+              style="width: 2.5%; height: 8px;"
+            />
+          </div>
+        </div>
+        <span
+          class="ant-progress-text"
+          title="2.5%"
+        >
+          2.5%
+        </span>
+      </div>
+      <div
+        style="flex-grow: 1; padding-left: 10px;"
+      >
+        2.5%
+      </div>
+    </div>
+  </div>
+</body>
+`;

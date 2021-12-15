@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CharValue Renders Basic story 1`] = `
+<body>
+  <div>
+    char value
+  </div>
+</body>
+`;

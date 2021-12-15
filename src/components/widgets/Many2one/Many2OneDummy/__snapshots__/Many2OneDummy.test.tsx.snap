@@ -1,0 +1,875 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Many2OneDummy Renders Basic story 1`] = `
+<body>
+  <div>
+    <div
+      class="ant-row ant-row-no-wrap"
+      style="margin-left: -4px; margin-right: -4px;"
+    >
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px; flex-basis: auto; min-width: 0;"
+      >
+        <input
+          class="ant-input"
+          style="color: black;"
+          type="text"
+          value=""
+        />
+      </div>
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px; flex: 0 0 32px; min-width: 0;"
+      >
+        <button
+          class="ant-btn ant-btn-icon-only"
+          tabindex="-1"
+          tooltip="Open"
+          type="button"
+        >
+          <span
+            aria-label="folder-open"
+            class="anticon anticon-folder-open"
+            role="img"
+          >
+            <svg
+              aria-hidden="true"
+              data-icon="folder-open"
+              fill="currentColor"
+              focusable="false"
+              height="1em"
+              viewBox="64 64 896 896"
+              width="1em"
+            >
+              <path
+                d="M928 444H820V330.4c0-17.7-14.3-32-32-32H473L355.7 186.2a8.15 8.15 0 00-5.5-2.2H96c-17.7 0-32 14.3-32 32v592c0 17.7 14.3 32 32 32h698c13 0 24.8-7.9 29.7-20l134-332c1.5-3.8 2.3-7.9 2.3-12 0-17.7-14.3-32-32-32zM136 256h188.5l119.6 114.4H748V444H238c-13 0-24.8 7.9-29.7 20L136 643.2V256zm635.3 512H159l103.3-256h612.4L771.3 768z"
+              />
+            </svg>
+          </span>
+        </button>
+      </div>
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px; flex: 0 0 32px; min-width: 0;"
+      >
+        <button
+          class="ant-btn ant-btn-icon-only"
+          tabindex="-1"
+          tooltip="Search"
+          type="button"
+        >
+          <span
+            aria-label="search"
+            class="anticon anticon-search"
+            role="img"
+          >
+            <svg
+              aria-hidden="true"
+              data-icon="search"
+              fill="currentColor"
+              focusable="false"
+              height="1em"
+              viewBox="64 64 896 896"
+              width="1em"
+            >
+              <path
+                d="M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z"
+              />
+            </svg>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`Many2OneDummy Renders ButtonsDisabled story 1`] = `
+<body>
+  <div>
+    <div
+      class="ant-row ant-row-no-wrap"
+      style="margin-left: -4px; margin-right: -4px;"
+    >
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px; flex-basis: auto; min-width: 0;"
+      >
+        <input
+          class="ant-input"
+          style="color: black;"
+          type="text"
+          value=""
+        />
+      </div>
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px; flex: 0 0 32px; min-width: 0;"
+      >
+        <span
+          class="ant-tooltip-disabled-compatible-wrapper"
+          style="display: inline-block; cursor: not-allowed;"
+        >
+          <button
+            class="ant-btn ant-btn-icon-only"
+            disabled=""
+            style="pointer-events: none;"
+            tabindex="-1"
+            tooltip="Open"
+            type="button"
+          >
+            <span
+              aria-label="folder-open"
+              class="anticon anticon-folder-open"
+              role="img"
+            >
+              <svg
+                aria-hidden="true"
+                data-icon="folder-open"
+                fill="currentColor"
+                focusable="false"
+                height="1em"
+                viewBox="64 64 896 896"
+                width="1em"
+              >
+                <path
+                  d="M928 444H820V330.4c0-17.7-14.3-32-32-32H473L355.7 186.2a8.15 8.15 0 00-5.5-2.2H96c-17.7 0-32 14.3-32 32v592c0 17.7 14.3 32 32 32h698c13 0 24.8-7.9 29.7-20l134-332c1.5-3.8 2.3-7.9 2.3-12 0-17.7-14.3-32-32-32zM136 256h188.5l119.6 114.4H748V444H238c-13 0-24.8 7.9-29.7 20L136 643.2V256zm635.3 512H159l103.3-256h612.4L771.3 768z"
+                />
+              </svg>
+            </span>
+          </button>
+        </span>
+      </div>
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px; flex: 0 0 32px; min-width: 0;"
+      >
+        <span
+          class="ant-tooltip-disabled-compatible-wrapper"
+          style="display: inline-block; cursor: not-allowed;"
+        >
+          <button
+            class="ant-btn ant-btn-icon-only"
+            disabled=""
+            style="pointer-events: none;"
+            tabindex="-1"
+            tooltip="Search"
+            type="button"
+          >
+            <span
+              aria-label="search"
+              class="anticon anticon-search"
+              role="img"
+            >
+              <svg
+                aria-hidden="true"
+                data-icon="search"
+                fill="currentColor"
+                focusable="false"
+                height="1em"
+                viewBox="64 64 896 896"
+                width="1em"
+              >
+                <path
+                  d="M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z"
+                />
+              </svg>
+            </span>
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`Many2OneDummy Renders NoButtons story 1`] = `
+.c0 {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgba(219,234,254,var(--tw-bg-opacity)) !important;
+}
+
+.c0 .ant-input {
+  background-color: rgba(219,234,254,var(--tw-bg-opacity)) !important;
+}
+
+<body>
+  <div>
+    <div
+      class="ant-row ant-row-no-wrap"
+      style="margin-left: -4px; margin-right: -4px;"
+    >
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px; flex-basis: auto; min-width: 0;"
+      >
+        <input
+          class="ant-input c0"
+          style="color: black;"
+          type="text"
+          value="Customer # 1"
+        />
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`Many2OneDummy Renders ReadOnly story 1`] = `
+<body>
+  <div>
+    <div
+      class="ant-row ant-row-no-wrap"
+      style="margin-left: -4px; margin-right: -4px;"
+    >
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px; flex-basis: auto; min-width: 0;"
+      >
+        <input
+          class="ant-input ant-input-disabled"
+          disabled=""
+          style="color: black;"
+          type="text"
+          value="Customer # 1"
+        />
+      </div>
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px; flex: 0 0 32px; min-width: 0;"
+      >
+        <button
+          class="ant-btn ant-btn-icon-only"
+          tabindex="-1"
+          tooltip="Open"
+          type="button"
+        >
+          <span
+            aria-label="folder-open"
+            class="anticon anticon-folder-open"
+            role="img"
+          >
+            <svg
+              aria-hidden="true"
+              data-icon="folder-open"
+              fill="currentColor"
+              focusable="false"
+              height="1em"
+              viewBox="64 64 896 896"
+              width="1em"
+            >
+              <path
+                d="M928 444H820V330.4c0-17.7-14.3-32-32-32H473L355.7 186.2a8.15 8.15 0 00-5.5-2.2H96c-17.7 0-32 14.3-32 32v592c0 17.7 14.3 32 32 32h698c13 0 24.8-7.9 29.7-20l134-332c1.5-3.8 2.3-7.9 2.3-12 0-17.7-14.3-32-32-32zM136 256h188.5l119.6 114.4H748V444H238c-13 0-24.8 7.9-29.7 20L136 643.2V256zm635.3 512H159l103.3-256h612.4L771.3 768z"
+              />
+            </svg>
+          </span>
+        </button>
+      </div>
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px; flex: 0 0 32px; min-width: 0;"
+      >
+        <span
+          class="ant-tooltip-disabled-compatible-wrapper"
+          style="display: inline-block; cursor: not-allowed;"
+        >
+          <button
+            class="ant-btn ant-btn-icon-only"
+            disabled=""
+            style="pointer-events: none;"
+            tabindex="-1"
+            tooltip="Search"
+            type="button"
+          >
+            <span
+              aria-label="search"
+              class="anticon anticon-search"
+              role="img"
+            >
+              <svg
+                aria-hidden="true"
+                data-icon="search"
+                fill="currentColor"
+                focusable="false"
+                height="1em"
+                viewBox="64 64 896 896"
+                width="1em"
+              >
+                <path
+                  d="M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z"
+                />
+              </svg>
+            </span>
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`Many2OneDummy Renders Required story 1`] = `
+.c0 {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgba(219,234,254,var(--tw-bg-opacity)) !important;
+}
+
+.c0 .ant-input {
+  background-color: rgba(219,234,254,var(--tw-bg-opacity)) !important;
+}
+
+<body>
+  <div>
+    <div
+      class="ant-row ant-row-no-wrap"
+      style="margin-left: -4px; margin-right: -4px;"
+    >
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px; flex-basis: auto; min-width: 0;"
+      >
+        <input
+          class="ant-input c0"
+          style="color: black;"
+          type="text"
+          value=""
+        />
+      </div>
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px; flex: 0 0 32px; min-width: 0;"
+      >
+        <button
+          class="ant-btn ant-btn-icon-only"
+          tabindex="-1"
+          tooltip="Open"
+          type="button"
+        >
+          <span
+            aria-label="folder-open"
+            class="anticon anticon-folder-open"
+            role="img"
+          >
+            <svg
+              aria-hidden="true"
+              data-icon="folder-open"
+              fill="currentColor"
+              focusable="false"
+              height="1em"
+              viewBox="64 64 896 896"
+              width="1em"
+            >
+              <path
+                d="M928 444H820V330.4c0-17.7-14.3-32-32-32H473L355.7 186.2a8.15 8.15 0 00-5.5-2.2H96c-17.7 0-32 14.3-32 32v592c0 17.7 14.3 32 32 32h698c13 0 24.8-7.9 29.7-20l134-332c1.5-3.8 2.3-7.9 2.3-12 0-17.7-14.3-32-32-32zM136 256h188.5l119.6 114.4H748V444H238c-13 0-24.8 7.9-29.7 20L136 643.2V256zm635.3 512H159l103.3-256h612.4L771.3 768z"
+              />
+            </svg>
+          </span>
+        </button>
+      </div>
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px; flex: 0 0 32px; min-width: 0;"
+      >
+        <button
+          class="ant-btn ant-btn-icon-only"
+          tabindex="-1"
+          tooltip="Search"
+          type="button"
+        >
+          <span
+            aria-label="search"
+            class="anticon anticon-search"
+            role="img"
+          >
+            <svg
+              aria-hidden="true"
+              data-icon="search"
+              fill="currentColor"
+              focusable="false"
+              height="1em"
+              viewBox="64 64 896 896"
+              width="1em"
+            >
+              <path
+                d="M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z"
+              />
+            </svg>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`Many2OneDummy Renders Searching story 1`] = `
+<body>
+  <div>
+    <div
+      class="ant-row ant-row-no-wrap"
+      style="margin-left: -4px; margin-right: -4px;"
+    >
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px; flex-basis: auto; min-width: 0;"
+      >
+        <input
+          class="ant-input ant-input-disabled"
+          disabled=""
+          style="color: black;"
+          type="text"
+          value="Customer # 1"
+        />
+      </div>
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px; flex: 0 0 32px; min-width: 0;"
+      >
+        <span
+          class="ant-tooltip-disabled-compatible-wrapper"
+          style="display: inline-block; cursor: not-allowed;"
+        >
+          <button
+            class="ant-btn ant-btn-icon-only"
+            disabled=""
+            style="pointer-events: none;"
+            tabindex="-1"
+            tooltip="Open"
+            type="button"
+          >
+            <span
+              aria-label="folder-open"
+              class="anticon anticon-folder-open"
+              role="img"
+            >
+              <svg
+                aria-hidden="true"
+                data-icon="folder-open"
+                fill="currentColor"
+                focusable="false"
+                height="1em"
+                viewBox="64 64 896 896"
+                width="1em"
+              >
+                <path
+                  d="M928 444H820V330.4c0-17.7-14.3-32-32-32H473L355.7 186.2a8.15 8.15 0 00-5.5-2.2H96c-17.7 0-32 14.3-32 32v592c0 17.7 14.3 32 32 32h698c13 0 24.8-7.9 29.7-20l134-332c1.5-3.8 2.3-7.9 2.3-12 0-17.7-14.3-32-32-32zM136 256h188.5l119.6 114.4H748V444H238c-13 0-24.8 7.9-29.7 20L136 643.2V256zm635.3 512H159l103.3-256h612.4L771.3 768z"
+                />
+              </svg>
+            </span>
+          </button>
+        </span>
+      </div>
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px; flex: 0 0 32px; min-width: 0;"
+      >
+        <span
+          class="ant-tooltip-disabled-compatible-wrapper"
+          style="display: inline-block; cursor: not-allowed;"
+        >
+          <button
+            class="ant-btn ant-btn-icon-only"
+            disabled=""
+            style="pointer-events: none;"
+            tabindex="-1"
+            tooltip="Search"
+            type="button"
+          >
+            <span
+              aria-label="loading"
+              class="anticon anticon-loading anticon-spin"
+              role="img"
+            >
+              <svg
+                aria-hidden="true"
+                data-icon="loading"
+                fill="currentColor"
+                focusable="false"
+                height="1em"
+                viewBox="0 0 1024 1024"
+                width="1em"
+              >
+                <path
+                  d="M988 548c-19.9 0-36-16.1-36-36 0-59.4-11.6-117-34.6-171.3a440.45 440.45 0 00-94.3-139.9 437.71 437.71 0 00-139.9-94.3C629 83.6 571.4 72 512 72c-19.9 0-36-16.1-36-36s16.1-36 36-36c69.1 0 136.2 13.5 199.3 40.3C772.3 66 827 103 874 150c47 47 83.9 101.8 109.7 162.7 26.7 63.1 40.2 130.2 40.2 199.3.1 19.9-16 36-35.9 36z"
+                />
+              </svg>
+            </span>
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`Many2OneDummy Renders SearchingRequired story 1`] = `
+.c0 {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgba(219,234,254,var(--tw-bg-opacity)) !important;
+}
+
+.c0 .ant-input {
+  background-color: rgba(219,234,254,var(--tw-bg-opacity)) !important;
+}
+
+<body>
+  <div>
+    <div
+      class="ant-row ant-row-no-wrap"
+      style="margin-left: -4px; margin-right: -4px;"
+    >
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px; flex-basis: auto; min-width: 0;"
+      >
+        <input
+          class="ant-input ant-input-disabled c0"
+          disabled=""
+          style="color: black;"
+          type="text"
+          value="Customer # 1"
+        />
+      </div>
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px; flex: 0 0 32px; min-width: 0;"
+      >
+        <span
+          class="ant-tooltip-disabled-compatible-wrapper"
+          style="display: inline-block; cursor: not-allowed;"
+        >
+          <button
+            class="ant-btn ant-btn-icon-only"
+            disabled=""
+            style="pointer-events: none;"
+            tabindex="-1"
+            tooltip="Open"
+            type="button"
+          >
+            <span
+              aria-label="folder-open"
+              class="anticon anticon-folder-open"
+              role="img"
+            >
+              <svg
+                aria-hidden="true"
+                data-icon="folder-open"
+                fill="currentColor"
+                focusable="false"
+                height="1em"
+                viewBox="64 64 896 896"
+                width="1em"
+              >
+                <path
+                  d="M928 444H820V330.4c0-17.7-14.3-32-32-32H473L355.7 186.2a8.15 8.15 0 00-5.5-2.2H96c-17.7 0-32 14.3-32 32v592c0 17.7 14.3 32 32 32h698c13 0 24.8-7.9 29.7-20l134-332c1.5-3.8 2.3-7.9 2.3-12 0-17.7-14.3-32-32-32zM136 256h188.5l119.6 114.4H748V444H238c-13 0-24.8 7.9-29.7 20L136 643.2V256zm635.3 512H159l103.3-256h612.4L771.3 768z"
+                />
+              </svg>
+            </span>
+          </button>
+        </span>
+      </div>
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px; flex: 0 0 32px; min-width: 0;"
+      >
+        <span
+          class="ant-tooltip-disabled-compatible-wrapper"
+          style="display: inline-block; cursor: not-allowed;"
+        >
+          <button
+            class="ant-btn ant-btn-icon-only"
+            disabled=""
+            style="pointer-events: none;"
+            tabindex="-1"
+            tooltip="Search"
+            type="button"
+          >
+            <span
+              aria-label="loading"
+              class="anticon anticon-loading anticon-spin"
+              role="img"
+            >
+              <svg
+                aria-hidden="true"
+                data-icon="loading"
+                fill="currentColor"
+                focusable="false"
+                height="1em"
+                viewBox="0 0 1024 1024"
+                width="1em"
+              >
+                <path
+                  d="M988 548c-19.9 0-36-16.1-36-36 0-59.4-11.6-117-34.6-171.3a440.45 440.45 0 00-94.3-139.9 437.71 437.71 0 00-139.9-94.3C629 83.6 571.4 72 512 72c-19.9 0-36-16.1-36-36s16.1-36 36-36c69.1 0 136.2 13.5 199.3 40.3C772.3 66 827 103 874 150c47 47 83.9 101.8 109.7 162.7 26.7 63.1 40.2 130.2 40.2 199.3.1 19.9-16 36-35.9 36z"
+                />
+              </svg>
+            </span>
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`Many2OneDummy Renders WithSuffixLoading story 1`] = `
+<body>
+  <div>
+    <div
+      class="ant-row ant-row-no-wrap"
+      style="margin-left: -4px; margin-right: -4px;"
+    >
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px; flex-basis: auto; min-width: 0;"
+      >
+        <span
+          class="ant-input-affix-wrapper"
+          style="color: black;"
+        >
+          <input
+            class="ant-input"
+            type="text"
+            value=""
+          />
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              aria-label="right-circle"
+              class="anticon anticon-right-circle ant-dropdown-trigger"
+              role="img"
+              style="color: rgba(0, 0, 0, 0.45);"
+              tabindex="-1"
+            >
+              <svg
+                aria-hidden="true"
+                data-icon="right-circle"
+                fill="currentColor"
+                focusable="false"
+                height="1em"
+                viewBox="64 64 896 896"
+                width="1em"
+              >
+                <path
+                  d="M666.7 505.5l-246-178A8 8 0 00408 334v46.9c0 10.2 4.9 19.9 13.2 25.9L566.6 512 421.2 617.2c-8.3 6-13.2 15.6-13.2 25.9V690c0 6.5 7.4 10.3 12.7 6.5l246-178c4.4-3.2 4.4-9.8 0-13z"
+                />
+                <path
+                  d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"
+                />
+              </svg>
+            </span>
+          </span>
+        </span>
+      </div>
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px; flex: 0 0 32px; min-width: 0;"
+      >
+        <span
+          class="ant-tooltip-disabled-compatible-wrapper"
+          style="display: inline-block; cursor: not-allowed;"
+        >
+          <button
+            class="ant-btn ant-btn-icon-only"
+            disabled=""
+            style="pointer-events: none;"
+            tabindex="-1"
+            tooltip="Open"
+            type="button"
+          >
+            <span
+              aria-label="folder-open"
+              class="anticon anticon-folder-open"
+              role="img"
+            >
+              <svg
+                aria-hidden="true"
+                data-icon="folder-open"
+                fill="currentColor"
+                focusable="false"
+                height="1em"
+                viewBox="64 64 896 896"
+                width="1em"
+              >
+                <path
+                  d="M928 444H820V330.4c0-17.7-14.3-32-32-32H473L355.7 186.2a8.15 8.15 0 00-5.5-2.2H96c-17.7 0-32 14.3-32 32v592c0 17.7 14.3 32 32 32h698c13 0 24.8-7.9 29.7-20l134-332c1.5-3.8 2.3-7.9 2.3-12 0-17.7-14.3-32-32-32zM136 256h188.5l119.6 114.4H748V444H238c-13 0-24.8 7.9-29.7 20L136 643.2V256zm635.3 512H159l103.3-256h612.4L771.3 768z"
+                />
+              </svg>
+            </span>
+          </button>
+        </span>
+      </div>
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px; flex: 0 0 32px; min-width: 0;"
+      >
+        <span
+          class="ant-tooltip-disabled-compatible-wrapper"
+          style="display: inline-block; cursor: not-allowed;"
+        >
+          <button
+            class="ant-btn ant-btn-icon-only"
+            disabled=""
+            style="pointer-events: none;"
+            tabindex="-1"
+            tooltip="Search"
+            type="button"
+          >
+            <span
+              aria-label="search"
+              class="anticon anticon-search"
+              role="img"
+            >
+              <svg
+                aria-hidden="true"
+                data-icon="search"
+                fill="currentColor"
+                focusable="false"
+                height="1em"
+                viewBox="64 64 896 896"
+                width="1em"
+              >
+                <path
+                  d="M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z"
+                />
+              </svg>
+            </span>
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`Many2OneDummy Renders WithSuffixWithOptions story 1`] = `
+<body>
+  <div>
+    <div
+      class="ant-row ant-row-no-wrap"
+      style="margin-left: -4px; margin-right: -4px;"
+    >
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px; flex-basis: auto; min-width: 0;"
+      >
+        <span
+          class="ant-input-affix-wrapper"
+          style="color: black;"
+        >
+          <input
+            class="ant-input"
+            type="text"
+            value=""
+          />
+          <span
+            class="ant-input-suffix"
+          >
+            <span
+              aria-label="right-circle"
+              class="anticon anticon-right-circle ant-dropdown-trigger"
+              role="img"
+              style="color: rgba(0, 0, 0, 0.45);"
+              tabindex="-1"
+            >
+              <svg
+                aria-hidden="true"
+                data-icon="right-circle"
+                fill="currentColor"
+                focusable="false"
+                height="1em"
+                viewBox="64 64 896 896"
+                width="1em"
+              >
+                <path
+                  d="M666.7 505.5l-246-178A8 8 0 00408 334v46.9c0 10.2 4.9 19.9 13.2 25.9L566.6 512 421.2 617.2c-8.3 6-13.2 15.6-13.2 25.9V690c0 6.5 7.4 10.3 12.7 6.5l246-178c4.4-3.2 4.4-9.8 0-13z"
+                />
+                <path
+                  d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"
+                />
+              </svg>
+            </span>
+          </span>
+        </span>
+      </div>
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px; flex: 0 0 32px; min-width: 0;"
+      >
+        <span
+          class="ant-tooltip-disabled-compatible-wrapper"
+          style="display: inline-block; cursor: not-allowed;"
+        >
+          <button
+            class="ant-btn ant-btn-icon-only"
+            disabled=""
+            style="pointer-events: none;"
+            tabindex="-1"
+            tooltip="Open"
+            type="button"
+          >
+            <span
+              aria-label="folder-open"
+              class="anticon anticon-folder-open"
+              role="img"
+            >
+              <svg
+                aria-hidden="true"
+                data-icon="folder-open"
+                fill="currentColor"
+                focusable="false"
+                height="1em"
+                viewBox="64 64 896 896"
+                width="1em"
+              >
+                <path
+                  d="M928 444H820V330.4c0-17.7-14.3-32-32-32H473L355.7 186.2a8.15 8.15 0 00-5.5-2.2H96c-17.7 0-32 14.3-32 32v592c0 17.7 14.3 32 32 32h698c13 0 24.8-7.9 29.7-20l134-332c1.5-3.8 2.3-7.9 2.3-12 0-17.7-14.3-32-32-32zM136 256h188.5l119.6 114.4H748V444H238c-13 0-24.8 7.9-29.7 20L136 643.2V256zm635.3 512H159l103.3-256h612.4L771.3 768z"
+                />
+              </svg>
+            </span>
+          </button>
+        </span>
+      </div>
+      <div
+        class="ant-col"
+        style="padding-left: 4px; padding-right: 4px; flex: 0 0 32px; min-width: 0;"
+      >
+        <span
+          class="ant-tooltip-disabled-compatible-wrapper"
+          style="display: inline-block; cursor: not-allowed;"
+        >
+          <button
+            class="ant-btn ant-btn-icon-only"
+            disabled=""
+            style="pointer-events: none;"
+            tabindex="-1"
+            tooltip="Search"
+            type="button"
+          >
+            <span
+              aria-label="search"
+              class="anticon anticon-search"
+              role="img"
+            >
+              <svg
+                aria-hidden="true"
+                data-icon="search"
+                fill="currentColor"
+                focusable="false"
+                height="1em"
+                viewBox="64 64 896 896"
+                width="1em"
+              >
+                <path
+                  d="M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z"
+                />
+              </svg>
+            </span>
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
+</body>
+`;

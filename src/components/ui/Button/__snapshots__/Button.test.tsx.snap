@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button Renders Basic story 1`] = `
+<body>
+  <div>
+    <button
+      class="ant-btn"
+      type="button"
+    >
+      <span>
+        Button caption
+      </span>
+    </button>
+  </div>
+</body>
+`;

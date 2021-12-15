@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FieldSet Renders Basic story 1`] = `
+.c0 {
+  padding: 0.5rem;
+  border-color: rga(161,161,170);
+  border-width: 1px;
+  border-style: solid;
+  font-family: ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont, "Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif, "Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji" !important;
+}
+
+.c1 {
+  all: initial;
+  margin-left: 1em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  font-family: system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial, sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+}
+
+<body>
+  <div>
+    <fieldset
+      class="c0"
+    >
+      <legend
+        class="c1"
+      >
+        Group of fields
+      </legend>
+      Content
+    </fieldset>
+  </div>
+</body>
+`;

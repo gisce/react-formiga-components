@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FloatTimeInput Renders Basic story 1`] = `
+.c0 {
+  width: 100%;
+}
+
+<body>
+  <div>
+    <input
+      class="ant-input c0"
+      placeholder="00:00"
+      type="text"
+      value=""
+    />
+  </div>
+</body>
+`;
+
+exports[`FloatTimeInput Renders WithValue story 1`] = `
+.c0 {
+  width: 100%;
+}
+
+<body>
+  <div>
+    <input
+      class="ant-input c0"
+      placeholder="00:00"
+      type="text"
+      value="02:30"
+    />
+  </div>
+</body>
+`;
