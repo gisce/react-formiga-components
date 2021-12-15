@@ -27,7 +27,6 @@ export const Many2OneDummy = (props: Many2OneDummyProps) => {
     onElementLostFocus,
     onEnterPressed,
     locale,
-    textColor = "black",
   } = props;
 
   const { t: tContext = undefined } =
@@ -51,7 +50,6 @@ export const Many2OneDummy = (props: Many2OneDummyProps) => {
     <Row gutter={8} wrap={false}>
       <Col flex="auto">
         <CustomInput
-          style={{ color: textColor }}
           type="text"
           value={value}
           disabled={readOnly || searching}

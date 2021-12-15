@@ -12,5 +12,4 @@ export type Many2OneDummyProps = BaseFieldProps<string> & {
   onClickSearchButton?: () => void;
   onElementLostFocus?: () => void;
   onEnterPressed?: () => void;
-  textColor?: string;
 };

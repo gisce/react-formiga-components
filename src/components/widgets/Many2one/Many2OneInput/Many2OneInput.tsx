@@ -33,7 +33,6 @@ export const Many2OneInput = (props: Many2OneInputProps) => {
       {...restProps}
       searching={searching}
       value={inputTextRef.current}
-      textColor={item.id !== undefined ? "blue" : "black"}
       onChange={(name: string) => {
         inputTextRef.current = name;
         onChange({ id: undefined, name });
