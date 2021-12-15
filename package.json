@@ -5,7 +5,7 @@
     "name": "GISCE-TI, S.L",
     "url": "https://gisce.net/"
   },
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "build/index.js",
   "module": "build/index.esm.js",
   "files": [
