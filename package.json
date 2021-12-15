@@ -5,6 +5,21 @@
     "name": "GISCE-TI, S.L",
     "url": "https://gisce.net/"
   },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gisce/react-formiga-components/"
+  },
+  "keywords": [
+    "react",
+    "form",
+    "antd",
+    "formiga",
+    "components",
+    "ui",
+    "storybook",
+    "library"
+  ],
   "version": "1.0.2",
   "main": "build/index.js",
   "module": "build/index.esm.js",
