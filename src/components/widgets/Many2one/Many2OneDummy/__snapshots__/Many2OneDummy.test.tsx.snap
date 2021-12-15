@@ -13,7 +13,6 @@ exports[`Many2OneDummy Renders Basic story 1`] = `
       >
         <input
           class="ant-input"
-          style="color: black;"
           type="text"
           value=""
         />
@@ -98,7 +97,6 @@ exports[`Many2OneDummy Renders ButtonsDisabled story 1`] = `
       >
         <input
           class="ant-input"
-          style="color: black;"
           type="text"
           value=""
         />
@@ -206,7 +204,6 @@ exports[`Many2OneDummy Renders NoButtons story 1`] = `
       >
         <input
           class="ant-input c0"
-          style="color: black;"
           type="text"
           value="Customer # 1"
         />
@@ -230,7 +227,6 @@ exports[`Many2OneDummy Renders ReadOnly story 1`] = `
         <input
           class="ant-input ant-input-disabled"
           disabled=""
-          style="color: black;"
           type="text"
           value="Customer # 1"
         />
@@ -331,7 +327,6 @@ exports[`Many2OneDummy Renders Required story 1`] = `
       >
         <input
           class="ant-input c0"
-          style="color: black;"
           type="text"
           value=""
         />
@@ -417,7 +412,6 @@ exports[`Many2OneDummy Renders Searching story 1`] = `
         <input
           class="ant-input ant-input-disabled"
           disabled=""
-          style="color: black;"
           type="text"
           value="Customer # 1"
         />
@@ -526,7 +520,6 @@ exports[`Many2OneDummy Renders SearchingRequired story 1`] = `
         <input
           class="ant-input ant-input-disabled c0"
           disabled=""
-          style="color: black;"
           type="text"
           value="Customer # 1"
         />
@@ -625,7 +618,6 @@ exports[`Many2OneDummy Renders WithSuffixLoading story 1`] = `
       >
         <span
           class="ant-input-affix-wrapper"
-          style="color: black;"
         >
           <input
             class="ant-input"
@@ -756,7 +748,6 @@ exports[`Many2OneDummy Renders WithSuffixWithOptions story 1`] = `
       >
         <span
           class="ant-input-affix-wrapper"
-          style="color: black;"
         >
           <input
             class="ant-input"
