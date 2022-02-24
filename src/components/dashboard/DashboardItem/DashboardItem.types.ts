@@ -1,4 +1,6 @@
 export type DashboardItemProps = {
-  onFieldsChange?: () => void;
-  children: React.ReactNode;
+  title: string;
+  id: string;
+  children?: React.ReactNode;
+  parms: any;
 };

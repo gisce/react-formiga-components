@@ -1,4 +1,3 @@
 export type DashboardProps = {
-  onFieldsChange?: () => void;
-  children: React.ReactNode;
+  children?: React.ReactElement<any>[] | any;
 };
