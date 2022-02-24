@@ -1,6 +1,8 @@
 import React from "react";
 import { DashboardProps } from "./Dashboard.types";
 import { WidthProvider, Responsive } from "react-grid-layout";
+import "react-resizable/css/styles.css";
+import "react-grid-layout/css/styles.css";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 

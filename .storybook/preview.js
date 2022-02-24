@@ -1,6 +1,4 @@
 import "antd/dist/antd.css";
-import "react-resizable/css/styles.css";
-import "react-grid-layout/css/styles.css";
 
 window.global = window;
 window.Buffer = window.Buffer || require("buffer").Buffer;
