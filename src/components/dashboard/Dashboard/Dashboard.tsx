@@ -17,7 +17,11 @@ export const Dashboard = (props: DashboardProps) => {
         | React.ReactPortal
     ) => {
       const { parms, id } = (child as any).props;
-      return <div key={id} data-grid={parms}>{child}</div>;
+      return (
+        <div key={id} data-grid={parms}>
+          {child}
+        </div>
+      );
     }
   );
 
@@ -27,7 +31,7 @@ export const Dashboard = (props: DashboardProps) => {
       cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
       rowHeight={30}
       onLayoutChange={(layout, layouts) => {
-        console.log();
+        // console.log();
       }}
     >
       {items}
