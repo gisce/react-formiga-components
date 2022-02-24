@@ -48,8 +48,8 @@
     "validator": "^13.7.0"
   },
   "peerDependencies": {
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   },
   "publishConfig": {
     "access": "public"
@@ -81,8 +81,8 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.4.3",
     "jest-styled-components": "^7.0.8",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.60.2",
     "rollup-plugin-peer-deps-external": "^2.2.4",

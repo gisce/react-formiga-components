@@ -38,11 +38,3 @@ export const Dashboard = (props: DashboardProps) => {
     </ResponsiveReactGridLayout>
   );
 };
-
-export const DashboardContainer = ({
-  children,
-  title,
-}: {
-  children: any;
-  title: string;
-}) => {};
