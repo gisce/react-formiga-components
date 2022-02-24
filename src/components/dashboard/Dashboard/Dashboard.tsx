@@ -4,9 +4,6 @@ import { WidthProvider, Responsive } from "react-grid-layout";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
-import "react-resizable/css/styles.css";
-import "react-grid-layout/css/styles.css";
-
 export const Dashboard = (props: DashboardProps) => {
   const { children = [] } = props;
 
