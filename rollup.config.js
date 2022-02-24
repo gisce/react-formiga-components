@@ -4,6 +4,7 @@ import commonjs from "@rollup/plugin-commonjs";
 import typescript from "rollup-plugin-typescript2";
 import { terser } from "rollup-plugin-terser";
 import json from "@rollup/plugin-json";
+import css from "rollup-plugin-import-css";
 
 const packageJson = require("./package.json");
 
@@ -22,6 +23,7 @@ export default {
     },
   ],
   plugins: [
+    css(),
     peerDepsExternal(),
     resolve({ preferBuiltins: true }),
     commonjs(),
