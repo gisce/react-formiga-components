@@ -23,8 +23,10 @@ export default {
     },
   ],
   plugins: [
+    peerDepsExternal({
+      includeDependencies: true,
+    }),
     css(),
-    peerDepsExternal(),
     resolve({ preferBuiltins: true }),
     commonjs(),
     json(),
