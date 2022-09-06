@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col } from "antd";
 import { IntegerInput } from "../index";
-import { ValueOnChange } from "components";
+import { ValueOnChange } from "@/components";
 
 export const IntegerSearch = (props: ValueOnChange<[number, number]>) => {
   const { value = [0, 0], onChange } = props;

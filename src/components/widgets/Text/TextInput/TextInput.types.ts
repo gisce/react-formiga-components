@@ -1,4 +1,4 @@
-import { BaseFieldProps } from "components/form/Field";
+import { BaseFieldProps } from "@/components/form/Field";
 
 export type TextInputProps = BaseFieldProps<string> & {
   height?: number;

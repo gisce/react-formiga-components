@@ -1,7 +1,7 @@
 import React from "react";
 import { Checkbox as AntCheckbox } from "antd";
 import { CheckboxContainer, RequiredCheckbox } from "./BooleanInput.styles";
-import { BaseFieldProps } from "components/form";
+import { BaseFieldProps } from "@/components/form";
 
 export const BooleanInput = (props: BaseFieldProps<boolean>) => {
   const { required, readOnly, value, onChange, ...restProps } = props;
@@ -16,7 +16,7 @@ export const BooleanInput = (props: BaseFieldProps<boolean>) => {
         data-testid="checkbox_input"
         disabled={readOnly}
         checked={value}
-        onChange={(event: { target: { checked: boolean; }; }) => {
+        onChange={(event: { target: { checked: boolean } }) => {
           onChange(event.target.checked);
         }}
       />

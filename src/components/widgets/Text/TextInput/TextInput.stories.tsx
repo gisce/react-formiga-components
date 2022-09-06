@@ -2,7 +2,7 @@ import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 import { TextInput } from ".";
-import { BaseFieldArgTypes } from "components/form/Field/BaseField.argTypes";
+import { BaseFieldArgTypes } from "@/components/form/Field/BaseField.argTypes";
 
 export default {
   title: "Components/Widgets/Text/TextInput",

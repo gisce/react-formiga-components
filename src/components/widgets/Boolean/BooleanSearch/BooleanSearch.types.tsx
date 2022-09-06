@@ -1,4 +1,4 @@
-import { LocaleType } from "context/LocaleContext";
+import { LocaleType } from "@/context/LocaleContext";
 
 export type BooleanSearchProps = LocaleType & {
   onChange?: (value: any) => void;

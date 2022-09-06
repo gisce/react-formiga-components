@@ -1,4 +1,4 @@
-import { BaseFieldProps } from "index";
+import { BaseFieldProps } from "@/index";
 import React from "react";
 import isEmail from "validator/lib/isEmail";
 import { LinkInput } from "../LinkInput";

@@ -17,16 +17,12 @@ module.exports = {
       ...config.resolve,
       alias: {
         ...config.resolve.alias,
+        "@": path.resolve(__dirname, "../src/"),
         path: require.resolve("path-browserify"),
         crypto: require.resolve("crypto-browserify"),
         stream: require.resolve("stream-browserify"),
       },
     };
-
-    config.resolve.modules = [
-      ...(config.resolve.modules || []),
-      path.resolve(__dirname, "../src"),
-    ];
 
     return config;
   },

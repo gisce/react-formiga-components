@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 import { SelectionInput } from "./SelectionInput";
-import { BaseFieldArgTypes } from "components/form/Field/BaseField.argTypes";
+import { BaseFieldArgTypes } from "@/components/form/Field/BaseField.argTypes";
 
 const selectionValues = {
   "1": "One",

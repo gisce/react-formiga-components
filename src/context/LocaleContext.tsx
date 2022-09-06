@@ -1,7 +1,7 @@
 import React from "react";
-import ca_ES from "locales/ca_ES.json";
-import en_US from "locales/en_US.json";
-import es_ES from "locales/es_ES.json";
+import ca_ES from "@/locales/ca_ES.json";
+import en_US from "@/locales/en_US.json";
+import es_ES from "@/locales/es_ES.json";
 
 const localeStrings: any = {
   ca_ES,

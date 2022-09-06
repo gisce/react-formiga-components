@@ -2,7 +2,7 @@ import React from "react";
 import { render } from "@testing-library/react";
 import { composeStories } from "@storybook/testing-react";
 import * as stories from "./DateTimeSearch.stories";
-import matchMediaMock from "mocks/matchMedia.mock";
+import matchMediaMock from "@/mocks/matchMedia.mock";
 
 describe("DateTimeSearch", () => {
   beforeAll(() => {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 import { IntegerInput } from "./IntegerInput";
-import { BaseFieldArgTypes } from "components/form/Field/BaseField.argTypes";
+import { BaseFieldArgTypes } from "@/components/form/Field/BaseField.argTypes";
 
 export default {
   title: "Components/Widgets/Integer/IntegerInput",

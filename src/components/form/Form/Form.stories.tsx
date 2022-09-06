@@ -13,7 +13,7 @@ import {
   IntegerInput,
   FloatInput,
   SelectionInput,
-} from "index";
+} from "@/index";
 
 export default {
   title: "Components/Form/Form",

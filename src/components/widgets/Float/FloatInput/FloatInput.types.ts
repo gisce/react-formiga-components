@@ -1,4 +1,4 @@
-import { BaseFieldProps } from "components/form/Field";
+import { BaseFieldProps } from "@/components/form/Field";
 
 export type BaseFloatProps = {
   decimalDigits: number;

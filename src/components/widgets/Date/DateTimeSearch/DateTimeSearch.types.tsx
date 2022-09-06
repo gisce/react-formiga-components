@@ -1,4 +1,4 @@
-import { ValueOnChange } from "components";
+import { ValueOnChange } from "@/components";
 
 export type DateTimeSearchProps = ValueOnChange<
   [[string, string], [string, string]]

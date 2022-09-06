@@ -9,7 +9,7 @@ import {
   Field,
   FileInput,
   Form,
-} from "index";
+} from "@/index";
 
 export default {
   title: "Components/Dashboard/Dashboard",

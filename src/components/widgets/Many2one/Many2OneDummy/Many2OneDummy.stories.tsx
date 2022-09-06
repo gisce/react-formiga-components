@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 
 import { Many2OneDummy } from "./Many2OneDummy";
-import { BaseFieldArgTypes } from "components/form/Field/BaseField.argTypes";
+import { BaseFieldArgTypes } from "@/components/form/Field/BaseField.argTypes";
 import { Many2oneSuffix } from "../Many2OneSuffix/Many2OneSuffix";
 import { Menu } from "antd";
 import {

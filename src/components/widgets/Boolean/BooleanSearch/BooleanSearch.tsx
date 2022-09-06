@@ -5,7 +5,7 @@ import {
   LocaleContext,
   LocaleContextType,
   tForLangContext,
-} from "context/LocaleContext";
+} from "@/context/LocaleContext";
 
 export const BooleanSearch = (props: BooleanSearchProps) => {
   const { locale } = props;

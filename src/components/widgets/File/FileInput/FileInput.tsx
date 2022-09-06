@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from "react";
 import { Row, Col, Input, Space } from "antd";
-import { Button } from "index";
+import { Button } from "@/index";
 
 import {
   getFilesize,
@@ -8,7 +8,7 @@ import {
   openBase64InNewTab,
   toBase64,
   downloadFile,
-} from "helpers/fileHelper";
+} from "@/helpers/fileHelper";
 
 import {
   FolderOpenOutlined,
@@ -20,7 +20,7 @@ import {
   LocaleContext,
   LocaleContextType,
   tForLangContext,
-} from "context/LocaleContext";
+} from "@/context/LocaleContext";
 import { FileInputProps } from "./FileInput.types";
 import { RequiredCharInput } from "./FileInput.styles";
 

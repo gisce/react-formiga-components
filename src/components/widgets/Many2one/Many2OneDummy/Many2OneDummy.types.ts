@@ -1,4 +1,4 @@
-import { BaseFieldProps } from "components/form/Field";
+import { BaseFieldProps } from "@/components/form/Field";
 import React from "react";
 
 export type Many2OneDummyProps = BaseFieldProps<string> & {

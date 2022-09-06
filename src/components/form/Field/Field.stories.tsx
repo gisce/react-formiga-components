@@ -1,8 +1,8 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
-import { CharInput } from "components/widgets/Char/CharInput";
-import { Field, FieldProps } from "components/form/Field";
+import { CharInput } from "@/components/widgets/Char/CharInput";
+import { Field, FieldProps } from "@/components/form/Field";
 import { BaseFieldArgTypes } from "./BaseField.argTypes";
 import { Form } from "antd";
 

@@ -1,4 +1,4 @@
-import { LocaleType } from "context/LocaleContext";
+import { LocaleType } from "@/context/LocaleContext";
 
 export type LabelOptions = {
   layout?: "horizontal" | "vertical";

@@ -1,4 +1,4 @@
-import { BaseFieldProps } from "index";
+import { BaseFieldProps } from "@/index";
 
 export type LinkInputProps = BaseFieldProps<string> & {
   valueValidator?: (value?: string) => boolean;

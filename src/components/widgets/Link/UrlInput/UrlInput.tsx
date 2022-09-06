@@ -1,7 +1,7 @@
 import React from "react";
 import isURL from "validator/lib/isURL";
 import { LinkInput } from "../LinkInput";
-import { BaseFieldProps } from "index";
+import { BaseFieldProps } from "@/index";
 
 export const UrlInput = (props: BaseFieldProps<string>) => {
   return (

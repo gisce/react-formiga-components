@@ -1,11 +1,17 @@
 {
+  "extends": "./tsconfig.paths.json",
   "compilerOptions": {
     "rootDir": "src",
     "declaration": true,
     "declarationDir": "build",
     "module": "esnext",
     "target": "es5",
-    "lib": ["es6", "dom", "es2016", "es2017"],
+    "lib": [
+      "es6",
+      "dom",
+      "es2016",
+      "es2017"
+    ],
     "sourceMap": true,
     "jsx": "react",
     "moduleResolution": "node",
@@ -16,9 +22,11 @@
     "skipLibCheck": true,
     "strictBindCallApply": true
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*"
+  ],
   "exclude": [
     "node_modules",
-    "build",  
+    "build",
   ]
 }

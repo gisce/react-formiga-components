@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 import { BooleanSearch } from "./BooleanSearch";
-import { LocaleArgTypes } from "components/form/Field/BaseField.argTypes";
+import { LocaleArgTypes } from "@/components/form/Field/BaseField.argTypes";
 
 export default {
   title: "Components/Widgets/Boolean/BooleanSearch",

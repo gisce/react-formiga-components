@@ -11,12 +11,12 @@ import {
   SearchOutlined,
   ApiOutlined,
 } from "@ant-design/icons";
-import { Button } from "components/ui/Button";
+import { Button } from "@/components/ui/Button";
 import {
   LocaleContext,
   LocaleContextType,
   tForLangContext,
-} from "context/LocaleContext";
+} from "@/context/LocaleContext";
 import { Container, Separator, Title, Wrapper } from "./One2ManyTopBar.styles";
 import { One2manyTopBarProps } from "./One2ManyTopBar.types";
 
