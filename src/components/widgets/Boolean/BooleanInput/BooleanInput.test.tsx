@@ -25,6 +25,7 @@ describe("BooleanInput", () => {
   }: Partial<BaseFieldProps<boolean>>) =>
     render(
       <BooleanInput
+        name="test_field"
         required={required}
         readOnly={readOnly}
         value={value}

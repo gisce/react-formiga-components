@@ -27,7 +27,7 @@ export type ValidatorOptions = {
 
 export type BaseFieldProps<ValueType> = LocaleType &
   ValueOnChange<ValueType> & {
-    id: string;
+    name: string;
     readOnly?: boolean;
     required?: boolean;
     tabIndex?: number;
