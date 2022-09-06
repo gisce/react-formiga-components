@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { parseFloatToString, parseStringToFloat } from "./FloatTime.helper";
-import { BaseFieldProps } from "index";
+import { BaseFieldProps } from "@/index";
 import { RequiredInput, Input } from "./FloatTimeInput.styles";
 
 export const FloatTimeInput = (props: BaseFieldProps<number>) => {

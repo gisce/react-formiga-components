@@ -1,9 +1,9 @@
 import React from "react";
-import { BaseFieldProps } from "components/form/Field";
+import { BaseFieldProps } from "@/components/form/Field";
 import {
   StyledRequiredInputNumber,
   StyledInputNumber,
-} from "components/widgets/Float/FloatInput/FloatInput.styles";
+} from "@/components/widgets/Float/FloatInput/FloatInput.styles";
 
 export const IntegerInput = (props: BaseFieldProps<number>) => {
   const { readOnly, required, ...restProps } = props;

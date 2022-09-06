@@ -3,12 +3,12 @@ import { Col, Input, Row } from "antd";
 import { RequiredMany2OneDummy } from "./Many2OneDummy.styles";
 import { SearchOutlined, FolderOpenOutlined } from "@ant-design/icons";
 import { Many2OneDummyProps } from "./Many2OneDummy.types";
-import { Button } from "components/ui/Button";
+import { Button } from "@/components/ui/Button";
 import {
   LocaleContext,
   LocaleContextType,
   tForLangContext,
-} from "context/LocaleContext";
+} from "@/context/LocaleContext";
 
 export const Many2OneDummy = (props: Many2OneDummyProps) => {
   const {

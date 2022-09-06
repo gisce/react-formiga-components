@@ -1,18 +1,18 @@
 import React, { useContext, useRef } from "react";
 import { Row, Space } from "antd";
-import { BaseFieldProps, Button } from "index";
+import { BaseFieldProps, Button } from "@/index";
 import {
   FolderOpenOutlined,
   DownloadOutlined,
   ClearOutlined,
 } from "@ant-design/icons";
 
-import { downloadFile, toBase64 } from "helpers/fileHelper";
+import { downloadFile, toBase64 } from "@/helpers/fileHelper";
 import {
   LocaleContext,
   LocaleContextType,
   tForLangContext,
-} from "context/LocaleContext";
+} from "@/context/LocaleContext";
 
 export const ImageInput = (props: BaseFieldProps<string>) => {
   const { readOnly, value, onChange, locale } = props;

@@ -1,6 +1,4 @@
-import {
-  LocaleType,
-} from "context/LocaleContext";
+import { LocaleType } from "@/context/LocaleContext";
 
 export type One2manyTopBarProps = LocaleType & {
   title: string;

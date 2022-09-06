@@ -2,12 +2,12 @@ import React, { useContext } from "react";
 import { Col } from "antd";
 import { Rule } from "antd/lib/form";
 
-import { Label } from "components/ui/Label/Label";
+import { Label } from "@/components/ui/Label/Label";
 import {
   LocaleContext,
   LocaleContextType,
   tForLangContext,
-} from "context/LocaleContext";
+} from "@/context/LocaleContext";
 import { FieldProps } from "./Field.types";
 import {
   FormItemStyled,

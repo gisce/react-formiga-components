@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 
 import { Many2OneInput } from "./Many2OneInput";
-import { BaseFieldArgTypes } from "components/form/Field/BaseField.argTypes";
+import { BaseFieldArgTypes } from "@/components/form/Field/BaseField.argTypes";
 import { ItemPair } from "./Many2OneInput.types";
 import { Modal } from "antd";
 const { info } = Modal;

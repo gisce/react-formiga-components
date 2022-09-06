@@ -1,5 +1,5 @@
 // TODO: This test fails randomly with jest. The reason is unknown.
-import { getFilesize, getMimeType } from "helpers/fileHelper";
+import { getFilesize, getMimeType } from "@/helpers/fileHelper";
 import { fileTypeFromBuffer } from "file-type-buffer-browser";
 
 let mFileTypeFromBuffer = {};
