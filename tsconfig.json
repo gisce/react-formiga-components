@@ -2,8 +2,6 @@
   "extends": "./tsconfig.paths.json",
   "compilerOptions": {
     "rootDir": "src",
-    "declaration": true,
-    "declarationDir": "build",
     "module": "esnext",
     "target": "es5",
     "lib": [
@@ -13,11 +11,13 @@
       "es2017"
     ],
     "sourceMap": true,
+    "noEmit": true,
+    "isolatedModules": true,
     "jsx": "react",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
+    "esModuleInterop": false,
     "baseUrl": "./src",
     "skipLibCheck": true,
     "strictBindCallApply": true

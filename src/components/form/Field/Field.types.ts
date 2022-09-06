@@ -27,8 +27,11 @@ export type ValidatorOptions = {
 
 export type BaseFieldProps<ValueType> = LocaleType &
   ValueOnChange<ValueType> & {
+    id: string;
     readOnly?: boolean;
     required?: boolean;
+    tabIndex?: number;
+    onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
   };
 
 export type ValueOnChange<ValueType> = {
