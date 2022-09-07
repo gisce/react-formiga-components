@@ -1,11 +1,12 @@
 import { Col, Input, Row } from "antd";
-import React from "react";
+import React, { useState, useCallback } from "react";
 import { TranslationOutlined } from "@ant-design/icons";
 import { tForLang } from "@/context/LocaleContext";
 import { ThemeConfig } from "@/theme";
 import { TranslatableInputProps } from "./TranslatableInput.types";
 import { ButtonWithTooltip } from "@/components/ui/Button/ButtonWithTooltip";
 import { TranslatableModal } from "../TranslatableModal";
+import { showInfoDialog } from "@/components/ui/Dialog";
 
 export const TranslatableInput = (props: TranslatableInputProps) => {
   const {
@@ -17,15 +18,15 @@ export const TranslatableInput = (props: TranslatableInputProps) => {
     value,
     onChange,
     locale,
-    modalVisible,
     modalOpts,
-    onClick,
     showButton,
+    mustSaveBeforeTranslate,
     ...rest
   } = props;
 
   const requiredClass =
     required && !readOnly ? ThemeConfig.requiredClass : undefined;
+  const [modalVisible, setModalVisible] = useState(false);
 
   const inputProps = {
     value,
@@ -38,6 +39,25 @@ export const TranslatableInput = (props: TranslatableInputProps) => {
     tabIndex,
   };
 
+  const buttonOnClick = useCallback(() => {
+    if (mustSaveBeforeTranslate) {
+      showInfoDialog(tForLang("saveBeforeTranslate", locale));
+    } else {
+      showInfoDialog(tForLang("enterTextBeforeTranslate", locale));
+    }
+  }, [locale, mustSaveBeforeTranslate]);
+
+  const onClick = useCallback(() => {
+    if (mustSaveBeforeTranslate) {
+      showInfoDialog(tForLang("saveBeforeTranslate", locale));
+      return;
+    }
+
+    if (!modalVisible) {
+      setModalVisible(true);
+    }
+  }, [locale, mustSaveBeforeTranslate, modalVisible, setModalVisible]);
+
   if (showButton) {
     return (
       <Row gutter={8} wrap={false}>
@@ -48,7 +68,7 @@ export const TranslatableInput = (props: TranslatableInputProps) => {
           <ButtonWithTooltip
             tooltip={tForLang("translate", locale)}
             icon={<TranslationOutlined />}
-            onClick={onClick}
+            onClick={buttonOnClick}
           >
             {tForLang("translate", locale)}
           </ButtonWithTooltip>
@@ -65,6 +85,8 @@ export const TranslatableInput = (props: TranslatableInputProps) => {
       <TranslatableModal
         name={name}
         visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        onSucceed={() => setModalVisible(false)}
         {...modalOpts}
         {...rest}
       />

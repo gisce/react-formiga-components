@@ -71,5 +71,10 @@
   "select": "Selecciona",
   "createNew": "Crear nuevo item",
   "searchExisting": "Buscar item existente",
-  "toggleViewMode": "Cambiar vista"
+  "toggleViewMode": "Cambiar vista",
+  "translate": "Traducir",
+  "enterTextBeforeTranslate":
+    "Introduce algun texto en el campo antes de añadir traducciones",
+  "saveBeforeTranslate":
+    "Tienes que guardar el registro antes de añadir las traducciones"
 }

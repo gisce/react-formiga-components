@@ -7,9 +7,7 @@ export type TranslatableModalBaseProps = {
 
 export type TranslatableDataMethods = {
   onGetLangs: () => Promise<Lang[]>;
-  onClose: () => void;
   onUpdateValues: (opts: OnUpdateValuesOpts) => Promise<void>;
-  onSucceed: () => void;
   onError: (err: any) => void;
   onGetValuesForLangs: (
     opts: OnGetValuesForLangsOpts
@@ -19,6 +17,8 @@ export type TranslatableDataMethods = {
 export type TranslatableModalProps = LocaleType &
   TranslatableModalBaseProps &
   TranslatableDataMethods & {
+    onClose: () => void;
+    onSucceed: () => void;
     visible: boolean;
     name: string;
   };

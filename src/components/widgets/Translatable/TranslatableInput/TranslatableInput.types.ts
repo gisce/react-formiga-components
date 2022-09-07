@@ -6,8 +6,7 @@ import {
 
 export type TranslatableInputProps = BaseFieldProps<string> &
   TranslatableDataMethods & {
-    showButton: boolean;
-    modalVisible: boolean;
+    showButton?: boolean;
     modalOpts: TranslatableModalBaseProps;
-    onClick: () => void;
+    mustSaveBeforeTranslate?: boolean;
   };
