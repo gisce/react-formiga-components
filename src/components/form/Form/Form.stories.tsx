@@ -25,7 +25,7 @@ export default {
 } as ComponentMeta<typeof Form>;
 
 const Template: ComponentStory<typeof Form> = (args) => {
-  return <Form {...args} />;
+  return <Form {...args} initialValues={{ name: "Hohn" }} />;
 };
 
 const formItems = [
@@ -183,7 +183,11 @@ function FieldWithWidget({
   );
 }
 
-export const Basic = Template.bind({});
+export const Basic = Template.bind({
+  initialValues: {
+    name: "John",
+  },
+});
 Basic.args = {
   children: getFormItems(),
 };
