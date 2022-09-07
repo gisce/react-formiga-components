@@ -20,7 +20,8 @@ export const TranslatableInput = (props: TranslatableInputProps) => {
     locale,
     modalOpts,
     showButton,
-    mustSaveBeforeTranslate,
+    onMustSave,
+    onSucceed,
     ...rest
   } = props;
 
@@ -40,15 +41,15 @@ export const TranslatableInput = (props: TranslatableInputProps) => {
   };
 
   const buttonOnClick = useCallback(() => {
-    if (mustSaveBeforeTranslate) {
+    if (onMustSave?.()) {
       showInfoDialog(tForLang("saveBeforeTranslate", locale));
     } else {
       showInfoDialog(tForLang("enterTextBeforeTranslate", locale));
     }
-  }, [locale, mustSaveBeforeTranslate]);
+  }, [locale, onMustSave]);
 
   const onClick = useCallback(() => {
-    if (mustSaveBeforeTranslate) {
+    if (onMustSave?.()) {
       showInfoDialog(tForLang("saveBeforeTranslate", locale));
       return;
     }
@@ -56,7 +57,7 @@ export const TranslatableInput = (props: TranslatableInputProps) => {
     if (!modalVisible) {
       setModalVisible(true);
     }
-  }, [locale, mustSaveBeforeTranslate, modalVisible, setModalVisible]);
+  }, [locale, onMustSave, modalVisible, setModalVisible]);
 
   if (showButton) {
     return (
@@ -77,18 +78,24 @@ export const TranslatableInput = (props: TranslatableInputProps) => {
     );
   }
 
+  const onSucceedCallback = useCallback(() => {
+    onSucceed?.();
+    setModalVisible(false);
+  }, [onSucceed]);
+
   return (
     <>
       <div onClick={onClick}>
         <Input {...inputProps} disabled={true} style={{ cursor: "pointer" }} />
       </div>
       <TranslatableModal
+        locale={locale}
         name={name}
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
-        onSucceed={() => setModalVisible(false)}
-        {...modalOpts}
+        onSucceed={onSucceedCallback}
         {...rest}
+        {...modalOpts}
       />
     </>
   );

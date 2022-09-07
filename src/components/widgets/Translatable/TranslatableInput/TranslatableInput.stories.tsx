@@ -73,6 +73,7 @@ export const Default: ComponentStory<typeof TranslatableInput> = (args) => {
           ca_ES: "Text traduït",
         };
       }}
+      onSucceed={() => {}}
       onError={(error) => {
         alert(JSON.stringify(error));
       }}

@@ -12,23 +12,24 @@ export type TranslatableDataMethods = {
   onGetValuesForLangs: (
     opts: OnGetValuesForLangsOpts
   ) => Promise<ValuesForLangs>;
+  onSucceed?: () => void;
 };
 
 export type TranslatableModalProps = LocaleType &
-  TranslatableModalBaseProps &
   TranslatableDataMethods & {
     onClose: () => void;
-    onSucceed: () => void;
     visible: boolean;
     name: string;
+    id?: number;
+    model: string;
   };
 
-type OnGetValuesForLangsOpts = TranslatableModalBaseProps & {
+export type OnGetValuesForLangsOpts = TranslatableModalBaseProps & {
   name: string;
   langs: Lang[];
 };
 
-type OnUpdateValuesOpts = TranslatableModalBaseProps & {
+export type OnUpdateValuesOpts = TranslatableModalBaseProps & {
   name: string;
   langCode: string;
   values: any;
