@@ -26,7 +26,8 @@ export default defineConfig({
     terser(),
   ],
   build: {
-    sourcemap: "inline",
+    emptyOutDir: true,
+    sourcemap: true,
     lib: {
       entry: path.resolve(__dirname, "src/index.ts"),
       name: "react-formiga-components",

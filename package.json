@@ -35,8 +35,12 @@
     "src"
   ],
   "scripts": {
-    "clean": "rimraf dist/",
-    "build": "npm run clean && tsc && vite build",
+    "preminor": "npm version preminor --preid rc",
+    "prerelease": "npm version prerelease --preid rc",
+    "prepatch": "npm version prepatch --preid rc",
+    "premajor": "npm version premajor --preid rc",
+    "start": "while :; do vite build --watch --force; done",
+    "build": "vite build",
     "prebuild:storybook": "npm run test:generate-output",
     "build:storybook": "build-storybook -c .storybook -o storybook-static/",
     "storybook": "start-storybook -p 6006",
