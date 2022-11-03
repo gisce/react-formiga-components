@@ -46,8 +46,7 @@
     "storybook": "start-storybook -p 6006",
     "test": "jest",
     "test:generate-output": "jest --json --outputFile=.jest-test-results.json",
-    "test:watch": "jest --watch",
-    "prepublishOnly": "npm run test && npm run build"
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "antd": "^4.17.2",
