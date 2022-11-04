@@ -1,5 +1,10 @@
-import { Transfer, Tree } from "antd";
-import type { TransferDirection, TransferItem } from "antd/es/transfer";
+import { Locale, tForLang } from "@/context";
+import { Button, Transfer, Tree } from "antd";
+import type {
+  TransferDirection,
+  TransferItem,
+  TransferListProps,
+} from "antd/es/transfer";
 import type { DataNode } from "antd/es/tree";
 import React from "react";
 
@@ -11,6 +16,7 @@ export type TreeTransferProps = {
     direction: TransferDirection,
     moveKeys: string[]
   ) => void;
+  locale: Locale;
 };
 
 // Customize Table Transfer
@@ -29,9 +35,10 @@ const generateTree = (
     children: generateTree(children, checkedKeys),
   }));
 
-export const ExportModalTransfer = ({
+export const EMTransfer = ({
   dataSource,
   targetKeys,
+  locale,
   ...restProps
 }: TreeTransferProps) => {
   const transferDataSource: TransferItem[] = [];
@@ -50,7 +57,11 @@ export const ExportModalTransfer = ({
       dataSource={transferDataSource}
       className="tree-transfer"
       render={(item) => item.title!}
-      showSelectAll={false}
+      showSelectAll={true}
+      titles={[
+        tForLang("availableFields", locale),
+        tForLang("fieldsToExport", locale),
+      ]}
     >
       {({ direction, onItemSelect, selectedKeys }) => {
         if (direction === "left") {

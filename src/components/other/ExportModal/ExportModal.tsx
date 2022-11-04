@@ -1,4 +1,4 @@
-import { Divider, Modal, Space } from "antd";
+import { Divider, Modal } from "antd";
 import React, { useCallback, useState } from "react";
 import {
   ExportModalProps,
@@ -10,6 +10,9 @@ import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { ModalBottomBar } from "@/components/ui/ModalBottomBar/ModalBottomBar";
 import { EMExportTypeSelector } from "./EMExportTypeSelector";
 import { EMTotalRegSelector } from "./EMTotalRegSelector";
+import { EMTransfer } from "./EMTransfer";
+import { EMSeparator } from "./EMSeparator";
+import { DataNode } from "antd/lib/tree";
 
 const { error } = Modal;
 
@@ -29,6 +32,11 @@ export const ExportModal = (props: ExportModalProps) => {
   const [registersAmount, setRegistersAmount] = useState<ExportRegistersAmount>(
     selectedRegistersToExport ? "selected" : "all"
   );
+
+  const [targetKeys, setTargetKeys] = useState<string[]>([]);
+  const onChange = (keys: string[]) => {
+    setTargetKeys(keys);
+  };
 
   const onConfirm = useCallback(async () => {
     setLoading(true);
@@ -59,20 +67,30 @@ export const ExportModal = (props: ExportModalProps) => {
       footer={null}
       destroyOnClose
     >
+      <EMTransfer
+        dataSource={treeData}
+        targetKeys={targetKeys}
+        onChange={onChange}
+        locale={locale}
+      />
+      <EMSeparator />
       <EMExportTypeSelector
         locale={locale}
         value={exportType}
         onChange={setExportType}
       />
-      <div style={{ padding: "0.5em" }} />
+
       {selectedRegistersToExport && (
-        <EMTotalRegSelector
-          locale={locale}
-          totalRegisters={totalRegisters}
-          selectedRegistersToExport={selectedRegistersToExport}
-          value={registersAmount}
-          onChange={setRegistersAmount}
-        />
+        <>
+          <EMSeparator />
+          <EMTotalRegSelector
+            locale={locale}
+            totalRegisters={totalRegisters}
+            selectedRegistersToExport={selectedRegistersToExport}
+            value={registersAmount}
+            onChange={setRegistersAmount}
+          />
+        </>
       )}
       <Divider />
       <ModalBottomBar
@@ -90,3 +108,16 @@ export const ExportModal = (props: ExportModalProps) => {
     </Modal>
   );
 };
+
+const treeData: DataNode[] = [
+  { key: "0-0", title: "Contrato" },
+  {
+    key: "CUPS",
+    title: "CUPS",
+    children: [
+      { key: "0-1-0", title: "CUPS/Código" },
+      { key: "0-1-1", title: "CUPS/Contador" },
+    ],
+  },
+  { key: "0-2", title: "Dirección" },
+];
