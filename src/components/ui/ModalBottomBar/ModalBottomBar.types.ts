@@ -5,4 +5,5 @@ export type ModalBottomBarProps = {
   onConfirm: () => void;
   locale: Locale;
   loading: boolean;
+  left?: React.ReactNode;
 };

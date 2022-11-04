@@ -5,7 +5,7 @@ export type ExportModalProps = {
   visible: boolean;
   onCancel: () => void;
   onSucceed: (options: ExportOptions) => Promise<void>;
-  selectedRegistersToExport: number;
+  selectedRegistersToExport?: number;
   totalRegisters: number;
   onGetFields: () => Promise<ExportField[]>;
   onGetFieldChilds: (field: string) => Promise<ExportField[]>;
@@ -16,7 +16,10 @@ export type ExportType = "csv" | "xlsx";
 export type ExportOptions = {
   exportType: ExportType;
   selectedFields: ExportField[];
+  registersAmount: ExportRegistersAmount;
 };
+
+export type ExportRegistersAmount = "all" | "selected";
 
 // fieldKey examples:
 // - cups

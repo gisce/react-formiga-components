@@ -76,5 +76,10 @@
   "enterTextBeforeTranslate": "Enter some text to the related field before adding translations",
   "saveBeforeTranslate": "You must save the record before adding translations",
   "export": "Export",
-  "saveAs": "Save as"
+  "saveAs": "Save as",
+  "exportRegisters": "{total} registers will be exported.",
+  "registersToExport": "Registers to export",
+  "registersToExportSummary": "There are <b>{selected}</b> selected registers from a total of <b>{total}</b>. How many registers do you want to export?",
+  "registersSelection": "Selected registers",
+  "registersSelectionAll": "All registers"
 }

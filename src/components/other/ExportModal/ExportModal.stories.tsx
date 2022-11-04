@@ -34,8 +34,8 @@ export const Default: ComponentStory<typeof ExportModal> = () => {
           return;
         }}
         locale="en_US"
-        totalRegisters={0}
-        selectedRegistersToExport={0}
+        totalRegisters={92348}
+        selectedRegistersToExport={32}
         onGetFieldChilds={async (field: string) => {
           return [];
         }}
