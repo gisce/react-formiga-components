@@ -39,7 +39,7 @@
     "prerelease": "npm version prerelease --preid rc",
     "prepatch": "npm version prepatch --preid rc",
     "premajor": "npm version premajor --preid rc",
-    "start": "while :; do vite build --watch --force; done",
+    "start": "while :; do vite build --watch; done",
     "build": "vite build",
     "prebuild:storybook": "npm run test:generate-output",
     "build:storybook": "build-storybook -c .storybook -o storybook-static/",

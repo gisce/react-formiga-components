@@ -37,10 +37,10 @@ export const Default: ComponentStory<typeof ExportModal> = () => {
         locale="en_US"
         totalRegisters={92348}
         selectedRegistersToExport={32}
-        onGetFieldChilds={async (field: string) => {
+        onGetFieldChilds={async (key: string, parentTitle: string) => {
           await new Promise((resolve) => setTimeout(resolve, 1000));
 
-          if (field === "cups") {
+          if (key === "cups") {
             return [
               {
                 key: "contador",
