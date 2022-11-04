@@ -31,16 +31,41 @@ export const Default: ComponentStory<typeof ExportModal> = () => {
           await new Promise((resolve) => setTimeout(resolve, 1000));
           // throw new Error("Example error");
           setVisible(false);
+          console.log(options);
           return;
         }}
         locale="en_US"
         totalRegisters={92348}
         selectedRegistersToExport={32}
         onGetFieldChilds={async (field: string) => {
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+
+          if (field === "cups") {
+            return [
+              {
+                key: "contador",
+                title: "CUPS/Contador",
+                isLeaf: true,
+              },
+              {
+                key: "code",
+                title: "CUPS/Código",
+                isLeaf: true,
+              },
+            ];
+          }
           return [];
         }}
         onGetFields={async () => {
-          return [];
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+          return [
+            { key: "contract", title: "Contrato", isLeaf: true },
+            {
+              key: "cups",
+              title: "CUPS",
+            },
+            { key: "address", title: "Dirección", isLeaf: true },
+          ];
         }}
       />
     </>

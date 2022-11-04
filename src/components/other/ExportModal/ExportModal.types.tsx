@@ -15,7 +15,7 @@ export type ExportType = "csv" | "xlsx";
 
 export type ExportOptions = {
   exportType: ExportType;
-  selectedFields: ExportField[];
+  selectedKeys: string[];
   registersAmount: ExportRegistersAmount;
 };
 
@@ -26,7 +26,8 @@ export type ExportRegistersAmount = "all" | "selected";
 // - cups/name
 // - hist_autoconsum/cups_id/aclarador
 export type ExportField = {
-  label: string;
-  hasChilds: boolean;
-  fieldKey: string;
+  title: string;
+  isLeaf?: boolean;
+  key: string;
+  children?: ExportField[];
 };

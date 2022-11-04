@@ -1,60 +1,120 @@
 import { Locale, tForLang } from "@/context";
-import { Button, Transfer, Tree } from "antd";
-import type {
-  TransferDirection,
-  TransferItem,
-  TransferListProps,
-} from "antd/es/transfer";
-import type { DataNode } from "antd/es/tree";
-import React from "react";
+import { Modal, Spin, Transfer, Tree } from "antd";
+import type { TransferItem } from "antd/es/transfer";
+import React, { useCallback, useEffect, useState } from "react";
+import { ExportField } from "./ExportModal.types";
+const { error } = Modal;
 
 export type TreeTransferProps = {
-  dataSource: DataNode[];
   targetKeys: string[];
-  onChange: (
-    targetKeys: string[],
-    direction: TransferDirection,
-    moveKeys: string[]
-  ) => void;
+  onChange: (targetKeys: string[]) => void;
   locale: Locale;
+  onGetFields: () => Promise<ExportField[]>;
+  onGetFieldChilds: (field: string) => Promise<ExportField[]>;
 };
 
-// Customize Table Transfer
 const isChecked = (
   selectedKeys: (string | number)[],
   eventKey: string | number
 ) => selectedKeys.includes(eventKey);
 
 const generateTree = (
-  treeNodes: DataNode[] = [],
+  treeNodes: ExportField[] = [],
   checkedKeys: string[] = []
-): DataNode[] =>
+): ExportField[] =>
   treeNodes.map(({ children, ...props }) => ({
     ...props,
     disabled: checkedKeys.includes(props.key as string),
     children: generateTree(children, checkedKeys),
   }));
 
-export const EMTransfer = ({
-  dataSource,
-  targetKeys,
-  locale,
-  ...restProps
-}: TreeTransferProps) => {
+const updateTreeData = (
+  list: ExportField[],
+  key: React.Key,
+  children: ExportField[]
+): ExportField[] =>
+  list.map((node) => {
+    if (node.key === key) {
+      return {
+        ...node,
+        children,
+      };
+    }
+    if (node.children) {
+      return {
+        ...node,
+        children: updateTreeData(node.children, key, children),
+      };
+    }
+    return node;
+  });
+
+const flatten = (dataSource: ExportField[]) => {
   const transferDataSource: TransferItem[] = [];
-  function flatten(list: DataNode[] = []) {
+
+  function innerFlatten(list: ExportField[] = []) {
     list.forEach((item) => {
       transferDataSource.push(item as TransferItem);
-      flatten(item.children);
+      innerFlatten(item.children);
     });
   }
-  flatten(dataSource);
+
+  innerFlatten(dataSource);
+  return transferDataSource;
+};
+
+export const EMTransfer = ({
+  targetKeys,
+  locale,
+  onGetFields,
+  onGetFieldChilds,
+  ...restProps
+}: TreeTransferProps) => {
+  const [treeData, setTreeData] = useState<ExportField[]>();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    fetchInitialItems();
+  }, []);
+
+  const fetchInitialItems = useCallback(async () => {
+    setIsLoading(true);
+
+    try {
+      const initialItems = await onGetFields();
+      setTreeData(initialItems);
+    } catch (err) {
+      error({
+        title: "Error",
+        centered: true,
+        content: <>{JSON.stringify(err, null, 2)}</>,
+      });
+    }
+
+    setIsLoading(false);
+  }, []);
+
+  const onLoadData = useCallback(
+    async ({ key }: any) => {
+      try {
+        const childs = await onGetFieldChilds(key);
+        setTreeData(updateTreeData(treeData, key, childs));
+      } catch (err) {
+        error({
+          title: "Error",
+          centered: true,
+          content: <>{JSON.stringify(err, null, 2)}</>,
+        });
+      }
+    },
+    [treeData]
+  );
 
   return (
     <Transfer
       {...restProps}
       targetKeys={targetKeys}
-      dataSource={transferDataSource}
+      dataSource={flatten(treeData)}
       className="tree-transfer"
       render={(item) => item.title!}
       showSelectAll={true}
@@ -65,15 +125,30 @@ export const EMTransfer = ({
     >
       {({ direction, onItemSelect, selectedKeys }) => {
         if (direction === "left") {
-          const checkedKeys = [...selectedKeys, ...targetKeys];
+          const checkedKeys = [...targetKeys, ...selectedKeys];
+
+          if (isLoading) {
+            return (
+              <div
+                style={{
+                  display: "flex",
+                  paddingTop: "2em",
+                  justifyContent: "center",
+                }}
+              >
+                <Spin />
+              </div>
+            );
+          }
+
           return (
             <Tree
               blockNode
               checkable
               checkStrictly
-              defaultExpandAll
               checkedKeys={checkedKeys}
-              treeData={generateTree(dataSource, targetKeys)}
+              loadData={onLoadData}
+              treeData={generateTree(treeData, targetKeys)}
               onCheck={(_, { node: { key } }) => {
                 onItemSelect(key as string, !isChecked(checkedKeys, key));
               }}

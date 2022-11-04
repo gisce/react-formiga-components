@@ -12,7 +12,6 @@ import { EMExportTypeSelector } from "./EMExportTypeSelector";
 import { EMTotalRegSelector } from "./EMTotalRegSelector";
 import { EMTransfer } from "./EMTransfer";
 import { EMSeparator } from "./EMSeparator";
-import { DataNode } from "antd/lib/tree";
 
 const { error } = Modal;
 
@@ -26,25 +25,24 @@ export const ExportModal = (props: ExportModalProps) => {
     selectedRegistersToExport,
   } = props;
   const { modalWidth } = useWindowDimensions();
-
   const [loading, setLoading] = useState(false);
   const [exportType, setExportType] = useState<ExportType>("csv");
   const [registersAmount, setRegistersAmount] = useState<ExportRegistersAmount>(
     selectedRegistersToExport ? "selected" : "all"
   );
+  const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
 
-  const [targetKeys, setTargetKeys] = useState<string[]>([]);
-  const onChange = (keys: string[]) => {
-    setTargetKeys(keys);
-  };
+  const onTransferChange = useCallback((keys: string[]) => {
+    setSelectedKeys(keys);
+  }, []);
 
   const onConfirm = useCallback(async () => {
     setLoading(true);
     try {
       await onSucceed({
-        exportType: "csv",
-        selectedFields: [],
-        registersAmount: "all",
+        exportType,
+        selectedKeys,
+        registersAmount,
       });
     } catch (err) {
       error({
@@ -68,10 +66,11 @@ export const ExportModal = (props: ExportModalProps) => {
       destroyOnClose
     >
       <EMTransfer
-        dataSource={treeData}
-        targetKeys={targetKeys}
-        onChange={onChange}
+        targetKeys={selectedKeys}
+        onChange={onTransferChange}
         locale={locale}
+        onGetFieldChilds={props.onGetFieldChilds}
+        onGetFields={props.onGetFields}
       />
       <EMSeparator />
       <EMExportTypeSelector
@@ -79,7 +78,6 @@ export const ExportModal = (props: ExportModalProps) => {
         value={exportType}
         onChange={setExportType}
       />
-
       {selectedRegistersToExport && (
         <>
           <EMSeparator />
@@ -108,16 +106,3 @@ export const ExportModal = (props: ExportModalProps) => {
     </Modal>
   );
 };
-
-const treeData: DataNode[] = [
-  { key: "0-0", title: "Contrato" },
-  {
-    key: "CUPS",
-    title: "CUPS",
-    children: [
-      { key: "0-1-0", title: "CUPS/Código" },
-      { key: "0-1-1", title: "CUPS/Contador" },
-    ],
-  },
-  { key: "0-2", title: "Dirección" },
-];
