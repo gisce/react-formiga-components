@@ -1,10 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Modal, Button, Divider, Row, Space, Spin, Col } from "antd";
-import {
-  CheckOutlined,
-  CloseOutlined,
-  LoadingOutlined,
-} from "@ant-design/icons";
+import { Modal, Divider, Row, Spin, Col } from "antd";
 import { tForLang } from "@/context/LocaleContext";
 import TextArea from "antd/lib/input/TextArea";
 import {

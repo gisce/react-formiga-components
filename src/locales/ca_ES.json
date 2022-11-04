@@ -73,8 +73,8 @@
   "searchExisting": "Buscar item existent",
   "toggleViewMode": "Canviar vista",
   "translate": "Traduïr",
-  "enterTextBeforeTranslate":
-    "Introdueix algun text al camp abans d'afegir traduccions",
-  "saveBeforeTranslate":
-    "Heu de desar el registre abans d'afegir les traduccions"
+  "enterTextBeforeTranslate": "Introdueix algun text al camp abans d'afegir traduccions",
+  "saveBeforeTranslate": "Heu de desar el registre abans d'afegir les traduccions",
+  "export": "Exportar",
+  "saveAs": "Guardar com"
 }
