@@ -10,12 +10,10 @@ export type ExportModalProps = {
   onGetFields: () => Promise<ExportField[]>;
   onGetFieldChilds: ({
     key,
-    parentKey,
-    parentTitle,
+    title,
   }: {
     key: string;
-    parentKey: string;
-    parentTitle: string;
+    title: string;
   }) => Promise<ExportField[]>;
 };
 

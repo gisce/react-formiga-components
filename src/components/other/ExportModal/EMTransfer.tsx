@@ -12,12 +12,10 @@ export type TreeTransferProps = {
   onGetFields: () => Promise<ExportField[]>;
   onGetFieldChilds: ({
     key,
-    parentKey,
-    parentTitle,
+    title,
   }: {
     key: string;
-    parentKey: string;
-    parentTitle: string;
+    title: string;
   }) => Promise<ExportField[]>;
 };
 
@@ -105,11 +103,10 @@ export const EMTransfer = ({
   const onLoadData = useCallback(
     async ({ key }: any) => {
       try {
-        const parent = treeData?.find((item) => item.key === key);
+        const item = treeData?.find((item) => item.key === key);
         const childs = await onGetFieldChilds({
           key,
-          parentKey: parent?.key,
-          parentTitle: parent?.title,
+          title: item!.title,
         });
         setTreeData(updateTreeData(treeData, key, childs));
       } catch (err) {
