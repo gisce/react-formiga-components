@@ -15,6 +15,7 @@ function parseStringToFloat(text?: string) {
       return parseFloat(text.trim());
     }
   } catch (err) {
+    console.error(err);
     return 0;
   }
 }

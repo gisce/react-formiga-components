@@ -45,6 +45,7 @@ export const ExportModal = (props: ExportModalProps) => {
         registersAmount,
       });
     } catch (err) {
+      console.error(err);
       error({
         title: "Error",
         centered: true,

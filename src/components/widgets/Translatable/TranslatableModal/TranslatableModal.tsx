@@ -50,6 +50,7 @@ export const TranslatableModal = (props: TranslatableModalProps) => {
       setLangs?.(langs);
       await getValuesForLangs(langs);
     } catch (err) {
+      console.error(err);
       onError(err);
     }
 
@@ -68,6 +69,7 @@ export const TranslatableModal = (props: TranslatableModalProps) => {
       originalValuesForLangs.current = retrievedValuesForLang;
       setValuesForLangs(retrievedValuesForLang);
     } catch (err) {
+      console.error(err);
       onError(err);
     }
   }
@@ -115,6 +117,7 @@ export const TranslatableModal = (props: TranslatableModalProps) => {
         }
       }
     } catch (err) {
+      console.error(err);
       onError(err);
     }
 

@@ -90,6 +90,7 @@ export const EMTransfer = ({
       const initialItems = await onGetFields();
       setTreeData(initialItems);
     } catch (err) {
+      console.error(err);
       error({
         title: "Error",
         centered: true,
@@ -110,6 +111,7 @@ export const EMTransfer = ({
         });
         setTreeData(updateTreeData(treeData, key, childs));
       } catch (err) {
+        console.error(err);
         error({
           title: "Error",
           centered: true,
