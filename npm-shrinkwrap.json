@@ -16,8 +16,6 @@
       },
       "devDependencies": {
         "@babel/core": "^7.16.0",
-        "@rollup/plugin-commonjs": "^21.0.1",
-        "@rollup/plugin-node-resolve": "^13.0.6",
         "@storybook/addon-actions": "^6.4.1",
         "@storybook/addon-docs": "^6.4.0-rc.11",
         "@storybook/addon-essentials": "^6.4.1",
@@ -4112,66 +4110,6 @@
         "type": "opencollective",
         "url": "https://opencollective.com/popperjs"
       }
-    },
-    "node_modules/@rollup/plugin-commonjs": {
-      "version": "21.0.1",
-      "dev": true,
-      "license": "MIT",
-      "dependencies": {
-        "@rollup/pluginutils": "^3.1.0",
-        "commondir": "^1.0.1",
-        "estree-walker": "^2.0.1",
-        "glob": "^7.1.6",
-        "is-reference": "^1.2.1",
-        "magic-string": "^0.25.7",
-        "resolve": "^1.17.0"
-      },
-      "engines": {
-        "node": ">= 8.0.0"
-      },
-      "peerDependencies": {
-        "rollup": "^2.38.3"
-      }
-    },
-    "node_modules/@rollup/plugin-node-resolve": {
-      "version": "13.0.6",
-      "dev": true,
-      "license": "MIT",
-      "dependencies": {
-        "@rollup/pluginutils": "^3.1.0",
-        "@types/resolve": "1.17.1",
-        "builtin-modules": "^3.1.0",
-        "deepmerge": "^4.2.2",
-        "is-module": "^1.0.0",
-        "resolve": "^1.19.0"
-      },
-      "engines": {
-        "node": ">= 10.0.0"
-      },
-      "peerDependencies": {
-        "rollup": "^2.42.0"
-      }
-    },
-    "node_modules/@rollup/pluginutils": {
-      "version": "3.1.0",
-      "dev": true,
-      "license": "MIT",
-      "dependencies": {
-        "@types/estree": "0.0.39",
-        "estree-walker": "^1.0.1",
-        "picomatch": "^2.2.2"
-      },
-      "engines": {
-        "node": ">= 8.0.0"
-      },
-      "peerDependencies": {
-        "rollup": "^1.20.0||^2.0.0"
-      }
-    },
-    "node_modules/@rollup/pluginutils/node_modules/estree-walker": {
-      "version": "1.0.1",
-      "dev": true,
-      "license": "MIT"
     },
     "node_modules/@rushstack/node-core-library": {
       "version": "3.51.1",
@@ -9892,14 +9830,6 @@
       "dev": true,
       "license": "MIT"
     },
-    "node_modules/@types/resolve": {
-      "version": "1.17.1",
-      "dev": true,
-      "license": "MIT",
-      "dependencies": {
-        "@types/node": "*"
-      }
-    },
     "node_modules/@types/scheduler": {
       "version": "0.16.2",
       "dev": true,
@@ -11977,17 +11907,6 @@
       "version": "1.0.3",
       "dev": true,
       "license": "MIT"
-    },
-    "node_modules/builtin-modules": {
-      "version": "3.2.0",
-      "dev": true,
-      "license": "MIT",
-      "engines": {
-        "node": ">=6"
-      },
-      "funding": {
-        "url": "https://github.com/sponsors/sindresorhus"
-      }
     },
     "node_modules/builtin-status-codes": {
       "version": "3.0.0",
@@ -15070,11 +14989,6 @@
         "node": ">=8.3.0"
       }
     },
-    "node_modules/estree-walker": {
-      "version": "2.0.2",
-      "dev": true,
-      "license": "MIT"
-    },
     "node_modules/esutils": {
       "version": "2.0.3",
       "dev": true,
@@ -17596,11 +17510,6 @@
         "url": "https://github.com/sponsors/ljharb"
       }
     },
-    "node_modules/is-module": {
-      "version": "1.0.0",
-      "dev": true,
-      "license": "MIT"
-    },
     "node_modules/is-negative-zero": {
       "version": "2.0.1",
       "dev": true,
@@ -17673,14 +17582,6 @@
       "version": "1.0.1",
       "dev": true,
       "license": "MIT"
-    },
-    "node_modules/is-reference": {
-      "version": "1.2.1",
-      "dev": true,
-      "license": "MIT",
-      "dependencies": {
-        "@types/estree": "*"
-      }
     },
     "node_modules/is-regex": {
       "version": "1.1.4",
@@ -21497,14 +21398,6 @@
       "license": "WTFPL",
       "bin": {
         "lz-string": "bin/bin.js"
-      }
-    },
-    "node_modules/magic-string": {
-      "version": "0.25.7",
-      "dev": true,
-      "license": "MIT",
-      "dependencies": {
-        "sourcemap-codec": "^1.4.4"
       }
     },
     "node_modules/make-dir": {
@@ -32288,46 +32181,6 @@
       "version": "2.11.0",
       "dev": true
     },
-    "@rollup/plugin-commonjs": {
-      "version": "21.0.1",
-      "dev": true,
-      "requires": {
-        "@rollup/pluginutils": "^3.1.0",
-        "commondir": "^1.0.1",
-        "estree-walker": "^2.0.1",
-        "glob": "^7.1.6",
-        "is-reference": "^1.2.1",
-        "magic-string": "^0.25.7",
-        "resolve": "^1.17.0"
-      }
-    },
-    "@rollup/plugin-node-resolve": {
-      "version": "13.0.6",
-      "dev": true,
-      "requires": {
-        "@rollup/pluginutils": "^3.1.0",
-        "@types/resolve": "1.17.1",
-        "builtin-modules": "^3.1.0",
-        "deepmerge": "^4.2.2",
-        "is-module": "^1.0.0",
-        "resolve": "^1.19.0"
-      }
-    },
-    "@rollup/pluginutils": {
-      "version": "3.1.0",
-      "dev": true,
-      "requires": {
-        "@types/estree": "0.0.39",
-        "estree-walker": "^1.0.1",
-        "picomatch": "^2.2.2"
-      },
-      "dependencies": {
-        "estree-walker": {
-          "version": "1.0.1",
-          "dev": true
-        }
-      }
-    },
     "@rushstack/node-core-library": {
       "version": "3.51.1",
       "dev": true,
@@ -36050,13 +35903,6 @@
         "@types/react": "*"
       }
     },
-    "@types/resolve": {
-      "version": "1.17.1",
-      "dev": true,
-      "requires": {
-        "@types/node": "*"
-      }
-    },
     "@types/scheduler": {
       "version": "0.16.2",
       "dev": true
@@ -37514,10 +37360,6 @@
     },
     "buffer-xor": {
       "version": "1.0.3",
-      "dev": true
-    },
-    "builtin-modules": {
-      "version": "3.2.0",
       "dev": true
     },
     "builtin-status-codes": {
@@ -39501,10 +39343,6 @@
         "c8": "^7.6.0"
       }
     },
-    "estree-walker": {
-      "version": "2.0.2",
-      "dev": true
-    },
     "esutils": {
       "version": "2.0.3",
       "dev": true
@@ -41206,10 +41044,6 @@
       "version": "2.0.2",
       "dev": true
     },
-    "is-module": {
-      "version": "1.0.0",
-      "dev": true
-    },
     "is-negative-zero": {
       "version": "2.0.1",
       "dev": true
@@ -41249,13 +41083,6 @@
     "is-potential-custom-element-name": {
       "version": "1.0.1",
       "dev": true
-    },
-    "is-reference": {
-      "version": "1.2.1",
-      "dev": true,
-      "requires": {
-        "@types/estree": "*"
-      }
     },
     "is-regex": {
       "version": "1.1.4",
@@ -43775,13 +43602,6 @@
     "lz-string": {
       "version": "1.4.4",
       "dev": true
-    },
-    "magic-string": {
-      "version": "0.25.7",
-      "dev": true,
-      "requires": {
-        "sourcemap-codec": "^1.4.4"
-      }
     },
     "make-dir": {
       "version": "2.1.0",
