@@ -61,7 +61,7 @@ export const ExportModal = (props: ExportModalProps) => {
       });
     }
     setLoading(false);
-  }, []);
+  }, [exportType, selectedKeys, registersAmount]);
 
   return (
     <Modal

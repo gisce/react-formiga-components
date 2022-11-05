@@ -79,7 +79,7 @@
   "saveAs": "Guardar com",
   "exportRegisters": "S'exportaran un total de {total} registres.",
   "registersToExport": "Registres a exportar",
-  "registersToExportSummary": "Hi ha <b>{selected}</b> registres seleccionats d'un total de <b>{total}</b>. Quants registres vols exportar?",
+  "registersToExportSummary": "Hi ha <b>{selected}</b> registres seleccionats d'un total de <b>{total}</b>. Quins registres vols exportar?",
   "registersSelection": "Registres seleccionats",
   "registersSelectionAll": "Tots els registres",
   "availableFields": "Camps disponibles",

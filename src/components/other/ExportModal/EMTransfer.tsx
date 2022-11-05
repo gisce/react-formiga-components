@@ -99,10 +99,6 @@ export const EMTransfer = ({
     }
   }, []);
 
-  // const onCheck = useCallback((_, { node: { key } }) => {
-  //   onItemSelect(key as string, !isChecked(checkedKeys, key));
-  // }, []);
-
   const onCheck = useCallback(
     ({
       checkedKeys,

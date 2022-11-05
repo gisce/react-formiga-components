@@ -79,7 +79,7 @@
   "saveAs": "Save as",
   "exportRegisters": "{total} registers will be exported.",
   "registersToExport": "Registers to export",
-  "registersToExportSummary": "There are <b>{selected}</b> selected registers from a total of <b>{total}</b>. How many registers do you want to export?",
+  "registersToExportSummary": "There are <b>{selected}</b> selected registers from a total of <b>{total}</b>. Which registers do you want to export?",
   "registersSelection": "Selected registers",
   "registersSelectionAll": "All registers",
   "availableFields": "Available fields",

@@ -79,7 +79,7 @@
   "saveAs": "Guardar como",
   "exportRegisters": "Se exportaran un total de {total} registros.",
   "registersToExport": "Registros a exportar",
-  "registersToExportSummary": "Hay <b>{selected}</b> registros seleccionados de un total de <b>{total}</b>. Cuántos registros quieres exportar?",
+  "registersToExportSummary": "Hay <b>{selected}</b> registros seleccionados de un total de <b>{total}</b>. ¿Qué registros quieres exportar?",
   "registersSelection": "Registros seleccionados",
   "registersSelectionAll": "Todos los registros",
   "availableFields": "Campos disponibles",
