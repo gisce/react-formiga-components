@@ -15,6 +15,7 @@ export type ExportModalProps = {
     key: string;
     title: string;
   }) => Promise<ExportField[]>;
+  selectedKeys?: string[];
 };
 
 export type ExportType = "csv" | "xlsx";

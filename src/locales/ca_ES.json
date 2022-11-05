@@ -83,5 +83,8 @@
   "registersSelection": "Registres seleccionats",
   "registersSelectionAll": "Tots els registres",
   "availableFields": "Camps disponibles",
-  "fieldsToExport": "Camps a exportar"
+  "fieldsToExport": "Camps a exportar",
+  "exportModalItemsUnit": "camps",
+  "notFoundContent": "La llista està buida",
+  "searchPlaceholder": "Introdueix text per filtrar els camps..."
 }

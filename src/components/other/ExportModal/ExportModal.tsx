@@ -1,5 +1,5 @@
 import { Divider, Modal } from "antd";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   ExportModalProps,
   ExportRegistersAmount,
@@ -23,14 +23,22 @@ export const ExportModal = (props: ExportModalProps) => {
     onSucceed,
     totalRegisters,
     selectedRegistersToExport,
+    selectedKeys: selectedKeysProps = [],
   } = props;
   const { modalWidth } = useWindowDimensions();
   const [loading, setLoading] = useState(false);
   const [exportType, setExportType] = useState<ExportType>("csv");
-  const [registersAmount, setRegistersAmount] = useState<ExportRegistersAmount>(
-    selectedRegistersToExport ? "selected" : "all"
-  );
-  const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+  const [registersAmount, setRegistersAmount] =
+    useState<ExportRegistersAmount>("all");
+  const [selectedKeys, setSelectedKeys] = useState<string[]>(selectedKeysProps);
+
+  useEffect(() => {
+    setRegistersAmount(selectedRegistersToExport ? "selected" : "all");
+  }, [selectedRegistersToExport]);
+
+  useEffect(() => {
+    setSelectedKeys(selectedKeysProps);
+  }, [selectedKeysProps]);
 
   const onTransferChange = useCallback((keys: string[]) => {
     setSelectedKeys(keys);

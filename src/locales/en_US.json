@@ -83,5 +83,8 @@
   "registersSelection": "Selected registers",
   "registersSelectionAll": "All registers",
   "availableFields": "Available fields",
-  "fieldsToExport": "Fields to export"
+  "fieldsToExport": "Fields to export",
+  "exportModalItemsUnit": "fields",
+  "notFoundContent": "The list is empty",
+  "searchPlaceholder": "Enter text to filter fields.."
 }

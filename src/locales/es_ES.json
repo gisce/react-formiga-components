@@ -83,5 +83,8 @@
   "registersSelection": "Registros seleccionados",
   "registersSelectionAll": "Todos los registros",
   "availableFields": "Campos disponibles",
-  "fieldsToExport": "Campos a exportar"
+  "fieldsToExport": "Campos a exportar",
+  "exportModalItemsUnit": "campos",
+  "notFoundContent": "La lista está vacía",
+  "searchPlaceholder": "Introducte texto para filtrar los campos..."
 }
