@@ -8,10 +8,15 @@ export type ExportModalProps = {
   selectedRegistersToExport?: number;
   totalRegisters: number;
   onGetFields: () => Promise<ExportField[]>;
-  onGetFieldChilds: (
-    key: string,
-    parentTitle: string
-  ) => Promise<ExportField[]>;
+  onGetFieldChilds: ({
+    key,
+    parentKey,
+    parentTitle,
+  }: {
+    key: string;
+    parentKey: string;
+    parentTitle: string;
+  }) => Promise<ExportField[]>;
 };
 
 export type ExportType = "csv" | "xlsx";

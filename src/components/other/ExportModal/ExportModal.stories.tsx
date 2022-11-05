@@ -37,7 +37,7 @@ export const Default: ComponentStory<typeof ExportModal> = () => {
         locale="en_US"
         totalRegisters={92348}
         selectedRegistersToExport={32}
-        onGetFieldChilds={async (key: string, parentTitle: string) => {
+        onGetFieldChilds={async ({ key, parentKey, parentTitle }: any) => {
           await new Promise((resolve) => setTimeout(resolve, 1000));
 
           if (key === "cups") {

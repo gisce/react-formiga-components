@@ -10,10 +10,15 @@ export type TreeTransferProps = {
   onChange: (targetKeys: string[]) => void;
   locale: Locale;
   onGetFields: () => Promise<ExportField[]>;
-  onGetFieldChilds: (
-    field: string,
-    parentTitle: string
-  ) => Promise<ExportField[]>;
+  onGetFieldChilds: ({
+    key,
+    parentKey,
+    parentTitle,
+  }: {
+    key: string;
+    parentKey: string;
+    parentTitle: string;
+  }) => Promise<ExportField[]>;
 };
 
 const isChecked = (
@@ -101,7 +106,11 @@ export const EMTransfer = ({
     async ({ key }: any) => {
       try {
         const parent = treeData?.find((item) => item.key === key);
-        const childs = await onGetFieldChilds(key, parent.title);
+        const childs = await onGetFieldChilds({
+          key,
+          parentKey: parent?.key,
+          parentTitle: parent?.title,
+        });
         setTreeData(updateTreeData(treeData, key, childs));
       } catch (err) {
         error({
