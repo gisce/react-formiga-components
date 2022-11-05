@@ -1,5 +1,5 @@
 import { FieldSet } from "@/components/ui";
-import { Locale, tForLang } from "@/context";
+import { tForLang } from "@/context";
 import { Radio, RadioChangeEvent } from "antd";
 import React, { useCallback } from "react";
 import { EMTotalRegSelectorProps } from "./EMTotalRegSelector.types";

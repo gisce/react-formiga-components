@@ -40,6 +40,7 @@ export const EMTransfer = ({
   locale,
   onGetFields,
   onGetFieldChilds,
+  onChange,
   ...restProps
 }: TreeTransferProps) => {
   const [treeData, setTreeData] = useState<ExportField[]>();
@@ -125,6 +126,7 @@ export const EMTransfer = ({
       dataSource={flatten(treeData!)}
       className="tree-transfer"
       render={(item) => item.title!}
+      onChange={onChange}
       showSelectAll={true}
       locale={{
         itemUnit: tForLang("exportModalItemsUnit", locale),
