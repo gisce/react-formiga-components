@@ -45,6 +45,7 @@ export const Default: ComponentStory<typeof ExportModal> = () => {
               {
                 key: "contador",
                 title: "CUPS/Contador",
+                tooltip: "Help",
                 isLeaf: true,
               },
               {

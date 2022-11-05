@@ -15,4 +15,5 @@ export const Legend = styled.legend`
   padding-right: 0.5em;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
     sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: 0.75rem;
 `;

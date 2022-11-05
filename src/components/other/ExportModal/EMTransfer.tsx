@@ -2,6 +2,7 @@ import { Locale, tForLang } from "@/context";
 import { Modal, Spin, Transfer, Tree } from "antd";
 import type { TransferItem } from "antd/es/transfer";
 import React, { useCallback, useEffect, useState } from "react";
+import { EMTitle } from "./EMTitle";
 import { ExportField } from "./ExportModal.types";
 const { error } = Modal;
 
@@ -104,12 +105,15 @@ export const EMTransfer = ({
   const onLoadData = useCallback(
     async ({ key }: any) => {
       try {
-        const item = treeData?.find((item) => item.key === key);
+        console.log("On load data: " + key);
+        console.log("Treedata: " + JSON.stringify(treeData, null, 2));
+        const item = flatten(treeData).find((item) => item.key === key);
+        console.log("On load data item: " + item);
         const childs = await onGetFieldChilds({
           key,
           title: item!.title,
         });
-        setTreeData(updateTreeData(treeData, key, childs));
+        setTreeData(updateTreeData(treeData!, key, childs));
       } catch (err) {
         console.error(err);
         error({
@@ -125,51 +129,63 @@ export const EMTransfer = ({
   return (
     <Transfer
       {...restProps}
+      showSearch
       targetKeys={targetKeys}
-      dataSource={flatten(treeData)}
+      dataSource={flatten(treeData!)}
       className="tree-transfer"
       render={(item) => item.title!}
       showSelectAll={true}
+      // onSearch={handleSearch}
+      locale={{
+        itemUnit: "item",
+        itemsUnit: "items",
+        notFoundContent: "The list is empty",
+        searchPlaceholder: "Search here",
+      }}
       titles={[
         tForLang("availableFields", locale),
         tForLang("fieldsToExport", locale),
       ]}
     >
       {({ direction, onItemSelect, selectedKeys }) => {
-        if (direction === "left") {
-          const checkedKeys = [...targetKeys, ...selectedKeys];
+        // if (direction === "left") {
+        const checkedKeys = [...targetKeys, ...selectedKeys];
 
-          if (isLoading) {
-            return (
-              <div
-                style={{
-                  display: "flex",
-                  paddingTop: "2em",
-                  justifyContent: "center",
-                }}
-              >
-                <Spin />
-              </div>
-            );
-          }
-
+        if (isLoading) {
           return (
-            <Tree
-              blockNode
-              checkable
-              checkStrictly
-              checkedKeys={checkedKeys}
-              loadData={onLoadData}
-              treeData={generateTree(treeData, targetKeys)}
-              onCheck={(_, { node: { key } }) => {
-                onItemSelect(key as string, !isChecked(checkedKeys, key));
+            <div
+              style={{
+                display: "flex",
+                paddingTop: "2em",
+                justifyContent: "center",
               }}
-              onSelect={(_, { node: { key } }) => {
-                onItemSelect(key as string, !isChecked(checkedKeys, key));
-              }}
-            />
+            >
+              <Spin />
+            </div>
           );
         }
+
+        return (
+          <Tree
+            height={300}
+            blockNode
+            checkable
+            checkStrictly
+            checkedKeys={checkedKeys}
+            loadData={onLoadData}
+            treeData={generateTree(treeData, targetKeys)}
+            onCheck={(_, { node: { key } }) => {
+              onItemSelect(key as string, !isChecked(checkedKeys, key));
+            }}
+            onSelect={(_, { node: { key } }) => {
+              onItemSelect(key as string, !isChecked(checkedKeys, key));
+            }}
+            titleRender={(node) => (
+              <EMTitle title={node.title} tooltip={node.tooltip} />
+            )}
+          />
+        );
+        // }
       }}
     </Transfer>
   );

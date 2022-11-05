@@ -33,6 +33,7 @@ export type ExportRegistersAmount = "all" | "selected";
 // - hist_autoconsum/cups_id/aclarador
 export type ExportField = {
   title: string;
+  tooltip?: string;
   isLeaf?: boolean;
   key: string;
   children?: ExportField[];

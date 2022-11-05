@@ -100,7 +100,7 @@ export const ExportModal = (props: ExportModalProps) => {
         left={tForLang("exportRegisters", locale).replace(
           "{total}",
           registersAmount === "selected"
-            ? selectedRegistersToExport.toString()
+            ? selectedRegistersToExport?.toString()
             : totalRegisters.toString()
         )}
       />
