@@ -35,6 +35,7 @@ export const Default: ComponentStory<typeof ExportModal> = () => {
           return;
         }}
         locale="en_US"
+        selectedKeys={["cups"]}
         totalRegisters={92348}
         selectedRegistersToExport={32}
         onGetFieldChilds={async ({ key, parentKey, parentTitle }: any) => {

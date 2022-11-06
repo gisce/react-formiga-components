@@ -23,7 +23,7 @@ export const ExportModal = (props: ExportModalProps) => {
     onSucceed,
     totalRegisters,
     selectedRegistersToExport,
-    selectedKeys: selectedKeysProps = [],
+    selectedKeys: selectedKeysProps,
   } = props;
   const { modalWidth } = useWindowDimensions();
   const [loading, setLoading] = useState(false);
@@ -33,12 +33,23 @@ export const ExportModal = (props: ExportModalProps) => {
   const [selectedKeys, setSelectedKeys] = useState<string[]>(selectedKeysProps);
 
   useEffect(() => {
-    setRegistersAmount(selectedRegistersToExport ? "selected" : "all");
+    if (!visible) {
+      setSelectedKeys(undefined);
+      setExportType("csv");
+      setRegistersAmount(selectedRegistersToExport ? "selected" : "all");
+    }
+  }, [visible]);
+
+  useEffect(() => {
+    const newAmountValue = selectedRegistersToExport ? "selected" : "all";
+    setRegistersAmount(newAmountValue);
   }, [selectedRegistersToExport]);
 
   useEffect(() => {
-    setSelectedKeys(selectedKeysProps);
-  }, [selectedKeysProps]);
+    if (selectedKeysProps !== undefined && !selectedKeys) {
+      setSelectedKeys(selectedKeysProps);
+    }
+  }, [selectedKeysProps, selectedKeys]);
 
   const onTransferChange = useCallback((keys: string[]) => {
     setSelectedKeys(keys);

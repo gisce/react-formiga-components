@@ -54,17 +54,13 @@ export const generateLeftTree = ({
   searchText?: string;
 }): ExportField[] => {
   if (searchText) {
-    return flatten(treeNodes)
+    const output = flatten(treeNodes)
       .filter((item) => filterOption(searchText, item))
       .map(({ children, ...props }) => ({
         ...props,
         disabled: checkedKeys.includes(props.key as string),
-        children: generateLeftTree({
-          treeNodes: children,
-          checkedKeys,
-          searchText,
-        }),
       }));
+    return output;
   }
 
   return treeNodes.map(({ children, ...props }) => ({

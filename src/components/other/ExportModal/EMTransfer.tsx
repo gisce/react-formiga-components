@@ -78,7 +78,8 @@ export const EMTransfer = ({
           key,
           title: item!.title,
         });
-        setTreeData(updateTreeData(treeData!, key, childs));
+        const updatedTree = updateTreeData(treeData!, key, childs);
+        setTreeData(updatedTree);
       } catch (err) {
         console.error(err);
         error({
@@ -170,7 +171,7 @@ export const EMTransfer = ({
               })}
               onCheck={onCheck({ checkedKeys, onItemSelect })}
               onSelect={onCheck({ checkedKeys, onItemSelect })}
-              titleRender={(node) => <EMTitle node={node} />}
+              titleRender={(node) => <EMTitle node={node as ExportField} />}
             />
           );
         } else {
@@ -188,7 +189,7 @@ export const EMTransfer = ({
                 checkedKeys: targetKeys,
                 searchText: rightSearchText,
               })}
-              titleRender={(node) => <EMTitle node={node} />}
+              titleRender={(node) => <EMTitle node={node as ExportField} />}
             />
           );
         }
