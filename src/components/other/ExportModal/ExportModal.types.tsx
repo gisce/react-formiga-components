@@ -36,6 +36,7 @@ export type ExportField = {
   title: string;
   tooltip?: string;
   isLeaf?: boolean;
+  required?: boolean;
   key: string;
   children?: ExportField[];
 };

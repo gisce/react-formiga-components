@@ -170,9 +170,7 @@ export const EMTransfer = ({
               })}
               onCheck={onCheck({ checkedKeys, onItemSelect })}
               onSelect={onCheck({ checkedKeys, onItemSelect })}
-              titleRender={(node) => (
-                <EMTitle title={node.title} tooltip={node.tooltip} />
-              )}
+              titleRender={(node) => <EMTitle node={node} />}
             />
           );
         } else {
@@ -190,9 +188,7 @@ export const EMTransfer = ({
                 checkedKeys: targetKeys,
                 searchText: rightSearchText,
               })}
-              titleRender={(node) => (
-                <EMTitle title={node.title} tooltip={node.tooltip} />
-              )}
+              titleRender={(node) => <EMTitle node={node} />}
             />
           );
         }

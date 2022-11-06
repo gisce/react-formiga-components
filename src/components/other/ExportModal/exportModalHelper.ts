@@ -59,7 +59,6 @@ export const generateLeftTree = ({
       .map(({ children, ...props }) => ({
         ...props,
         disabled: checkedKeys.includes(props.key as string),
-        isLeaf: true,
         children: generateLeftTree({
           treeNodes: children,
           checkedKeys,

@@ -52,6 +52,7 @@ export const Default: ComponentStory<typeof ExportModal> = () => {
                 key: "code",
                 title: "CUPS/Código",
                 isLeaf: true,
+                required: true,
               },
             ];
           }
