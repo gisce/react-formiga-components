@@ -73,8 +73,18 @@
   "searchExisting": "Buscar item existente",
   "toggleViewMode": "Cambiar vista",
   "translate": "Traducir",
-  "enterTextBeforeTranslate":
-    "Introduce algun texto en el campo antes de añadir traducciones",
-  "saveBeforeTranslate":
-    "Tienes que guardar el registro antes de añadir las traducciones"
+  "enterTextBeforeTranslate": "Introduce algun texto en el campo antes de añadir traducciones",
+  "saveBeforeTranslate": "Tienes que guardar el registro antes de añadir las traducciones",
+  "export": "Exportar",
+  "saveAs": "Guardar como",
+  "exportRegisters": "Se exportaran un total de {total} registros.",
+  "registersToExport": "Registros a exportar",
+  "registersToExportSummary": "Hay <b>{selected}</b> registros seleccionados de un total de <b>{total}</b>. ¿Qué registros quieres exportar?",
+  "registersSelection": "Registros seleccionados",
+  "registersSelectionAll": "Todos los registros",
+  "availableFields": "Campos disponibles",
+  "fieldsToExport": "Campos a exportar",
+  "exportModalItemsUnit": "campos",
+  "notFoundContent": "La lista está vacía",
+  "searchPlaceholder": "Introducte texto para filtrar los campos..."
 }

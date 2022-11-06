@@ -1,4 +1,5 @@
 import "antd/dist/antd.css";
+import "./tailwind.css";
 
 window.global = window;
 window.Buffer = window.Buffer || require("buffer").Buffer;

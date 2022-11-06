@@ -9,8 +9,10 @@ const localeStrings: any = {
   es_ES,
 };
 
+export type Locale = "es_ES" | "en_US" | "ca_ES";
+
 export type LocaleType = {
-  locale?: "es_ES" | "en_US" | "ca_ES";
+  locale?: Locale;
 };
 
 export type LocaleContextType = {
@@ -18,9 +20,8 @@ export type LocaleContextType = {
   t: (key: string) => string;
 };
 
-export const LocaleContext = React.createContext<LocaleContextType | null>(
-  null
-);
+export const LocaleContext =
+  React.createContext<LocaleContextType | null>(null);
 
 type LocaleContextProps = {
   children: React.ReactNode;

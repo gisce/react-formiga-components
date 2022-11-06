@@ -73,8 +73,18 @@
   "searchExisting": "Buscar item existent",
   "toggleViewMode": "Canviar vista",
   "translate": "Traduïr",
-  "enterTextBeforeTranslate":
-    "Introdueix algun text al camp abans d'afegir traduccions",
-  "saveBeforeTranslate":
-    "Heu de desar el registre abans d'afegir les traduccions"
+  "enterTextBeforeTranslate": "Introdueix algun text al camp abans d'afegir traduccions",
+  "saveBeforeTranslate": "Heu de desar el registre abans d'afegir les traduccions",
+  "export": "Exportar",
+  "saveAs": "Guardar com",
+  "exportRegisters": "S'exportaran un total de {total} registres.",
+  "registersToExport": "Registres a exportar",
+  "registersToExportSummary": "Hi ha <b>{selected}</b> registres seleccionats d'un total de <b>{total}</b>. Quins registres vols exportar?",
+  "registersSelection": "Registres seleccionats",
+  "registersSelectionAll": "Tots els registres",
+  "availableFields": "Camps disponibles",
+  "fieldsToExport": "Camps a exportar",
+  "exportModalItemsUnit": "camps",
+  "notFoundContent": "La llista està buida",
+  "searchPlaceholder": "Introdueix text per filtrar els camps..."
 }

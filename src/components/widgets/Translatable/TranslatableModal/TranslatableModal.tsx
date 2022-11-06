@@ -1,10 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Modal, Button, Divider, Row, Space, Spin, Col } from "antd";
-import {
-  CheckOutlined,
-  CloseOutlined,
-  LoadingOutlined,
-} from "@ant-design/icons";
+import { Modal, Divider, Row, Spin, Col } from "antd";
 import { tForLang } from "@/context/LocaleContext";
 import TextArea from "antd/lib/input/TextArea";
 import {
@@ -13,6 +8,7 @@ import {
   ValuesForLangs,
 } from "./TranslatableModal.types";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
+import { ModalBottomBar } from "@/components/ui/ModalBottomBar/ModalBottomBar";
 
 export const TranslatableModal = (props: TranslatableModalProps) => {
   const {
@@ -54,6 +50,7 @@ export const TranslatableModal = (props: TranslatableModalProps) => {
       setLangs?.(langs);
       await getValuesForLangs(langs);
     } catch (err) {
+      console.error(err);
       onError(err);
     }
 
@@ -72,6 +69,7 @@ export const TranslatableModal = (props: TranslatableModalProps) => {
       originalValuesForLangs.current = retrievedValuesForLang;
       setValuesForLangs(retrievedValuesForLang);
     } catch (err) {
+      console.error(err);
       onError(err);
     }
   }
@@ -119,6 +117,7 @@ export const TranslatableModal = (props: TranslatableModalProps) => {
         }
       }
     } catch (err) {
+      console.error(err);
       onError(err);
     }
 
@@ -135,26 +134,12 @@ export const TranslatableModal = (props: TranslatableModalProps) => {
       <>
         {getInputsForLangs()}
         <Divider />
-        <Row justify="end">
-          <Space>
-            <Button
-              icon={<CloseOutlined />}
-              onClick={onClose}
-              disabled={submitLoading}
-            >
-              {tForLang("cancel", locale)}
-            </Button>
-            <Button
-              icon={submitLoading ? <LoadingOutlined /> : <CheckOutlined />}
-              disabled={submitLoading}
-              onClick={onSubmit}
-              style={{ marginLeft: 15 }}
-              type="primary"
-            >
-              {tForLang("ok", locale)}
-            </Button>
-          </Space>
-        </Row>
+        <ModalBottomBar
+          locale={locale}
+          onClose={onClose}
+          onConfirm={onSubmit}
+          loading={submitLoading}
+        />
       </>
     );
   }
