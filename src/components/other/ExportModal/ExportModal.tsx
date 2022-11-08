@@ -86,7 +86,7 @@ export const ExportModal = (props: ExportModalProps) => {
       destroyOnClose
     >
       <EMTransfer
-        targetKeys={selectedKeys}
+        targetKeys={selectedKeys || []}
         onChange={onTransferChange}
         locale={locale}
         onGetFieldChilds={props.onGetFieldChilds}
