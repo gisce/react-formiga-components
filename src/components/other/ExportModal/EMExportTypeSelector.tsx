@@ -14,8 +14,8 @@ export const EMExportTypeSelector = (props: EMExportTypeSelectorProps) => {
   return (
     <FieldSet label={tForLang("saveAs", locale)}>
       <Radio.Group onChange={onExportTypeChange} value={value}>
-        <Radio value={"csv"}>CSV</Radio>
         <Radio value={"xlsx"}>Excel</Radio>
+        <Radio value={"csv"}>CSV</Radio>
       </Radio.Group>
     </FieldSet>
   );

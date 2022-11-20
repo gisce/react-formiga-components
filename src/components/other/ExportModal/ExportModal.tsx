@@ -27,7 +27,7 @@ export const ExportModal = (props: ExportModalProps) => {
   } = props;
   const { modalWidth } = useWindowDimensions();
   const [loading, setLoading] = useState(false);
-  const [exportType, setExportType] = useState<ExportType>("csv");
+  const [exportType, setExportType] = useState<ExportType>("xlsx");
   const [registersAmount, setRegistersAmount] =
     useState<ExportRegistersAmount>("all");
   const [selectedKeys, setSelectedKeys] = useState<string[]>(selectedKeysProps);
@@ -35,7 +35,7 @@ export const ExportModal = (props: ExportModalProps) => {
   useEffect(() => {
     if (!visible) {
       setSelectedKeys(undefined);
-      setExportType("csv");
+      setExportType("xlsx");
       setRegistersAmount(selectedRegistersToExport ? "selected" : "all");
     }
   }, [visible]);
@@ -86,7 +86,7 @@ export const ExportModal = (props: ExportModalProps) => {
       destroyOnClose
     >
       <EMTransfer
-        targetKeys={selectedKeys}
+        targetKeys={selectedKeys || []}
         onChange={onTransferChange}
         locale={locale}
         onGetFieldChilds={props.onGetFieldChilds}
