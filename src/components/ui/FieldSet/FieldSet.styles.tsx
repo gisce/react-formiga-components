@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const FieldSetElement = styled.fieldset`
   padding: 0.5rem;
-  border-color: #ccc;
+  border-color: #D9D9D9;
   border-width: 1px;
   border-style: solid;
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
