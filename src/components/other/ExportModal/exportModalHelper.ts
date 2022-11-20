@@ -53,25 +53,17 @@ export const generateLeftTree = ({
   checkedKeys: string[];
   searchText?: string;
 }): ExportField[] => {
-  if (searchText) {
-    const output = flatten(treeNodes)
-      .filter((item) => filterOption(searchText, item))
-      .map(({ children, ...props }) => ({
-        ...props,
-        disabled: checkedKeys.includes(props.key as string),
-      }));
-    return output;
-  }
-
-  return treeNodes.map(({ children, ...props }) => ({
-    ...props,
-    disabled: checkedKeys.includes(props.key as string),
-    children: generateLeftTree({
-      treeNodes: children,
-      checkedKeys,
-      searchText,
-    }),
-  }));
+  return treeNodes
+    .filter((item) => (searchText ? filterOption(searchText, item) : true))
+    .map(({ children, ...props }) => ({
+      ...props,
+      disabled: checkedKeys.includes(props.key as string),
+      children: generateLeftTree({
+        treeNodes: children,
+        checkedKeys,
+        searchText: undefined,
+      }),
+    }));
 };
 
 export const generateRightTree = ({
@@ -83,18 +75,22 @@ export const generateRightTree = ({
   checkedKeys: string[];
   searchText?: string;
 }): ExportField[] => {
+  return flatten(treeNodes)
+    .filter((node) => checkedKeys.indexOf(node.key) !== -1)
+    .filter((item) => (searchText ? filterOption(searchText, item) : true))
+    .map(({ children, ...props }) => ({
+      ...props,
+      disabled: false,
+      isLeaf: true,
+    }));
+
   if (searchText) {
     return flatten(treeNodes)
-      .filter((item) => filterOption(searchText, item))
+      .filter((item) => (searchText ? filterOption(searchText, item) : true))
       .map(({ children, ...props }) => ({
         ...props,
         disabled: checkedKeys.includes(props.key as string),
         isLeaf: true,
-        children: generateRightTree({
-          treeNodes: children,
-          checkedKeys,
-          searchText,
-        }),
       }));
   }
 
