@@ -15,7 +15,7 @@ export const EMTitle = ({ node }: { node: ExportField }) => {
 
   return (
     <div className={divClasses.join(" ")}>
-      <Text>{title.replace(/\//g, " → ")}</Text>
+      <Text>{title}</Text>
       {tooltip && (
         <Tooltip title={tooltip} className="pl-1">
           <QuestionCircleOutlined className="text-xs text-blue-400" />
