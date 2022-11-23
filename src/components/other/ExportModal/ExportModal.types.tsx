@@ -7,6 +7,7 @@ export type ExportModalProps = {
   onSucceed: (options: ExportOptions) => Promise<void>;
   selectedRegistersToExport?: number;
   totalRegisters: number;
+  visibleRegisters: number;
   onGetFields: () => Promise<ExportField[]>;
   onGetFieldChilds: ({
     key,

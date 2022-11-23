@@ -24,6 +24,7 @@ export const ExportModal = (props: ExportModalProps) => {
     totalRegisters,
     selectedRegistersToExport,
     selectedKeys: selectedKeysProps,
+    visibleRegisters,
   } = props;
   const { modalWidth } = useWindowDimensions();
   const [loading, setLoading] = useState(false);
@@ -98,18 +99,15 @@ export const ExportModal = (props: ExportModalProps) => {
         value={exportType}
         onChange={setExportType}
       />
-      {selectedRegistersToExport && (
-        <>
-          <EMSeparator />
-          <EMTotalRegSelector
-            locale={locale}
-            totalRegisters={totalRegisters}
-            selectedRegistersToExport={selectedRegistersToExport}
-            value={registersAmount}
-            onChange={setRegistersAmount}
-          />
-        </>
-      )}
+      <EMSeparator />
+      <EMTotalRegSelector
+        locale={locale}
+        totalRegisters={totalRegisters}
+        selectedRegistersToExport={selectedRegistersToExport}
+        visibleRegisters={visibleRegisters}
+        value={registersAmount}
+        onChange={setRegistersAmount}
+      />
       <Divider />
       <ModalBottomBar
         locale={locale}
@@ -118,8 +116,10 @@ export const ExportModal = (props: ExportModalProps) => {
         loading={loading}
         left={tForLang("exportRegisters", locale).replace(
           "{total}",
-          registersAmount === "selected"
+          registersAmount === "selected" && selectedRegistersToExport
             ? selectedRegistersToExport?.toString()
+            : registersAmount === "selected"
+            ? visibleRegisters
             : totalRegisters.toString()
         )}
       />

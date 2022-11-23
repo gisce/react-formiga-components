@@ -5,24 +5,41 @@ import React, { useCallback } from "react";
 import { EMTotalRegSelectorProps } from "./EMTotalRegSelector.types";
 
 export const EMTotalRegSelector = (props: EMTotalRegSelectorProps) => {
-  const { value, onChange, locale, totalRegisters, selectedRegistersToExport } =
-    props;
+  const {
+    value,
+    onChange,
+    locale,
+    totalRegisters,
+    selectedRegistersToExport,
+    visibleRegisters,
+  } = props;
 
   const onExportTypeChange = useCallback((e: RadioChangeEvent) => {
     onChange(e.target.value);
   }, []);
 
-  const text = tForLang("registersToExportSummary", locale)
+  const title = selectedRegistersToExport
+    ? tForLang("registersToExportSelectedSummary", locale)
+    : tForLang("registersToExportVisibleSummary", locale);
+
+  const text = title
     .replace("{total}", totalRegisters.toString())
-    .replace("{selected}", selectedRegistersToExport?.toString());
+    .replace(
+      "{selected}",
+      selectedRegistersToExport
+        ? selectedRegistersToExport?.toString()
+        : visibleRegisters.toString()
+    );
+
+  const option = selectedRegistersToExport
+    ? tForLang("registersSelection", locale)
+    : tForLang("registersVisible", locale);
 
   return (
     <FieldSet label={tForLang("registersToExport", locale)}>
       <p dangerouslySetInnerHTML={{ __html: text }} />
       <Radio.Group onChange={onExportTypeChange} value={value}>
-        <Radio value={"selected"}>
-          {tForLang("registersSelection", locale)}
-        </Radio>
+        <Radio value={"selected"}>{option}</Radio>
         <Radio value={"all"}>{tForLang("registersSelectionAll", locale)}</Radio>
       </Radio.Group>
     </FieldSet>
