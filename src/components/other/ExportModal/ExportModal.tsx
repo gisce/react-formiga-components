@@ -114,14 +114,6 @@ export const ExportModal = (props: ExportModalProps) => {
         onClose={onCancel}
         onConfirm={onConfirm}
         loading={loading}
-        left={tForLang("exportRegisters", locale).replace(
-          "{total}",
-          registersAmount === "selected" && selectedRegistersToExport
-            ? selectedRegistersToExport?.toString()
-            : registersAmount === "selected"
-            ? visibleRegisters
-            : totalRegisters.toString()
-        )}
       />
     </Modal>
   );
