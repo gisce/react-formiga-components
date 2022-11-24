@@ -39,8 +39,12 @@ export const EMTotalRegSelector = (props: EMTotalRegSelectorProps) => {
     <FieldSet label={tForLang("registersToExport", locale)}>
       <p dangerouslySetInnerHTML={{ __html: text }} />
       <Radio.Group onChange={onExportTypeChange} value={value}>
-        <Radio value={"selected"}>{option}</Radio>
-        <Radio value={"all"}>{tForLang("registersSelectionAll", locale)}</Radio>
+        <Radio value={"selected"}>
+          {option + ` (${selectedRegistersToExport || visibleRegisters})`}
+        </Radio>
+        <Radio value={"all"}>
+          {tForLang("registersSelectionAll", locale) + ` (${totalRegisters})`}
+        </Radio>
       </Radio.Group>
     </FieldSet>
   );
