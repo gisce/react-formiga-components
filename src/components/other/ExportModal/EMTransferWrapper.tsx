@@ -1,16 +1,15 @@
 import { Locale } from "@/context/LocaleContext";
-import { Col, Row, Tree } from "antd";
-import React, { useCallback, useState } from "react";
+import { Col, Row } from "antd";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
-import { EMTitle } from "./EMTitle";
-import { EMTransferLeftTree } from "./EMTransferLeftTree";
 import { ExportField } from "./ExportModal.types";
-import { generateLeftTree, isChecked } from "./exportModalHelper";
+import { EMTransferOperations } from "./EMTransferOperations";
+import { EMTransferTree } from "./EMTransferTree";
 
 export type EMTransferWrapperProps = {
   locale: Locale;
   targetKeys: string[];
-  // onChange: (targetKeys: string[]) => void;
+  onChange: (targetKeys: string[]) => void;
   dataSource: ExportField[];
   onLoadData: (treeNode: any) => Promise<void>;
 };
@@ -24,20 +23,67 @@ export const ColumnContainer = styled(Col)`
 `;
 
 export const EMTransferWrapper = (props: EMTransferWrapperProps) => {
-  const { targetKeys, dataSource, onLoadData, locale } = props;
+  const {
+    targetKeys: targetKeysProps = [],
+    dataSource,
+    onLoadData,
+    locale,
+    onChange,
+  } = props;
+
+  const [targetKeys, setTargetKeys] = useState<string[]>(targetKeysProps);
+  const [leftSelectedKeys, setLeftSelectedKeys] = useState<string[]>([]);
+  const [rightSelectedKeys, setRightSelectedKeys] = useState<string[]>([]);
+
+  useEffect(() => {
+    onChange(targetKeys);
+    setRightSelectedKeys(targetKeys);
+  }, [targetKeys]);
+
+  const toRight = useCallback(() => {
+    const newTargetKeys = [...targetKeys, ...leftSelectedKeys];
+    setTargetKeys(newTargetKeys);
+    setLeftSelectedKeys([]);
+  }, [leftSelectedKeys, targetKeys]);
+
+  const toLeft = useCallback(() => {
+    const newTargetKeys = targetKeys.filter(
+      (key) => !rightSelectedKeys.includes(key)
+    );
+    setTargetKeys(newTargetKeys);
+    setRightSelectedKeys([]);
+  }, [rightSelectedKeys, targetKeys]);
 
   return (
     <Row style={{ height: 400 }}>
       <ColumnContainer>
-        <EMTransferLeftTree
+        <EMTransferTree
+          mode="left"
           locale={locale}
           targetKeys={targetKeys}
           dataSource={dataSource}
           onLoadData={onLoadData}
+          onChange={setLeftSelectedKeys}
         />
       </ColumnContainer>
-      <Col flex={0.05}>mid</Col>
-      <ColumnContainer>right</ColumnContainer>
+      <Col flex={0.05}>
+        <EMTransferOperations
+          toLeftDisabled={rightSelectedKeys.length === 0}
+          toRightDisabled={leftSelectedKeys.length === 0}
+          onToRight={toRight}
+          onToLeft={toLeft}
+        />
+      </Col>
+      <ColumnContainer>
+        <EMTransferTree
+          mode="right"
+          locale={locale}
+          targetKeys={targetKeys}
+          dataSource={dataSource}
+          onLoadData={onLoadData}
+          onChange={setRightSelectedKeys}
+        />
+      </ColumnContainer>
     </Row>
   );
 };

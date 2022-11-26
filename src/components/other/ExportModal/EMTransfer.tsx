@@ -122,6 +122,7 @@ export const EMTransfer = ({
       dataSource={treeData}
       onLoadData={onLoadData}
       targetKeys={targetKeys}
+      onChange={onChange}
     />
   );
   return (

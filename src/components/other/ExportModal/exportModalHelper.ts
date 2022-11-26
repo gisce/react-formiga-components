@@ -75,6 +75,16 @@ export const generateRightTree = ({
   checkedKeys: string[];
   searchText?: string;
 }): ExportField[] => {
+  const flattenNodes = flatten(treeNodes);
+  return checkedKeys.map((key) => {
+    const node = flattenNodes.find((item) => item.key === key);
+    return {
+      ...node,
+      disabled: true,
+      isLeaf: true,
+    };
+  });
+
   return flatten(treeNodes)
     .filter((node) => checkedKeys.indexOf(node.key) !== -1)
     .filter((item) => (searchText ? filterOption(searchText, item) : true))

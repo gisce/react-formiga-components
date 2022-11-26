@@ -1,42 +1,75 @@
-import { Tree, Input, Row, Col, Checkbox } from "antd";
-import React, { useCallback, useState } from "react";
+import { Tree, Input, Col, Checkbox } from "antd";
+import React, { useCallback, useEffect, useState } from "react";
 import { EMTitle } from "./EMTitle";
 import { ExportField } from "./ExportModal.types";
-import { flatten, generateLeftTree } from "./exportModalHelper";
+import {
+  flatten,
+  generateLeftTree,
+  generateRightTree,
+} from "./exportModalHelper";
 import { SearchOutlined } from "@ant-design/icons";
 import { Locale, tForLang } from "@/context/LocaleContext";
 import type { CheckboxChangeEvent } from "antd/es/checkbox";
-import { useMemo } from "@storybook/addons";
 
 export type EMTransferLeftTreeProps = {
+  mode: "left" | "right";
   locale: Locale;
   targetKeys: string[];
   dataSource: ExportField[];
   onLoadData: (treeNode: any) => Promise<void>;
+  onChange: (selectedKeys: string[]) => void;
 };
 
-export const EMTransferLeftTree = (props: EMTransferLeftTreeProps) => {
-  const { targetKeys, dataSource, onLoadData, locale } = props;
+export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
+  const {
+    targetKeys: targetKeysProps,
+    dataSource,
+    onLoadData,
+    locale,
+    onChange,
+    mode,
+  } = props;
+  const [targetKeys, setTargetKeys] = useState<string[]>(targetKeysProps);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const [searchText, setSearchText] = useState<string>();
   const [indeterminate, setIndeterminate] = useState(false);
   const [checkAll, setCheckAll] = useState(false);
 
-  const getFlatDatasource = useCallback(
-    () => flatten(dataSource),
-    [dataSource]
-  );
+  useEffect(() => {
+    onChange?.([...selectedKeys, ...targetKeys]);
+  }, [selectedKeys, targetKeys]);
+
+  useEffect(() => {
+    setTargetKeys(targetKeysProps);
+  }, [targetKeysProps]);
+
+  useEffect(() => {
+    setSelectedKeys([]);
+    setIndeterminate(false);
+    setCheckAll(false);
+  }, [targetKeys]);
+
+  const getAllFlattenItems = useCallback(() => {
+    if (mode === "left") {
+      return flatten(dataSource);
+    }
+    return flatten(dataSource).filter((item) => targetKeys.includes(item.key));
+  }, [dataSource, mode, targetKeys]);
 
   const checkedKeys = [...targetKeys, ...selectedKeys];
 
   const onCheck = useCallback(
     ({ checked }: any) => {
-      const newSelectedKeys = checked.filter(
-        (key: string) => !targetKeys.includes(key)
-      );
+      const newSelectedKeys = checked.filter((key: string) => {
+        if (mode === "left") {
+          return !targetKeys.includes(key);
+        } else {
+          return true;
+        }
+      });
       setSelectedKeys(newSelectedKeys);
 
-      if (newSelectedKeys.length === getFlatDatasource().length) {
+      if (newSelectedKeys.length === getAllFlattenItems().length) {
         setCheckAll(true);
         setIndeterminate(false);
       } else if (newSelectedKeys.length > 0) {
@@ -47,7 +80,7 @@ export const EMTransferLeftTree = (props: EMTransferLeftTreeProps) => {
         setCheckAll(false);
       }
     },
-    [getFlatDatasource, targetKeys]
+    [getAllFlattenItems, targetKeys]
   );
 
   const onSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,14 +91,52 @@ export const EMTransferLeftTree = (props: EMTransferLeftTreeProps) => {
   const onCheckAllChange = (e: CheckboxChangeEvent) => {
     setSelectedKeys(
       e.target.checked
-        ? getFlatDatasource()
-            .filter((entry) => !targetKeys.includes(entry.key))
+        ? getAllFlattenItems()
+            .filter((entry) => {
+              if (mode === "left") {
+                return !targetKeys.includes(entry.key);
+              } else {
+                return true;
+              }
+            })
             .map((entry) => entry.key)
         : []
     );
     setIndeterminate(false);
     setCheckAll(e.target.checked);
   };
+
+  const onDropCallback = useCallback(
+    (info) => {
+      console.log(info);
+      const { dragNode, dropPosition } = info;
+      const { key } = dragNode;
+
+      const newSelectedKeys = [...targetKeys];
+      const index = newSelectedKeys.indexOf(key);
+      if (index > -1) {
+        newSelectedKeys.splice(index, 1);
+      }
+      if (dropPosition === -1) {
+        newSelectedKeys.unshift(key);
+      } else {
+        newSelectedKeys.push(key);
+      }
+      setTargetKeys(newSelectedKeys);
+    },
+    [targetKeys]
+  );
+
+  const treeDataMethod = mode === "left" ? generateLeftTree : generateRightTree;
+
+  const draggableProps =
+    mode === "right"
+      ? {
+          className: "draggable-tree",
+          draggable: true,
+          onDrop: onDropCallback,
+        }
+      : {};
 
   return (
     <>
@@ -77,14 +148,16 @@ export const EMTransferLeftTree = (props: EMTransferLeftTreeProps) => {
             checked={checkAll}
           >
             {selectedKeys.length > 0 ? `${selectedKeys.length}/` : ""}
-            {`${getFlatDatasource()?.length || 0} ${tForLang(
+            {`${getAllFlattenItems()?.length || 0} ${tForLang(
               "exportModalItemsUnit",
               locale
             )}`}
           </Checkbox>
         </Col>
         <Col flex={1} style={{ textAlign: "right" }}>
-          {tForLang("availableFields", locale)}
+          {mode === "left"
+            ? tForLang("availableFields", locale)
+            : tForLang("fieldsToExport", locale)}
         </Col>
       </div>
       <div className="ant-transfer-list-body ant-transfer-list-body-with-search">
@@ -99,13 +172,14 @@ export const EMTransferLeftTree = (props: EMTransferLeftTreeProps) => {
         </div>
         <div className="ant-transfer-list-body-customize-wrapper">
           <Tree
+            {...draggableProps}
             height={300}
             blockNode
             checkable
             checkStrictly
-            checkedKeys={checkedKeys}
-            loadData={onLoadData}
-            treeData={generateLeftTree({
+            checkedKeys={mode === "left" ? checkedKeys : selectedKeys}
+            loadData={mode === "left" ? onLoadData : undefined}
+            treeData={treeDataMethod({
               treeNodes: dataSource,
               checkedKeys: targetKeys,
               searchText: searchText,
