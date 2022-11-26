@@ -39,5 +39,6 @@ export type ExportField = {
   isLeaf?: boolean;
   required?: boolean;
   key: string;
+  disabled?: boolean;
   children?: ExportField[];
 };

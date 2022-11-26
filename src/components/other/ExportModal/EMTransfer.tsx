@@ -3,6 +3,7 @@ import { Modal, Spin, Transfer as AntTransfer, Tree } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { EMTitle } from "./EMTitle";
+import { EMTransferWrapper } from "./EMTransferWrapper";
 import { ExportField } from "./ExportModal.types";
 import {
   filterOption,
@@ -115,6 +116,14 @@ export const EMTransfer = ({
     []
   );
 
+  return (
+    <EMTransferWrapper
+      locale={locale}
+      dataSource={treeData}
+      onLoadData={onLoadData}
+      targetKeys={targetKeys}
+    />
+  );
   return (
     <Transfer
       {...restProps}
