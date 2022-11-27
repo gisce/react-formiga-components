@@ -20,7 +20,7 @@
     "storybook",
     "library"
   ],
-  "version": "1.0.9-rc.12",
+  "version": "1.0.9-rc.13",
   "main": "./dist/react-formiga-components.umd.js",
   "module": "./dist/react-formiga-components.es.js",
   "types": "./dist/index.d.ts",
