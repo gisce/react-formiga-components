@@ -44,6 +44,8 @@ export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
   const [searchText, setSearchText] = useState<string>();
   const [indeterminate, setIndeterminate] = useState(false);
   const [checkAll, setCheckAll] = useState(false);
+  const [treeData, setTreeData] = useState<ExportField[]>([]);
+  const treeDataMethod = mode === "left" ? generateLeftTree : generateRightTree;
 
   useEffect(() => {
     if (mode === "left") {
@@ -62,6 +64,16 @@ export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
       });
     }
   }, [targetKeys, mode]);
+
+  useEffect(() => {
+    setTreeData(
+      treeDataMethod({
+        treeNodes: dataSource,
+        targetKeys,
+        searchText,
+      })
+    );
+  }, [dataSource, targetKeys, searchText]);
 
   useEffect(() => {
     if (selectedKeys.length === 0) {
@@ -167,8 +179,6 @@ export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
     [targetKeys]
   );
 
-  const treeDataMethod = mode === "left" ? generateLeftTree : generateRightTree;
-
   const draggableProps =
     mode === "right"
       ? {
@@ -188,7 +198,7 @@ export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
             checked={checkAll}
           >
             {selectedKeys.length > 0 ? `${selectedKeys.length}/` : ""}
-            {`${getAllFlattenItems()?.length || 0} ${tForLang(
+            {`${flatten(treeData)?.length || 0} ${tForLang(
               "exportModalItemsUnit",
               locale
             )}`}
@@ -219,11 +229,7 @@ export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
             checkStrictly
             checkedKeys={mode === "left" ? allKeys : selectedKeys}
             loadData={mode === "left" ? onLoadData : undefined}
-            treeData={treeDataMethod({
-              treeNodes: dataSource,
-              targetKeys,
-              searchText,
-            })}
+            treeData={treeData}
             onCheck={onCheck}
             titleRender={(node) => <EMTitle node={node as ExportField} />}
           />
