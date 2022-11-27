@@ -24,19 +24,23 @@ export type EMTransferLeftTreeProps = {
     selectedKeys: string[];
     targetKeys: string[];
   }) => void;
+  selectedKeys: string[];
+  setSelectedKeys: (keys: string[]) => void;
+  setTargetKeys: (keys: string[]) => void;
 };
 
 export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
   const {
-    targetKeys: targetKeysProps,
+    targetKeys,
     dataSource,
     onLoadData,
     locale,
     onChange,
     mode,
+    selectedKeys,
+    setSelectedKeys,
+    setTargetKeys,
   } = props;
-  const [targetKeys, setTargetKeys] = useState<string[]>(targetKeysProps);
-  const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const [searchText, setSearchText] = useState<string>();
   const [indeterminate, setIndeterminate] = useState(false);
   const [checkAll, setCheckAll] = useState(false);
@@ -51,25 +55,23 @@ export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
         selectedKeys: filteredSelectedKeys,
         targetKeys,
       });
-
-      if (targetKeys.length === getAllFlattenItems().length) {
-        setSelectedKeys([]);
-        setIndeterminate(false);
-        setCheckAll(false);
-      }
     } else {
       onChange?.({
         selectedKeys,
         targetKeys,
       });
     }
-  }, [selectedKeys, targetKeys, mode]);
+  }, [targetKeys, mode]);
 
   useEffect(() => {
-    if (targetKeysProps.join(",") !== targetKeys.join(",")) {
-      setTargetKeys(targetKeysProps);
+    if (selectedKeys.length === 0) {
+      setIndeterminate(false);
+      setCheckAll(false);
+    } else if (selectedKeys.length === targetKeys.length && mode === "left") {
+      setIndeterminate(false);
+      setCheckAll(true);
     }
-  }, [targetKeysProps]);
+  }, [selectedKeys]);
 
   useEffect(() => {
     if (targetKeys.length === 0) {
@@ -86,7 +88,7 @@ export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
     return flatten(dataSource).filter((item) => targetKeys.includes(item.key));
   }, [dataSource, mode, targetKeys]);
 
-  const checkedKeys = [...targetKeys, ...selectedKeys];
+  const allKeys = [...targetKeys, ...selectedKeys];
 
   const onCheck = useCallback(
     ({ checked }: any) => {
@@ -215,12 +217,12 @@ export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
             blockNode
             checkable
             checkStrictly
-            checkedKeys={mode === "left" ? checkedKeys : selectedKeys}
+            checkedKeys={mode === "left" ? allKeys : selectedKeys}
             loadData={mode === "left" ? onLoadData : undefined}
             treeData={treeDataMethod({
               treeNodes: dataSource,
-              checkedKeys: targetKeys,
-              searchText: searchText,
+              targetKeys,
+              searchText,
             })}
             onCheck={onCheck}
             titleRender={(node) => <EMTitle node={node as ExportField} />}

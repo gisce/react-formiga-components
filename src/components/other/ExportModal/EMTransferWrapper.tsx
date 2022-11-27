@@ -37,7 +37,6 @@ export const EMTransferWrapper = (props: EMTransferWrapperProps) => {
 
   useEffect(() => {
     onChange(targetKeys);
-    setRightSelectedKeys(targetKeys);
   }, [targetKeys]);
 
   const toRight = useCallback(() => {
@@ -57,6 +56,41 @@ export const EMTransferWrapper = (props: EMTransferWrapperProps) => {
     setRightSelectedKeys([]);
   }, [rightSelectedKeys, targetKeys]);
 
+  const onChangeLeft = useCallback(
+    ({ selectedKeys }: { selectedKeys: string[] }) => {
+      setLeftSelectedKeys(selectedKeys);
+    },
+    [targetKeys]
+  );
+
+  const onChangeRight = useCallback(
+    ({
+      selectedKeys,
+      targetKeys,
+    }: {
+      selectedKeys: string[];
+      targetKeys: string[];
+    }) => {
+      setRightSelectedKeys(selectedKeys);
+      setTargetKeys(targetKeys);
+    },
+    []
+  );
+
+  const onSetLeftSelectedKeys = useCallback(
+    (keys: string[]) => {
+      setLeftSelectedKeys(keys.filter((key) => !targetKeys.includes(key)));
+    },
+    [targetKeys]
+  );
+
+  const onSetRightSelectedKeys = useCallback(
+    (keys: string[]) => {
+      setRightSelectedKeys(keys);
+    },
+    [targetKeys]
+  );
+
   return (
     <Row style={{ height: 400 }}>
       <ColumnContainer>
@@ -66,7 +100,10 @@ export const EMTransferWrapper = (props: EMTransferWrapperProps) => {
           targetKeys={targetKeys}
           dataSource={dataSource}
           onLoadData={onLoadData}
-          onChange={setLeftSelectedKeys}
+          onChange={onChangeLeft}
+          selectedKeys={leftSelectedKeys}
+          setSelectedKeys={onSetLeftSelectedKeys}
+          setTargetKeys={setTargetKeys}
         />
       </ColumnContainer>
       <Col flex={0.05}>
@@ -84,7 +121,10 @@ export const EMTransferWrapper = (props: EMTransferWrapperProps) => {
           targetKeys={targetKeys}
           dataSource={dataSource}
           onLoadData={onLoadData}
-          onChange={setRightSelectedKeys}
+          onChange={onChangeRight}
+          selectedKeys={rightSelectedKeys}
+          setSelectedKeys={onSetRightSelectedKeys}
+          setTargetKeys={setTargetKeys}
         />
       </ColumnContainer>
     </Row>

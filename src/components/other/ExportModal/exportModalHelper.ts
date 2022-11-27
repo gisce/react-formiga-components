@@ -46,21 +46,21 @@ export const flatten = (dataSource: ExportField[]) => {
 
 export const generateLeftTree = ({
   treeNodes = [],
-  checkedKeys = [],
+  targetKeys = [],
   searchText,
 }: {
   treeNodes: ExportField[];
-  checkedKeys: string[];
+  targetKeys: string[];
   searchText?: string;
 }): ExportField[] => {
   return treeNodes
     .filter((item) => (searchText ? filterOption(searchText, item) : true))
     .map(({ children, ...props }) => ({
       ...props,
-      disabled: checkedKeys.includes(props.key as string),
+      disabled: targetKeys.includes(props.key as string),
       children: generateLeftTree({
         treeNodes: children,
-        checkedKeys,
+        targetKeys,
         searchText: undefined,
       }),
     }));
@@ -68,11 +68,11 @@ export const generateLeftTree = ({
 
 export const generateRightTree = ({
   treeNodes = [],
-  checkedKeys = [],
+  targetKeys = [],
   searchText,
 }: {
   treeNodes: ExportField[];
-  checkedKeys: string[];
+  targetKeys: string[];
   searchText?: string;
 }): ExportField[] => {
   const flattenNodes = flatten(treeNodes);
@@ -81,7 +81,7 @@ export const generateRightTree = ({
     return [];
   }
 
-  return checkedKeys
+  return targetKeys
     .map((key) => {
       const node = flattenNodes.find((item) => item.key === key);
       return {
