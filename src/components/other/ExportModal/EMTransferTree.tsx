@@ -108,7 +108,6 @@ export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
 
   const onDropCallback = useCallback(
     (info) => {
-      console.log(info);
       const { dragNode, dropPosition } = info;
       const { key } = dragNode;
 
