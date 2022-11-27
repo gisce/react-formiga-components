@@ -120,7 +120,7 @@ export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
       if (dropPosition === -1) {
         newSelectedKeys.unshift(key);
       } else {
-        newSelectedKeys.push(key);
+        newSelectedKeys.splice(dropPosition, 0, key);
       }
       setTargetKeys(newSelectedKeys);
     },
