@@ -41,7 +41,10 @@ export const EMTransferWrapper = (props: EMTransferWrapperProps) => {
   }, [targetKeys]);
 
   const toRight = useCallback(() => {
-    const newTargetKeys = [...targetKeys, ...leftSelectedKeys];
+    const newTargetKeys = [
+      ...targetKeys,
+      ...leftSelectedKeys.filter((key) => !targetKeys.includes(key)),
+    ];
     setTargetKeys(newTargetKeys);
     setLeftSelectedKeys([]);
   }, [leftSelectedKeys, targetKeys]);
