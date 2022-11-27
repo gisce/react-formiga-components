@@ -17,7 +17,13 @@ export type EMTransferLeftTreeProps = {
   targetKeys: string[];
   dataSource: ExportField[];
   onLoadData: (treeNode: any) => Promise<void>;
-  onChange: (selectedKeys: string[]) => void;
+  onChange: ({
+    selectedKeys,
+    targetKeys,
+  }: {
+    selectedKeys: string[];
+    targetKeys: string[];
+  }) => void;
 };
 
 export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
@@ -36,17 +42,41 @@ export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
   const [checkAll, setCheckAll] = useState(false);
 
   useEffect(() => {
-    onChange?.([...selectedKeys, ...targetKeys]);
-  }, [selectedKeys, targetKeys]);
+    if (mode === "left") {
+      const filteredSelectedKeys = selectedKeys.filter(
+        (item) => !targetKeys.includes(item)
+      );
+
+      onChange?.({
+        selectedKeys: filteredSelectedKeys,
+        targetKeys,
+      });
+
+      if (targetKeys.length === getAllFlattenItems().length) {
+        setSelectedKeys([]);
+        setIndeterminate(false);
+        setCheckAll(false);
+      }
+    } else {
+      onChange?.({
+        selectedKeys,
+        targetKeys,
+      });
+    }
+  }, [selectedKeys, targetKeys, mode]);
 
   useEffect(() => {
-    setTargetKeys(targetKeysProps);
+    if (targetKeysProps.join(",") !== targetKeys.join(",")) {
+      setTargetKeys(targetKeysProps);
+    }
   }, [targetKeysProps]);
 
   useEffect(() => {
-    setSelectedKeys([]);
-    setIndeterminate(false);
-    setCheckAll(false);
+    if (targetKeys.length === 0) {
+      setSelectedKeys([]);
+      setIndeterminate(false);
+      setCheckAll(false);
+    }
   }, [targetKeys]);
 
   const getAllFlattenItems = useCallback(() => {
@@ -88,23 +118,32 @@ export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
     setSearchText(value.trim() === "" ? undefined : value.trim());
   }, []);
 
-  const onCheckAllChange = (e: CheckboxChangeEvent) => {
-    setSelectedKeys(
-      e.target.checked
-        ? getAllFlattenItems()
-            .filter((entry) => {
-              if (mode === "left") {
-                return !targetKeys.includes(entry.key);
-              } else {
-                return true;
-              }
-            })
-            .map((entry) => entry.key)
-        : []
-    );
-    setIndeterminate(false);
-    setCheckAll(e.target.checked);
-  };
+  const onCheckAllChange = useCallback(
+    (e: CheckboxChangeEvent) => {
+      if (mode === "left") {
+        setSelectedKeys(
+          e.target.checked
+            ? getAllFlattenItems()
+                .filter((entry) => {
+                  if (mode === "left") {
+                    return !targetKeys.includes(entry.key);
+                  } else {
+                    return true;
+                  }
+                })
+                .map((entry) => entry.key)
+            : []
+        );
+        setIndeterminate(false);
+        setCheckAll(e.target.checked);
+      } else {
+        setSelectedKeys(e.target.checked ? targetKeys : []);
+        setIndeterminate(false);
+        setCheckAll(e.target.checked);
+      }
+    },
+    [mode, targetKeys, getAllFlattenItems]
+  );
 
   const onDropCallback = useCallback(
     (info) => {
