@@ -88,6 +88,7 @@ export const generateRightTree = ({
         ...node,
         disabled: false,
         isLeaf: true,
+        children: undefined,
       };
     })
     .filter((item) => (searchText ? filterOption(searchText, item) : true));

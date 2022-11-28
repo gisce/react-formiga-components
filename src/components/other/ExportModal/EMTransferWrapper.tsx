@@ -92,7 +92,7 @@ export const EMTransferWrapper = (props: EMTransferWrapperProps) => {
   );
 
   return (
-    <Row style={{ height: 400 }}>
+    <Row>
       <ColumnContainer>
         <EMTransferTree
           mode="left"

@@ -220,10 +220,11 @@ export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
             prefix={<SearchOutlined style={{ color: "#ccc" }} />}
           />
         </div>
-        <div className="ant-transfer-list-body-customize-wrapper">
+        <div style={{ minHeight: 400 }}>
           <Tree
             {...draggableProps}
-            height={300}
+            height={400}
+            selectable={false}
             blockNode
             checkable
             checkStrictly
