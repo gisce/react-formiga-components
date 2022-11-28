@@ -20,7 +20,7 @@
     "storybook",
     "library"
   ],
-  "version": "1.0.9-rc.14",
+  "version": "1.0.9-rc.15",
   "main": "./dist/react-formiga-components.umd.js",
   "module": "./dist/react-formiga-components.es.js",
   "types": "./dist/index.d.ts",
@@ -51,6 +51,7 @@
   "dependencies": {
     "antd": "^4.24.3",
     "file-type-buffer-browser": "git+ssh://git@github.com/mguellsegarra/file-type-buffer-browser.git",
+    "interweave": "^13.0.0",
     "moment": "^2.29.1",
     "validator": "^13.7.0"
   },

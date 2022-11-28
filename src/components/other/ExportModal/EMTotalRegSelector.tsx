@@ -3,6 +3,7 @@ import { tForLang } from "@/context";
 import { Radio, RadioChangeEvent } from "antd";
 import React, { useCallback } from "react";
 import { EMTotalRegSelectorProps } from "./EMTotalRegSelector.types";
+import { Interweave } from "interweave";
 
 export const EMTotalRegSelector = (props: EMTotalRegSelectorProps) => {
   const {
@@ -37,7 +38,9 @@ export const EMTotalRegSelector = (props: EMTotalRegSelectorProps) => {
 
   return (
     <FieldSet label={tForLang("registersToExport", locale)}>
-      <p dangerouslySetInnerHTML={{ __html: text }} />
+      <p>
+        <Interweave content={text} />
+      </p>
       <Radio.Group
         onChange={onExportTypeChange}
         value={value}
