@@ -5,13 +5,15 @@ import {
   ExportRegistersAmount,
   ExportType,
 } from "./ExportModal.types";
-import { tForLang } from "@/context/LocaleContext";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { ModalBottomBar } from "@/components/ui/ModalBottomBar/ModalBottomBar";
 import { EMExportTypeSelector } from "./EMExportTypeSelector";
 import { EMTotalRegSelector } from "./EMTotalRegSelector";
 import { EMTransfer } from "./EMTransfer";
 import { EMSeparator } from "./EMSeparator";
+import { ExportModalTitle } from "./ExportModalTitle";
+import { EMPredefinedModal } from "./EMPredefinedModal";
+import { EMNameDialog } from "./EMNameDialog";
 
 const { error } = Modal;
 
@@ -32,6 +34,9 @@ export const ExportModal = (props: ExportModalProps) => {
   const [registersAmount, setRegistersAmount] =
     useState<ExportRegistersAmount>("all");
   const [selectedKeys, setSelectedKeys] = useState<string[]>(selectedKeysProps);
+  const [predefinedModalVisible, setPredefinedModalVisible] = useState(false);
+  const [predefinedNameDialogVisible, setPredefinedNameDialogVisible] =
+    useState(false);
 
   useEffect(() => {
     if (!visible) {
@@ -77,7 +82,12 @@ export const ExportModal = (props: ExportModalProps) => {
 
   return (
     <Modal
-      title={tForLang("export", locale)}
+      title={
+        <ExportModalTitle
+          onClickPredefinedButton={() => setPredefinedModalVisible(true)}
+          locale={locale}
+        />
+      }
       centered
       width={modalWidth}
       visible={visible}
@@ -114,6 +124,31 @@ export const ExportModal = (props: ExportModalProps) => {
         onClose={onCancel}
         onConfirm={onConfirm}
         loading={loading}
+        onSavePredefined={() => {
+          setPredefinedNameDialogVisible(true);
+        }}
+      />
+      <EMPredefinedModal
+        locale={locale}
+        visible={predefinedModalVisible}
+        onCancel={() => {
+          setPredefinedModalVisible(false);
+        }}
+        onSucceed={(options: any) => {
+          setPredefinedModalVisible(false);
+          return Promise.resolve();
+        }}
+      />
+      <EMNameDialog
+        locale={locale}
+        visible={predefinedNameDialogVisible}
+        onCancel={() => {
+          setPredefinedNameDialogVisible(false);
+        }}
+        onSucceed={(options: any) => {
+          setPredefinedNameDialogVisible(false);
+          return Promise.resolve();
+        }}
       />
     </Modal>
   );

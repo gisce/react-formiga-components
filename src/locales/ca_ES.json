@@ -88,5 +88,11 @@
   "fieldsToExport": "Camps a exportar",
   "exportModalItemsUnit": "camps",
   "notFoundContent": "La llista està buida",
-  "searchPlaceholder": "Introdueix text per filtrar els camps..."
+  "searchPlaceholder": "Introdueix text per filtrar els camps...",
+  "selectPredefinedExport": "Selecciona una exportació predefinida",
+  "confirmDeletePredefinedExport": "Estàs segur que vols esborrar aquesta exportació predefinida",
+  "name": "Nom",
+  "loadPredefinedExport": "Carregar exportació predefinida",
+  "enterNameOfExport": "Entra el nom de l'exportació",
+  "nameOfExport": "Nom de l'exportació",
 }

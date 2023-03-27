@@ -4,12 +4,20 @@ import {
   CheckOutlined,
   CloseOutlined,
   LoadingOutlined,
+  SaveOutlined,
 } from "@ant-design/icons";
 import { tForLang } from "@/context/LocaleContext";
 import { ModalBottomBarProps } from "./ModalBottomBar.types";
 
 export const ModalBottomBar = (props: ModalBottomBarProps) => {
-  const { locale, onClose, onConfirm, loading, left = null } = props;
+  const {
+    locale,
+    onClose,
+    onConfirm,
+    loading,
+    left = null,
+    onSavePredefined,
+  } = props;
 
   return (
     <Row>
@@ -20,9 +28,17 @@ export const ModalBottomBar = (props: ModalBottomBarProps) => {
         <Row justify="end">
           <Space>
             <Button
+              icon={<SaveOutlined />}
+              onClick={onSavePredefined}
+              disabled={loading}
+            >
+              Guardar exportació predefinida
+            </Button>
+            <Button
               icon={<CloseOutlined />}
               onClick={onClose}
               disabled={loading}
+              style={{ marginLeft: 15 }}
             >
               {tForLang("cancel", locale)}
             </Button>

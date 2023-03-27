@@ -6,4 +6,5 @@ export type ModalBottomBarProps = {
   locale: Locale;
   loading: boolean;
   left?: React.ReactNode;
+  onSavePredefined?: () => void;
 };
