@@ -88,5 +88,11 @@
   "fieldsToExport": "Campos a exportar",
   "exportModalItemsUnit": "campos",
   "notFoundContent": "La lista está vacía",
-  "searchPlaceholder": "Introducte texto para filtrar los campos..."
+  "searchPlaceholder": "Introducte texto para filtrar los campos...",
+  "selectPredefinedExport": "Selecciona una exportación predefinida",
+  "confirmDeletePredefinedExport": "Estás seguro que quieres eliminar ésta exportación predefinida?",
+  "name": "Nombre",
+  "loadPredefinedExport": "Cargar exportación predefinida",
+  "enterNameOfExport": "Introduce el nombre de la exportación",
+  "nameOfExport": "Nombre de la exportación"
 }

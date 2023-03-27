@@ -88,5 +88,11 @@
   "fieldsToExport": "Fields to export",
   "exportModalItemsUnit": "fields",
   "notFoundContent": "The list is empty",
-  "searchPlaceholder": "Enter text to filter fields.."
+  "searchPlaceholder": "Enter text to filter fields..",
+  "selectPredefinedExport": "Select predefined export",
+  "confirmDeletePredefinedExport": "Are you sure you want to delete this predefined export?",
+  "name": "Name",
+  "loadPredefinedExport": "Load predefined export",
+  "enterNameOfExport": "Enter name of export",
+  "nameOfExport": "Name of export"
 }
