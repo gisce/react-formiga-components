@@ -32,7 +32,7 @@ export const ModalBottomBar = (props: ModalBottomBarProps) => {
               onClick={onSavePredefined}
               disabled={loading}
             >
-              Guardar exportació predefinida
+              {tForLang("savePredefinedExport", locale)}
             </Button>
             <Button
               icon={<CloseOutlined />}
