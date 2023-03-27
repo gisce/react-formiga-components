@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 import { ExportModal } from "./ExportModal";
 import { Button } from "antd";
-import { ExportOptions } from "./ExportModal.types";
+import { ExportOptions, PredefinedExport } from "./ExportModal.types";
 
 export default {
   title: "Components/Other/ExportModal",
@@ -45,14 +45,14 @@ export const Default: ComponentStory<typeof ExportModal> = () => {
           if (key === "active") {
             return [
               {
-                key: "contador",
-                title: "active/Contador",
+                key: "active/contador",
+                title: "Activo/Contador",
                 tooltip: "Help",
                 isLeaf: true,
               },
               {
-                key: "code",
-                title: "active/Código",
+                key: "active/code",
+                title: "Activo/Código",
                 isLeaf: true,
                 required: true,
               },
@@ -66,7 +66,7 @@ export const Default: ComponentStory<typeof ExportModal> = () => {
             {
               key: "active",
               title: "Activo",
-              isLeaf: true,
+              isLeaf: false,
             },
             {
               key: "address/id",
@@ -271,6 +271,29 @@ export const Default: ComponentStory<typeof ExportModal> = () => {
               isLeaf: true,
             },
           ];
+        }}
+        onGetPredefinedExports={async () => {
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+          return [
+            {
+              id: 1,
+              name: "Exportación de prueba",
+              fields: [
+                {
+                  key: "active/contador",
+                  title: "Activo/Contador",
+                },
+              ],
+            },
+          ];
+        }}
+        onSavePredefinedExport={async (options: PredefinedExport) => {
+          new Promise((resolve) => setTimeout(resolve, 1000));
+          return;
+        }}
+        onRemovePredefinedExport={async (id: number) => {
+          new Promise((resolve) => setTimeout(resolve, 1000));
+          return;
         }}
       />
     </>

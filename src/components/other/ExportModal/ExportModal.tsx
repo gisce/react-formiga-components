@@ -1,9 +1,10 @@
 import { Divider, Modal } from "antd";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   ExportModalProps,
   ExportRegistersAmount,
   ExportType,
+  PredefinedExport,
 } from "./ExportModal.types";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { ModalBottomBar } from "@/components/ui/ModalBottomBar/ModalBottomBar";
@@ -27,6 +28,9 @@ export const ExportModal = (props: ExportModalProps) => {
     selectedRegistersToExport,
     selectedKeys: selectedKeysProps,
     visibleRegisters,
+    onGetPredefinedExports,
+    onSavePredefinedExport,
+    onRemovePredefinedExport,
   } = props;
   const { modalWidth } = useWindowDimensions();
   const [loading, setLoading] = useState(false);
@@ -37,6 +41,8 @@ export const ExportModal = (props: ExportModalProps) => {
   const [predefinedModalVisible, setPredefinedModalVisible] = useState(false);
   const [predefinedNameDialogVisible, setPredefinedNameDialogVisible] =
     useState(false);
+
+  const currentPredefinedExport = useRef<PredefinedExport | undefined>();
 
   useEffect(() => {
     if (!visible) {
@@ -79,6 +85,12 @@ export const ExportModal = (props: ExportModalProps) => {
     }
     setLoading(false);
   }, [exportType, selectedKeys, registersAmount]);
+
+  const loadPredefinedExport = (predefinedExport: PredefinedExport) => {
+    setPredefinedModalVisible(false);
+    currentPredefinedExport.current = predefinedExport;
+    setSelectedKeys(predefinedExport.fields.map((field) => field.key));
+  };
 
   return (
     <Modal
@@ -134,10 +146,10 @@ export const ExportModal = (props: ExportModalProps) => {
         onCancel={() => {
           setPredefinedModalVisible(false);
         }}
-        onSucceed={(options: any) => {
-          setPredefinedModalVisible(false);
-          return Promise.resolve();
-        }}
+        onSelectPredefinedExport={loadPredefinedExport}
+        onGetPredefinedExports={onGetPredefinedExports}
+        onSavePredefinedExport={onSavePredefinedExport}
+        onRemovePredefinedExport={onRemovePredefinedExport}
       />
       <EMNameDialog
         locale={locale}

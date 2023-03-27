@@ -39,6 +39,10 @@ export const EMTransferWrapper = (props: EMTransferWrapperProps) => {
     onChange(targetKeys);
   }, [targetKeys]);
 
+  useEffect(() => {
+    setTargetKeys(targetKeysProps);
+  }, [targetKeysProps]);
+
   const toRight = useCallback(() => {
     const newTargetKeys = [
       ...targetKeys,

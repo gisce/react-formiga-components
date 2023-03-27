@@ -17,6 +17,18 @@ export type ExportModalProps = {
     title: string;
   }) => Promise<ExportField[]>;
   selectedKeys?: string[];
+  onGetPredefinedExports: () => Promise<PredefinedExport[]>;
+  onSavePredefinedExport: (options: PredefinedExport) => Promise<void>;
+  onRemovePredefinedExport: (id: number) => Promise<void>;
+};
+
+export type PredefinedExport = {
+  id?: number;
+  name: string;
+  fields: {
+    key: string;
+    title?: string;
+  }[];
 };
 
 export type ExportType = "csv" | "xlsx";
