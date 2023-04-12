@@ -1,4 +1,4 @@
-import { Tree, Input, Col, Checkbox } from "antd";
+import { Tree, Input, Col, Checkbox, Spin } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
 import { EMTitle } from "./EMTitle";
 import { ExportField } from "./ExportModal.types";
@@ -27,6 +27,7 @@ export type EMTransferLeftTreeProps = {
   selectedKeys: string[];
   setSelectedKeys: (keys: string[]) => void;
   setTargetKeys: (keys: string[]) => void;
+  isLoading?: boolean;
 };
 
 export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
@@ -40,6 +41,7 @@ export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
     selectedKeys,
     setSelectedKeys,
     setTargetKeys,
+    isLoading = false,
   } = props;
   const [searchText, setSearchText] = useState<string>();
   const [indeterminate, setIndeterminate] = useState(false);
@@ -221,19 +223,23 @@ export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
           />
         </div>
         <div style={{ minHeight: 400 }}>
-          <Tree
-            {...draggableProps}
-            height={400}
-            selectable={false}
-            blockNode
-            checkable
-            checkStrictly
-            checkedKeys={mode === "left" ? allKeys : selectedKeys}
-            loadData={mode === "left" ? onLoadData : undefined}
-            treeData={treeData}
-            onCheck={onCheck}
-            titleRender={(node) => <EMTitle node={node as ExportField} />}
-          />
+          {isLoading ? (
+            <Spin />
+          ) : (
+            <Tree
+              {...draggableProps}
+              height={400}
+              selectable={false}
+              blockNode
+              checkable
+              checkStrictly
+              checkedKeys={mode === "left" ? allKeys : selectedKeys}
+              loadData={mode === "left" ? onLoadData : undefined}
+              treeData={treeData}
+              onCheck={onCheck}
+              titleRender={(node) => <EMTitle node={node as ExportField} />}
+            />
+          )}
         </div>
       </div>
     </>

@@ -35,11 +35,13 @@ export const Default: ComponentStory<typeof ExportModal> = () => {
           return;
         }}
         locale="en_US"
-        selectedKeys={["active"]}
+        // selectedKeys={["active"]}
+        selectedKeys={[]}
         totalRegisters={92348}
         visibleRegisters={8}
         selectedRegistersToExport={32}
-        onGetFieldChilds={async ({ key, parentKey, parentTitle }: any) => {
+        onGetFieldChilds={async ({ key }: any) => {
+          console.log("onGetFieldChilds: " + key);
           await new Promise((resolve) => setTimeout(resolve, 1000));
 
           if (key === "active") {
@@ -57,6 +59,24 @@ export const Default: ComponentStory<typeof ExportModal> = () => {
                 required: true,
               },
             ];
+          } else if (key === "parent1") {
+            return [
+              {
+                key: "parent1/parent2",
+                title: "parent1/parent2",
+                tooltip: "Help",
+                isLeaf: false,
+              },
+            ];
+          } else if (key === "parent1/parent2") {
+            return [
+              {
+                key: "parent1/parent2/test",
+                title: "parent1/parent2/test",
+                tooltip: "Help",
+                isLeaf: true,
+              },
+            ];
           }
           return [];
         }}
@@ -66,6 +86,11 @@ export const Default: ComponentStory<typeof ExportModal> = () => {
             {
               key: "active",
               title: "Activo",
+              isLeaf: false,
+            },
+            {
+              key: "parent1",
+              title: "Parent1",
               isLeaf: false,
             },
             {
@@ -276,12 +301,36 @@ export const Default: ComponentStory<typeof ExportModal> = () => {
           await new Promise((resolve) => setTimeout(resolve, 1000));
           return [
             {
-              id: 1,
-              name: "Exportación de prueba",
+              id: 3,
+              name: "Exportación de prueba 3",
               fields: [
                 {
                   key: "active/contador",
                   title: "Activo/Contador",
+                },
+                {
+                  key: "parent1/parent2/test",
+                  title: "Parent1/Parent2/test",
+                },
+              ],
+            },
+            {
+              id: 1,
+              name: "Exportación de prueba",
+              fields: [
+                {
+                  key: "active",
+                  title: "Activo",
+                },
+              ],
+            },
+            {
+              id: 2,
+              name: "Exportación de prueba 2",
+              fields: [
+                {
+                  key: "city",
+                  title: "Ciudad",
                 },
               ],
             },

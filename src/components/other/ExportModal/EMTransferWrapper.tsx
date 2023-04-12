@@ -1,10 +1,11 @@
 import { Locale } from "@/context/LocaleContext";
-import { Col, Row } from "antd";
+import { Col, Row, Spin } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { ExportField } from "./ExportModal.types";
 import { EMTransferOperations } from "./EMTransferOperations";
 import { EMTransferTree } from "./EMTransferTree";
+import { flatten, getTreeDataForOrphanTargetKeys } from "./exportModalHelper";
 
 export type EMTransferWrapperProps = {
   locale: Locale;
@@ -12,6 +13,7 @@ export type EMTransferWrapperProps = {
   onChange: (targetKeys: string[]) => void;
   dataSource: ExportField[];
   onLoadData: (treeNode: any) => Promise<void>;
+  onLoadMultipleKeys: (keys: string[]) => Promise<void>;
 };
 
 export const ColumnContainer = styled(Col)`
@@ -29,11 +31,13 @@ export const EMTransferWrapper = (props: EMTransferWrapperProps) => {
     onLoadData,
     locale,
     onChange,
+    onLoadMultipleKeys,
   } = props;
 
   const [targetKeys, setTargetKeys] = useState<string[]>(targetKeysProps);
   const [leftSelectedKeys, setLeftSelectedKeys] = useState<string[]>([]);
   const [rightSelectedKeys, setRightSelectedKeys] = useState<string[]>([]);
+  const [isLoadingTargetKeys, setIsLoadingTargetKeys] = useState(true);
 
   useEffect(() => {
     onChange(targetKeys);
@@ -41,6 +45,21 @@ export const EMTransferWrapper = (props: EMTransferWrapperProps) => {
 
   useEffect(() => {
     setTargetKeys(targetKeysProps);
+    loadTargetKeys();
+  }, [targetKeysProps]);
+
+  const loadTargetKeys = useCallback(async () => {
+    setIsLoadingTargetKeys(true);
+
+    const newKeys = targetKeysProps.filter(
+      (key) =>
+        !flatten(dataSource)
+          .map((item) => item.key)
+          .includes(key)
+    );
+
+    await onLoadMultipleKeys(newKeys);
+    setIsLoadingTargetKeys(false);
   }, [targetKeysProps]);
 
   const toRight = useCallback(() => {
@@ -129,6 +148,7 @@ export const EMTransferWrapper = (props: EMTransferWrapperProps) => {
           selectedKeys={rightSelectedKeys}
           setSelectedKeys={onSetRightSelectedKeys}
           setTargetKeys={setTargetKeys}
+          isLoading={isLoadingTargetKeys}
         />
       </ColumnContainer>
     </Row>

@@ -3,7 +3,11 @@ import { Modal, Spin } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
 import { EMTransferWrapper } from "./EMTransferWrapper";
 import { ExportField } from "./ExportModal.types";
-import { flatten, updateTreeData } from "./exportModalHelper";
+import {
+  flatten,
+  getTreeDataForOrphanTargetKeys,
+  updateTreeData,
+} from "./exportModalHelper";
 const { error } = Modal;
 
 export type TreeTransferProps = {
@@ -74,6 +78,18 @@ export const EMTransfer = ({
     [treeData]
   );
 
+  const onLoadMultipleKeys = useCallback(
+    async (newKeys: string[]) => {
+      const newTreeData = await getTreeDataForOrphanTargetKeys({
+        treeData,
+        targetKeys: newKeys,
+        onGetFieldChilds,
+      });
+      setTreeData(newTreeData);
+    },
+    [treeData]
+  );
+
   if (isLoading) {
     return <Spin />;
   }
@@ -85,6 +101,7 @@ export const EMTransfer = ({
       onLoadData={onLoadData}
       targetKeys={targetKeys}
       onChange={onChange}
+      onLoadMultipleKeys={onLoadMultipleKeys}
     />
   );
 };

@@ -93,3 +93,58 @@ export const generateRightTree = ({
     })
     .filter((item) => (searchText ? filterOption(searchText, item) : true));
 };
+
+export const getParentKeys = (key: string) => {
+  // Keys are in format parent/child/child2/child3
+  // We want a list of all parent keys, like [parent, parent/child, parent/child/child2]
+  // And also we want them to be sorted by number of levels, like [parent, parent/child, parent/child/child2]
+  const keys = key.split("/");
+  const parentKeys = [];
+  for (let i = 1; i < keys.length; i++) {
+    parentKeys.push(keys.slice(0, i).join("/"));
+  }
+  return parentKeys;
+};
+
+export const getTreeDataForOrphanTargetKeys = async ({
+  treeData,
+  targetKeys,
+  onGetFieldChilds,
+}) => {
+  let updatedTreeData = treeData;
+
+  let keysToRetrieve = [];
+
+  // Check if we have target keys that are not in the first level of the tree
+  // If so, we need to load the data for those keys
+  const targetKeysNotInFirstLevel = targetKeys.filter((key) => {
+    const found =
+      flatten(treeData)?.find((item) => item.key === key) !== undefined;
+    return !found;
+  });
+
+  targetKeysNotInFirstLevel.forEach((key: string) => {
+    keysToRetrieve = [...keysToRetrieve, ...getParentKeys(key)];
+  });
+
+  // We must remove duplicates
+  keysToRetrieve = [...new Set(keysToRetrieve)];
+
+  // We must sort targetKeysNotInFirstLevel by number of levels
+  keysToRetrieve.sort((a, b) => {
+    return a.split("/").length - b.split("/").length;
+  });
+
+  // We must get the title for each key
+  for (const key of keysToRetrieve) {
+    const item = flatten(updatedTreeData).find((item) => item.key === key);
+    console.log({ key, item });
+    const childs = await onGetFieldChilds({
+      key,
+      title: item!.title,
+    });
+    updatedTreeData = updateTreeData(updatedTreeData, key, childs);
+  }
+
+  return updatedTreeData;
+};
