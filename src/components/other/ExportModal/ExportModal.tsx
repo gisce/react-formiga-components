@@ -42,11 +42,14 @@ export const ExportModal = (props: ExportModalProps) => {
   const [predefinedNameDialogVisible, setPredefinedNameDialogVisible] =
     useState(false);
 
-  const currentPredefinedExport = useRef<PredefinedExport | undefined>();
+  const [currentPredefinedExport, setCurrentPredefinedExport] = useState<
+    PredefinedExport | undefined
+  >();
 
   useEffect(() => {
     if (!visible) {
       setSelectedKeys(undefined);
+      setCurrentPredefinedExport(undefined);
       setExportType("xlsx");
       setRegistersAmount(selectedRegistersToExport ? "selected" : "all");
     }
@@ -88,7 +91,7 @@ export const ExportModal = (props: ExportModalProps) => {
 
   const loadPredefinedExport = (predefinedExport: PredefinedExport) => {
     setPredefinedModalVisible(false);
-    currentPredefinedExport.current = predefinedExport;
+    setCurrentPredefinedExport(predefinedExport);
     setSelectedKeys(predefinedExport.fields.map((field) => field.key));
   };
 
@@ -96,6 +99,7 @@ export const ExportModal = (props: ExportModalProps) => {
     <Modal
       title={
         <ExportModalTitle
+          currentPredefinedExport={currentPredefinedExport}
           onClickPredefinedButton={() => setPredefinedModalVisible(true)}
           locale={locale}
         />
@@ -137,7 +141,11 @@ export const ExportModal = (props: ExportModalProps) => {
         onConfirm={onConfirm}
         loading={loading}
         onSavePredefined={() => {
-          setPredefinedNameDialogVisible(true);
+          if (currentPredefinedExport) {
+            onSavePredefinedExport(currentPredefinedExport);
+          } else {
+            setPredefinedNameDialogVisible(true);
+          }
         }}
       />
       <EMPredefinedModal
@@ -148,7 +156,6 @@ export const ExportModal = (props: ExportModalProps) => {
         }}
         onSelectPredefinedExport={loadPredefinedExport}
         onGetPredefinedExports={onGetPredefinedExports}
-        onSavePredefinedExport={onSavePredefinedExport}
         onRemovePredefinedExport={onRemovePredefinedExport}
       />
       <EMNameDialog

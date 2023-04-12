@@ -24,8 +24,9 @@ export type EMPredefinedModalProps = {
   onCancel: () => void;
   onSelectPredefinedExport: (predefinedExport: PredefinedExport) => void;
   onGetPredefinedExports: () => Promise<PredefinedExport[]>;
-  onSavePredefinedExport: (options: PredefinedExport) => Promise<void>;
-  onRemovePredefinedExport: (id: number) => Promise<void>;
+  onRemovePredefinedExport: (
+    predefinedExport: PredefinedExport
+  ) => Promise<void>;
 };
 
 interface RowData {
@@ -43,7 +44,9 @@ const getColumns = ({
   locale: Locale;
   predefinedExports: PredefinedExport[];
   onSelectPredefinedExport: (predefinedExport: PredefinedExport) => void;
-  onRemovePredefinedExport: (id: number) => Promise<void>;
+  onRemovePredefinedExport: (
+    predefinedExport: PredefinedExport
+  ) => Promise<void>;
 }): ColumnsType<RowData> => {
   return [
     {
@@ -91,7 +94,18 @@ const getColumns = ({
             cancelText={tForLang("false", locale)}
           >
             <Tooltip title={tForLang("delete", locale)}>
-              <Button danger shape="circle" icon={<DeleteFilled />} />
+              <Button
+                danger
+                shape="circle"
+                icon={<DeleteFilled />}
+                onClick={() => {
+                  onRemovePredefinedExport(
+                    predefinedExports.find(
+                      (item) => item.id === parseInt(record.key)
+                    )
+                  );
+                }}
+              />
             </Tooltip>
           </Popconfirm>
         </Space>
