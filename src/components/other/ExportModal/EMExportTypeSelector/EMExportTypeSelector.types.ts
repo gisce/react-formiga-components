@@ -1,5 +1,5 @@
 import { Locale } from "@/context";
-import { ExportType } from "./ExportModal.types";
+import { ExportType } from "../ExportModal.types";
 
 export type EMExportTypeSelectorProps = {
   locale: Locale;

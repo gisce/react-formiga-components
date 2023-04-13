@@ -1,5 +1,5 @@
 import { Locale } from "@/context";
-import { ExportRegistersAmount } from "./ExportModal.types";
+import { ExportRegistersAmount } from "../ExportModal.types";
 
 export type EMTotalRegSelectorProps = {
   locale: Locale;

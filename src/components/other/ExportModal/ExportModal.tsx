@@ -7,14 +7,14 @@ import {
   PredefinedExport,
 } from "./ExportModal.types";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
-import { ModalBottomBar } from "@/components/ui/ModalBottomBar/ModalBottomBar";
-import { EMExportTypeSelector } from "./EMExportTypeSelector";
-import { EMTotalRegSelector } from "./EMTotalRegSelector";
+import { EMExportTypeSelector } from "./EMExportTypeSelector/EMExportTypeSelector";
+import { EMTotalRegSelector } from "./EMTotalRegSelector/EMTotalRegSelector";
 import { EMTransfer } from "./EMTransfer";
 import { EMSeparator } from "./EMSeparator";
 import { ExportModalTopBar } from "./ExportModalTopBar";
 import { EMPredefinedModal } from "./EMPredefinedModal";
 import { EMNameDialog } from "./EMNameDialog";
+import { EMBottomBar } from "./EMBottomBar";
 
 const { error } = Modal;
 
@@ -137,7 +137,7 @@ export const ExportModal = (props: ExportModalProps) => {
         onChange={setRegistersAmount}
       />
       <Divider />
-      <ModalBottomBar
+      <EMBottomBar
         locale={locale}
         onClose={onCancel}
         onConfirm={onConfirm}
