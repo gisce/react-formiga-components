@@ -15,6 +15,7 @@ export type EMTransferWrapperProps = {
   dataSource: ExportField[];
   onLoadData: (treeNode: any) => Promise<void>;
   onLoadMultipleKeys: (keys: string[]) => Promise<void>;
+  disabled?: boolean;
 };
 
 export const ColumnContainer = styled(Col)`
@@ -33,6 +34,7 @@ export const EMTransferWrapper = (props: EMTransferWrapperProps) => {
     locale,
     onChange,
     onLoadMultipleKeys,
+    disabled = false,
   } = props;
 
   const [targetKeys, setTargetKeys] = useState<string[]>(targetKeysProps);
@@ -141,6 +143,7 @@ export const EMTransferWrapper = (props: EMTransferWrapperProps) => {
           toRightDisabled={leftSelectedKeys.length === 0}
           onToRight={toRight}
           onToLeft={toLeft}
+          disabled={disabled}
         />
       </Col>
       <ColumnContainer>

@@ -17,20 +17,27 @@ export type EMTransferOperationsProps = {
   toRightDisabled: boolean;
   onToLeft: () => void;
   onToRight: () => void;
+  disabled?: boolean;
 };
 
 export const EMTransferOperations = (props: EMTransferOperationsProps) => {
-  const { toLeftDisabled, toRightDisabled, onToLeft, onToRight } = props;
+  const {
+    toLeftDisabled,
+    toRightDisabled,
+    onToLeft,
+    onToRight,
+    disabled = false,
+  } = props;
   return (
     <Container>
       <Button
         icon={<RightOutlined />}
-        disabled={toRightDisabled}
+        disabled={toRightDisabled || disabled}
         onClick={onToRight}
       />
       <Button
         icon={<LeftOutlined />}
-        disabled={toLeftDisabled}
+        disabled={toLeftDisabled || disabled}
         onClick={onToLeft}
       />
     </Container>

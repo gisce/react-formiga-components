@@ -100,19 +100,21 @@ export const ExportModal = (props: ExportModalProps) => {
 
   const onSavePredefined = useCallback(async () => {
     setLoading(true);
-    await onSavePredefinedExport({
+    const newPredefinedExport = await onSavePredefinedExport({
       ...currentPredefinedExport,
       fields: selectedFields,
     });
+    setCurrentPredefinedExport(newPredefinedExport);
     setLoading(false);
   }, [currentPredefinedExport, selectedFields]);
 
   const onSaveNewPredefined = useCallback(
     async (name: string) => {
-      await onSavePredefinedExport({
+      const newPredefinedExport = await onSavePredefinedExport({
         name,
         fields: selectedFields,
       });
+      setCurrentPredefinedExport(newPredefinedExport);
     },
     [currentPredefinedExport, selectedFields]
   );
@@ -121,6 +123,7 @@ export const ExportModal = (props: ExportModalProps) => {
     <Modal
       title={
         <ExportModalTopBar
+          disabled={loading}
           locale={locale}
           title={currentPredefinedExport?.name}
           onClickLoadPredefined={() => setPredefinedModalVisible(true)}
@@ -144,6 +147,7 @@ export const ExportModal = (props: ExportModalProps) => {
         locale={locale}
         onGetFieldChilds={props.onGetFieldChilds}
         onGetFields={props.onGetFields}
+        disabled={loading}
       />
       <EMSeparator />
       <EMExportTypeSelector

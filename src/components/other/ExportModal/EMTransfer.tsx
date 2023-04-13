@@ -10,7 +10,7 @@ import {
 } from "./exportModalHelper";
 const { error } = Modal;
 
-export type TreeTransferProps = {
+export type EMTransferProps = {
   targetKeys: string[];
   onChange: (targetFields: PredefinedExportField[]) => void;
   locale: Locale;
@@ -22,6 +22,7 @@ export type TreeTransferProps = {
     key: string;
     title: string;
   }) => Promise<ExportField[]>;
+  disabled?: boolean;
 };
 
 export const EMTransfer = ({
@@ -30,7 +31,8 @@ export const EMTransfer = ({
   onGetFields,
   onGetFieldChilds,
   onChange,
-}: TreeTransferProps) => {
+  disabled = false,
+}: EMTransferProps) => {
   const [treeData, setTreeData] = useState<ExportField[]>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -97,6 +99,7 @@ export const EMTransfer = ({
   return (
     <EMTransferWrapper
       locale={locale}
+      disabled={disabled}
       dataSource={treeData}
       onLoadData={onLoadData}
       targetKeys={targetKeys}

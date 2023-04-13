@@ -18,7 +18,9 @@ export type ExportModalProps = {
   }) => Promise<ExportField[]>;
   selectedKeys?: string[];
   onGetPredefinedExports: () => Promise<PredefinedExport[]>;
-  onSavePredefinedExport: (options: PredefinedExport) => Promise<void>;
+  onSavePredefinedExport: (
+    options: PredefinedExport
+  ) => Promise<PredefinedExport>;
   onRemovePredefinedExport: (options: PredefinedExport) => Promise<void>;
 };
 

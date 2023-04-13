@@ -12,6 +12,7 @@ export type ExportModalTopBarProps = {
   onClickClearExport: () => void;
   title?: string;
   mustShowClearButton?: boolean;
+  disabled?: boolean;
 };
 
 export const ExportModalTopBar = (props: ExportModalTopBarProps) => {
@@ -21,6 +22,7 @@ export const ExportModalTopBar = (props: ExportModalTopBarProps) => {
     title,
     onClickClearExport,
     mustShowClearButton = false,
+    disabled = false,
   } = props;
 
   return (
@@ -34,11 +36,16 @@ export const ExportModalTopBar = (props: ExportModalTopBarProps) => {
             style={{ marginRight: 20 }}
             onClick={onClickClearExport}
             icon={<ClearOutlined />}
+            disabled={disabled}
           >
             {tForLang("clearPredefinedExport", locale)}
           </Button>
         )}
-        <Button onClick={onClickLoadPredefined} icon={<BarsOutlined />}>
+        <Button
+          disabled={disabled}
+          onClick={onClickLoadPredefined}
+          icon={<BarsOutlined />}
+        >
           {tForLang("loadPredefinedExport", locale)}
         </Button>
       </Col>

@@ -29,6 +29,7 @@ export const ModalBottomBar = (props: ModalBottomBarProps) => {
           <Space>
             {rightAdditionalButtons}
             <Button
+              style={{ marginLeft: 15 }}
               icon={<CloseOutlined />}
               onClick={onClose}
               disabled={loading}

@@ -337,10 +337,14 @@ export const Default: ComponentStory<typeof ExportModal> = () => {
           ];
         }}
         onSavePredefinedExport={async (options: PredefinedExport) => {
+          await new Promise((resolve) => setTimeout(resolve, 3000));
           console.log(
             "onSavePredefinedExport: " + JSON.stringify(options, null, 2)
           );
-          return await new Promise((resolve) => setTimeout(resolve, 3000));
+          return {
+            ...options,
+            id: options.id ? options.id : Math.floor(Math.random() * 1000),
+          };
         }}
         onRemovePredefinedExport={async (options: PredefinedExport) => {
           console.log(
