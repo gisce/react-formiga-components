@@ -1,5 +1,4 @@
-import { EMBottomBar } from "./EMBottomBar";
 import { EMBottomBarProps } from "./EMBottomBar.types";
 
-export { EMBottomBar };
+export * from "./EMBottomBar";
 export type { EMBottomBarProps };

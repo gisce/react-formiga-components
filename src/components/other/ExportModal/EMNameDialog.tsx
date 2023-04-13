@@ -1,7 +1,7 @@
 import { Locale, tForLang } from "@/context";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { Button, Col, Divider, Input, Modal, Row, Space } from "antd";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   LoadingOutlined,
   CloseOutlined,
@@ -12,13 +12,27 @@ export type EMNameDialogProps = {
   locale: Locale;
   visible: boolean;
   onCancel: () => void;
-  onSucceed: (options: any) => Promise<void>;
+  onSave: (name: string) => Promise<void>;
 };
 
 export const EMNameDialog = (props: EMNameDialogProps) => {
-  const { locale, visible, onCancel, onSucceed } = props;
+  const { locale, visible, onCancel, onSave } = props;
   const { modalWidth } = useWindowDimensions();
   const [loading, setLoading] = useState(false);
+  const [name, setName] = useState<string>();
+
+  const onSaveCallback = useCallback(async () => {
+    setLoading(true);
+    await onSave(name);
+    setLoading(false);
+    onCancel();
+  }, [name]);
+
+  useEffect(() => {
+    if (!visible) {
+      setLoading(false);
+    }
+  }, [visible]);
 
   return (
     <Modal
@@ -31,7 +45,12 @@ export const EMNameDialog = (props: EMNameDialogProps) => {
       footer={null}
       destroyOnClose
     >
-      <Input placeholder={tForLang("nameOfExport", locale)}></Input>
+      <Input
+        onChange={(event) => {
+          setName(event.target.value);
+        }}
+        placeholder={tForLang("nameOfExport", locale)}
+      ></Input>
       <Divider />
       <Row>
         <Col span={24}>
@@ -48,7 +67,7 @@ export const EMNameDialog = (props: EMNameDialogProps) => {
               <Button
                 icon={loading ? <LoadingOutlined /> : <CheckOutlined />}
                 disabled={loading}
-                onClick={onSucceed}
+                onClick={onSaveCallback}
                 style={{ marginLeft: 15 }}
                 type="primary"
               >

@@ -340,15 +340,13 @@ export const Default: ComponentStory<typeof ExportModal> = () => {
           console.log(
             "onSavePredefinedExport: " + JSON.stringify(options, null, 2)
           );
-          new Promise((resolve) => setTimeout(resolve, 1000));
-          return;
+          return await new Promise((resolve) => setTimeout(resolve, 3000));
         }}
         onRemovePredefinedExport={async (options: PredefinedExport) => {
           console.log(
             "onRemovePredefinedExport: " + JSON.stringify(options, null, 2)
           );
-          new Promise((resolve) => setTimeout(resolve, 1000));
-          return;
+          return await new Promise((resolve) => setTimeout(resolve, 3000));
         }}
       />
     </>

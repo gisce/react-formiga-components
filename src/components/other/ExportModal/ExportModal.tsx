@@ -7,8 +7,8 @@ import {
   PredefinedExport,
 } from "./ExportModal.types";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
-import { EMExportTypeSelector } from "./EMExportTypeSelector/EMExportTypeSelector";
-import { EMTotalRegSelector } from "./EMTotalRegSelector/EMTotalRegSelector";
+import { EMExportTypeSelector } from "./EMExportTypeSelector";
+import { EMTotalRegSelector } from "./EMTotalRegSelector";
 import { EMTransfer } from "./EMTransfer";
 import { EMSeparator } from "./EMSeparator";
 import { ExportModalTopBar } from "./ExportModalTopBar";
@@ -95,6 +95,25 @@ export const ExportModal = (props: ExportModalProps) => {
     setSelectedKeys(predefinedExport.fields.map((field) => field.key));
   };
 
+  const onSavePredefined = useCallback(async () => {
+    setLoading(true);
+    await onSavePredefinedExport({
+      ...currentPredefinedExport,
+      fields: selectedKeys.map((key) => ({ key, title: key })),
+    });
+    setLoading(false);
+  }, [currentPredefinedExport, selectedKeys]);
+
+  const onSaveNewPredefined = useCallback(
+    async (name: string) => {
+      await onSavePredefinedExport({
+        name,
+        fields: selectedKeys.map((key) => ({ key, title: key })),
+      });
+    },
+    [currentPredefinedExport, selectedKeys]
+  );
+
   return (
     <Modal
       title={
@@ -142,9 +161,7 @@ export const ExportModal = (props: ExportModalProps) => {
         onClose={onCancel}
         onConfirm={onConfirm}
         loading={loading}
-        onSavePredefined={() => {
-          onSavePredefinedExport(currentPredefinedExport);
-        }}
+        onSavePredefined={onSavePredefined}
         onSaveNewPredefined={() => {
           setPredefinedNameDialogVisible(true);
         }}
@@ -166,10 +183,7 @@ export const ExportModal = (props: ExportModalProps) => {
         onCancel={() => {
           setPredefinedNameDialogVisible(false);
         }}
-        onSucceed={(options: any) => {
-          setPredefinedNameDialogVisible(false);
-          return Promise.resolve();
-        }}
+        onSave={onSaveNewPredefined}
       />
     </Modal>
   );
