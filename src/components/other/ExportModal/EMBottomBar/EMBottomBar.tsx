@@ -16,6 +16,7 @@ export const EMBottomBar = (props: EMBottomBarProps) => {
 
   return (
     <ModalBottomBar
+      okText={tForLang("export", locale)}
       rightAdditionalButtons={
         <>
           <Button

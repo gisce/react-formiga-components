@@ -2,7 +2,7 @@ import { Locale } from "@/context";
 import { Modal, Spin } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
 import { EMTransferWrapper } from "./EMTransferWrapper";
-import { ExportField } from "./ExportModal.types";
+import { ExportField, PredefinedExportField } from "./ExportModal.types";
 import {
   flatten,
   getTreeDataForOrphanTargetKeys,
@@ -12,7 +12,7 @@ const { error } = Modal;
 
 export type TreeTransferProps = {
   targetKeys: string[];
-  onChange: (targetKeys: string[]) => void;
+  onChange: (targetFields: PredefinedExportField[]) => void;
   locale: Locale;
   onGetFields: () => Promise<ExportField[]>;
   onGetFieldChilds: ({

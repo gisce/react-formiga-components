@@ -5,6 +5,7 @@ import {
   ExportRegistersAmount,
   ExportType,
   PredefinedExport,
+  PredefinedExportField,
 } from "./ExportModal.types";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { EMExportTypeSelector } from "./EMExportTypeSelector";
@@ -37,7 +38,9 @@ export const ExportModal = (props: ExportModalProps) => {
   const [exportType, setExportType] = useState<ExportType>("xlsx");
   const [registersAmount, setRegistersAmount] =
     useState<ExportRegistersAmount>("all");
-  const [selectedKeys, setSelectedKeys] = useState<string[]>(selectedKeysProps);
+  const [selectedFields, setSelectedFields] = useState<PredefinedExportField[]>(
+    selectedKeysProps.map((key) => ({ key }))
+  );
   const [predefinedModalVisible, setPredefinedModalVisible] = useState(false);
   const [predefinedNameDialogVisible, setPredefinedNameDialogVisible] =
     useState(false);
@@ -48,7 +51,7 @@ export const ExportModal = (props: ExportModalProps) => {
 
   useEffect(() => {
     if (!visible) {
-      setSelectedKeys(undefined);
+      setSelectedFields(undefined);
       setCurrentPredefinedExport(undefined);
       setExportType("xlsx");
       setRegistersAmount(selectedRegistersToExport ? "selected" : "all");
@@ -61,13 +64,13 @@ export const ExportModal = (props: ExportModalProps) => {
   }, [selectedRegistersToExport]);
 
   useEffect(() => {
-    if (selectedKeysProps !== undefined && !selectedKeys) {
-      setSelectedKeys(selectedKeysProps);
+    if (selectedKeysProps !== undefined && !selectedFields) {
+      setSelectedFields(selectedKeysProps.map((key) => ({ key })));
     }
-  }, [selectedKeysProps, selectedKeys]);
+  }, [selectedKeysProps, selectedFields]);
 
-  const onTransferChange = useCallback((keys: string[]) => {
-    setSelectedKeys(keys);
+  const onTransferChange = useCallback((fields: PredefinedExportField[]) => {
+    setSelectedFields(fields);
   }, []);
 
   const onConfirm = useCallback(async () => {
@@ -75,7 +78,7 @@ export const ExportModal = (props: ExportModalProps) => {
     try {
       await onSucceed({
         exportType,
-        selectedKeys,
+        selectedKeys: selectedFields.map((field) => field.key),
         registersAmount,
       });
     } catch (err) {
@@ -87,31 +90,31 @@ export const ExportModal = (props: ExportModalProps) => {
       });
     }
     setLoading(false);
-  }, [exportType, selectedKeys, registersAmount]);
+  }, [exportType, selectedFields, registersAmount]);
 
   const loadPredefinedExport = (predefinedExport: PredefinedExport) => {
     setPredefinedModalVisible(false);
     setCurrentPredefinedExport(predefinedExport);
-    setSelectedKeys(predefinedExport.fields.map((field) => field.key));
+    setSelectedFields(predefinedExport.fields);
   };
 
   const onSavePredefined = useCallback(async () => {
     setLoading(true);
     await onSavePredefinedExport({
       ...currentPredefinedExport,
-      fields: selectedKeys.map((key) => ({ key, title: key })),
+      fields: selectedFields,
     });
     setLoading(false);
-  }, [currentPredefinedExport, selectedKeys]);
+  }, [currentPredefinedExport, selectedFields]);
 
   const onSaveNewPredefined = useCallback(
     async (name: string) => {
       await onSavePredefinedExport({
         name,
-        fields: selectedKeys.map((key) => ({ key, title: key })),
+        fields: selectedFields,
       });
     },
-    [currentPredefinedExport, selectedKeys]
+    [currentPredefinedExport, selectedFields]
   );
 
   return (
@@ -134,7 +137,9 @@ export const ExportModal = (props: ExportModalProps) => {
       destroyOnClose
     >
       <EMTransfer
-        targetKeys={selectedKeys || []}
+        targetKeys={
+          selectedFields ? selectedFields.map((field) => field.key) : []
+        }
         onChange={onTransferChange}
         locale={locale}
         onGetFieldChilds={props.onGetFieldChilds}

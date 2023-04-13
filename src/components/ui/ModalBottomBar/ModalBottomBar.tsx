@@ -16,6 +16,7 @@ export const ModalBottomBar = (props: ModalBottomBarProps) => {
     loading,
     left = null,
     rightAdditionalButtons = null,
+    okText = tForLang("ok", locale),
   } = props;
 
   return (
@@ -41,7 +42,7 @@ export const ModalBottomBar = (props: ModalBottomBarProps) => {
               style={{ marginLeft: 15 }}
               type="primary"
             >
-              {tForLang("ok", locale)}
+              {okText}
             </Button>
           </Space>
         </Row>

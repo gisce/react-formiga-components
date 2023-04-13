@@ -2,15 +2,16 @@ import { Locale } from "@/context/LocaleContext";
 import { Col, Row, Spin } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
-import { ExportField } from "./ExportModal.types";
+import { ExportField, PredefinedExportField } from "./ExportModal.types";
 import { EMTransferOperations } from "./EMTransferOperations";
 import { EMTransferTree } from "./EMTransferTree";
-import { flatten, getTreeDataForOrphanTargetKeys } from "./exportModalHelper";
+import { flatten } from "./exportModalHelper";
+import useDeepCompareEffect from "use-deep-compare-effect";
 
 export type EMTransferWrapperProps = {
   locale: Locale;
   targetKeys: string[];
-  onChange: (targetKeys: string[]) => void;
+  onChange: (targetFields: PredefinedExportField[]) => void;
   dataSource: ExportField[];
   onLoadData: (treeNode: any) => Promise<void>;
   onLoadMultipleKeys: (keys: string[]) => Promise<void>;
@@ -39,9 +40,14 @@ export const EMTransferWrapper = (props: EMTransferWrapperProps) => {
   const [rightSelectedKeys, setRightSelectedKeys] = useState<string[]>([]);
   const [isLoadingTargetKeys, setIsLoadingTargetKeys] = useState(true);
 
-  useEffect(() => {
-    onChange(targetKeys);
-  }, [targetKeys]);
+  useDeepCompareEffect(() => {
+    onChange(
+      targetKeys.map((key) => ({
+        key,
+        title: flatten(dataSource).find((item) => item.key === key)?.title,
+      }))
+    );
+  }, [targetKeys, dataSource]);
 
   useEffect(() => {
     setTargetKeys(targetKeysProps);

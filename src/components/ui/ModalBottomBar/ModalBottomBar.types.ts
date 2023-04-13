@@ -7,4 +7,5 @@ export type ModalBottomBarProps = {
   loading: boolean;
   left?: React.ReactNode;
   rightAdditionalButtons?: React.ReactNode;
+  okText?: string;
 };

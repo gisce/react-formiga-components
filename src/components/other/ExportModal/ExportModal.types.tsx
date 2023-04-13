@@ -25,10 +25,12 @@ export type ExportModalProps = {
 export type PredefinedExport = {
   id?: number;
   name: string;
-  fields: {
-    key: string;
-    title?: string;
-  }[];
+  fields: PredefinedExportField[];
+};
+
+export type PredefinedExportField = {
+  key: string;
+  title?: string;
 };
 
 export type ExportType = "csv" | "xlsx";
