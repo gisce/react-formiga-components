@@ -7,4 +7,6 @@ export type ModalBottomBarProps = {
   loading: boolean;
   left?: React.ReactNode;
   onSavePredefined?: () => void;
+  onSaveNewPredefined?: () => void;
+  showSaveCurrentExport?: boolean;
 };

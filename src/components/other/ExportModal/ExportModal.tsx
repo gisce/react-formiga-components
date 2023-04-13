@@ -1,5 +1,5 @@
 import { Divider, Modal } from "antd";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   ExportModalProps,
   ExportRegistersAmount,
@@ -12,7 +12,7 @@ import { EMExportTypeSelector } from "./EMExportTypeSelector";
 import { EMTotalRegSelector } from "./EMTotalRegSelector";
 import { EMTransfer } from "./EMTransfer";
 import { EMSeparator } from "./EMSeparator";
-import { ExportModalTitle } from "./ExportModalTitle";
+import { ExportModalTopBar } from "./ExportModalTopBar";
 import { EMPredefinedModal } from "./EMPredefinedModal";
 import { EMNameDialog } from "./EMNameDialog";
 
@@ -98,10 +98,12 @@ export const ExportModal = (props: ExportModalProps) => {
   return (
     <Modal
       title={
-        <ExportModalTitle
-          currentPredefinedExport={currentPredefinedExport}
-          onClickPredefinedButton={() => setPredefinedModalVisible(true)}
+        <ExportModalTopBar
           locale={locale}
+          title={currentPredefinedExport?.name}
+          onClickLoadPredefined={() => setPredefinedModalVisible(true)}
+          onClickClearExport={() => setCurrentPredefinedExport(undefined)}
+          mustShowClearButton={!!currentPredefinedExport}
         />
       }
       centered
@@ -141,12 +143,12 @@ export const ExportModal = (props: ExportModalProps) => {
         onConfirm={onConfirm}
         loading={loading}
         onSavePredefined={() => {
-          if (currentPredefinedExport) {
-            onSavePredefinedExport(currentPredefinedExport);
-          } else {
-            setPredefinedNameDialogVisible(true);
-          }
+          onSavePredefinedExport(currentPredefinedExport);
         }}
+        onSaveNewPredefined={() => {
+          setPredefinedNameDialogVisible(true);
+        }}
+        showSaveCurrentExport={!!currentPredefinedExport}
       />
       <EMPredefinedModal
         locale={locale}
