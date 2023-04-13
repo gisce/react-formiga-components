@@ -138,7 +138,6 @@ export const getTreeDataForOrphanTargetKeys = async ({
   // We must get the title for each key
   for (const key of keysToRetrieve) {
     const item = flatten(updatedTreeData).find((item) => item.key === key);
-    console.log({ key, item });
     const childs = await onGetFieldChilds({
       key,
       title: item!.title,

@@ -27,7 +27,7 @@ export const ExportModal = (props: ExportModalProps) => {
     onSucceed,
     totalRegisters,
     selectedRegistersToExport,
-    selectedKeys: selectedKeysProps,
+    selectedKeys: selectedKeysProps = [],
     visibleRegisters,
     onGetPredefinedExports,
     onSavePredefinedExport,
