@@ -1,6 +1,7 @@
 import { Divider, Modal } from "antd";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import {
+  ExportField,
   ExportModalProps,
   ExportRegistersAmount,
   ExportType,
@@ -16,10 +17,23 @@ import { ExportModalTopBar } from "./ExportModalTopBar";
 import { EMPredefinedModal } from "./EMPredefinedModal";
 import { EMNameDialog } from "./EMNameDialog";
 import { EMBottomBar } from "./EMBottomBar";
+import {
+  ExportModalContext,
+  ExportModalContextProvider,
+} from "./ExportModalContext";
+import { updateTreeData } from "./exportModalHelper";
 
 const { error } = Modal;
 
 export const ExportModal = (props: ExportModalProps) => {
+  return (
+    <ExportModalContextProvider>
+      <ExportModalWithContext {...props} />
+    </ExportModalContextProvider>
+  );
+};
+
+export const ExportModalWithContext = (props: ExportModalProps) => {
   const {
     visible,
     locale,
@@ -44,6 +58,7 @@ export const ExportModal = (props: ExportModalProps) => {
   const [predefinedModalVisible, setPredefinedModalVisible] = useState(false);
   const [predefinedNameDialogVisible, setPredefinedNameDialogVisible] =
     useState(false);
+  const { dataSource, setDataSource } = useContext(ExportModalContext);
 
   const [currentPredefinedExport, setCurrentPredefinedExport] = useState<
     PredefinedExport | undefined
@@ -119,6 +134,25 @@ export const ExportModal = (props: ExportModalProps) => {
     [currentPredefinedExport, selectedFields]
   );
 
+  const onGetPredefinedExportsCallback = useCallback(async () => {
+    const { predefinedExports, keysWithChilds } =
+      await onGetPredefinedExports();
+
+    let updatedTree: ExportField[] = undefined;
+
+    for (const entry of keysWithChilds) {
+      const { key, childs } = entry;
+      if (!updatedTree) {
+        updatedTree = updateTreeData(dataSource!, key, childs);
+      } else {
+        updatedTree = updateTreeData(updatedTree, key, childs);
+      }
+      console.log({ key, updatedTree });
+    }
+    setDataSource(updatedTree);
+    return predefinedExports;
+  }, [dataSource]);
+
   return (
     <Modal
       title={
@@ -183,7 +217,7 @@ export const ExportModal = (props: ExportModalProps) => {
           setPredefinedModalVisible(false);
         }}
         onSelectPredefinedExport={loadPredefinedExport}
-        onGetPredefinedExports={onGetPredefinedExports}
+        onGetPredefinedExports={onGetPredefinedExportsCallback}
         onRemovePredefinedExport={onRemovePredefinedExport}
       />
       <EMNameDialog

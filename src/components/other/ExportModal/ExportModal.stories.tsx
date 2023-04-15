@@ -40,7 +40,7 @@ export const Default: ComponentStory<typeof ExportModal> = () => {
         totalRegisters={92348}
         visibleRegisters={8}
         selectedRegistersToExport={32}
-        onGetFieldChilds={async ({ key }: any) => {
+        onGetFieldChilds={async (key: string) => {
           console.log("onGetFieldChilds: " + key);
           await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -306,11 +306,9 @@ export const Default: ComponentStory<typeof ExportModal> = () => {
               fields: [
                 {
                   key: "active/contador",
-                  title: "Activo/Contador",
                 },
                 {
                   key: "parent1/parent2/test",
-                  title: "Parent1/Parent2/test",
                 },
               ],
             },
@@ -320,7 +318,6 @@ export const Default: ComponentStory<typeof ExportModal> = () => {
               fields: [
                 {
                   key: "active",
-                  title: "Activo",
                 },
               ],
             },
@@ -330,7 +327,6 @@ export const Default: ComponentStory<typeof ExportModal> = () => {
               fields: [
                 {
                   key: "city",
-                  title: "Ciudad",
                 },
               ],
             },

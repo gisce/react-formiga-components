@@ -14,7 +14,6 @@ export type EMTransferWrapperProps = {
   onChange: (targetFields: PredefinedExportField[]) => void;
   dataSource: ExportField[];
   onLoadData: (treeNode: any) => Promise<void>;
-  onLoadMultipleKeys: (keys: string[]) => Promise<void>;
   disabled?: boolean;
 };
 
@@ -33,14 +32,12 @@ export const EMTransferWrapper = (props: EMTransferWrapperProps) => {
     onLoadData,
     locale,
     onChange,
-    onLoadMultipleKeys,
     disabled = false,
   } = props;
 
   const [targetKeys, setTargetKeys] = useState<string[]>(targetKeysProps);
   const [leftSelectedKeys, setLeftSelectedKeys] = useState<string[]>([]);
   const [rightSelectedKeys, setRightSelectedKeys] = useState<string[]>([]);
-  const [isLoadingTargetKeys, setIsLoadingTargetKeys] = useState(true);
 
   useDeepCompareEffect(() => {
     onChange(
@@ -51,23 +48,8 @@ export const EMTransferWrapper = (props: EMTransferWrapperProps) => {
     );
   }, [targetKeys, dataSource]);
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     setTargetKeys(targetKeysProps);
-    loadTargetKeys();
-  }, [targetKeysProps]);
-
-  const loadTargetKeys = useCallback(async () => {
-    setIsLoadingTargetKeys(true);
-
-    const newKeys = targetKeysProps.filter(
-      (key) =>
-        !flatten(dataSource)
-          .map((item) => item.key)
-          .includes(key)
-    );
-
-    await onLoadMultipleKeys(newKeys);
-    setIsLoadingTargetKeys(false);
   }, [targetKeysProps]);
 
   const toRight = useCallback(() => {
@@ -157,7 +139,6 @@ export const EMTransferWrapper = (props: EMTransferWrapperProps) => {
           selectedKeys={rightSelectedKeys}
           setSelectedKeys={onSetRightSelectedKeys}
           setTargetKeys={setTargetKeys}
-          isLoading={isLoadingTargetKeys}
         />
       </ColumnContainer>
     </Row>

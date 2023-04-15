@@ -9,15 +9,12 @@ export type ExportModalProps = {
   totalRegisters: number;
   visibleRegisters: number;
   onGetFields: () => Promise<ExportField[]>;
-  onGetFieldChilds: ({
-    key,
-    title,
-  }: {
-    key: string;
-    title: string;
-  }) => Promise<ExportField[]>;
+  onGetFieldChilds: (key: string) => Promise<ExportField[]>;
   selectedKeys?: string[];
-  onGetPredefinedExports: () => Promise<PredefinedExport[]>;
+  onGetPredefinedExports: () => Promise<{
+    predefinedExports: PredefinedExport[];
+    keysWithChilds: { key: string; childs: ExportField[] }[];
+  }>;
   onSavePredefinedExport: (
     options: PredefinedExport
   ) => Promise<PredefinedExport>;

@@ -1,13 +1,10 @@
 import { Locale } from "@/context";
 import { Modal, Spin } from "antd";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { EMTransferWrapper } from "./EMTransferWrapper";
 import { ExportField, PredefinedExportField } from "./ExportModal.types";
-import {
-  flatten,
-  getTreeDataForOrphanTargetKeys,
-  updateTreeData,
-} from "./exportModalHelper";
+import { ExportModalContext } from "./ExportModalContext";
+import { updateTreeData } from "./exportModalHelper";
 const { error } = Modal;
 
 export type EMTransferProps = {
@@ -15,13 +12,7 @@ export type EMTransferProps = {
   onChange: (targetFields: PredefinedExportField[]) => void;
   locale: Locale;
   onGetFields: () => Promise<ExportField[]>;
-  onGetFieldChilds: ({
-    key,
-    title,
-  }: {
-    key: string;
-    title: string;
-  }) => Promise<ExportField[]>;
+  onGetFieldChilds: (key: string) => Promise<ExportField[]>;
   disabled?: boolean;
 };
 
@@ -33,7 +24,7 @@ export const EMTransfer = ({
   onChange,
   disabled = false,
 }: EMTransferProps) => {
-  const [treeData, setTreeData] = useState<ExportField[]>();
+  const { dataSource, setDataSource } = useContext(ExportModalContext);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -45,7 +36,7 @@ export const EMTransfer = ({
 
     try {
       const initialItems = await onGetFields();
-      setTreeData(initialItems);
+      setDataSource(initialItems);
     } catch (err) {
       console.error(err);
       error({
@@ -61,13 +52,9 @@ export const EMTransfer = ({
   const onLoadData = useCallback(
     async ({ key }: any) => {
       try {
-        const item = flatten(treeData).find((item) => item.key === key);
-        const childs = await onGetFieldChilds({
-          key,
-          title: item!.title,
-        });
-        const updatedTree = updateTreeData(treeData!, key, childs);
-        setTreeData(updatedTree);
+        const childs = await onGetFieldChilds(key);
+        const updatedTree = updateTreeData(dataSource!, key, childs);
+        setDataSource(updatedTree);
       } catch (err) {
         console.error(err);
         error({
@@ -77,19 +64,7 @@ export const EMTransfer = ({
         });
       }
     },
-    [treeData]
-  );
-
-  const onLoadMultipleKeys = useCallback(
-    async (newKeys: string[]) => {
-      const newTreeData = await getTreeDataForOrphanTargetKeys({
-        treeData,
-        targetKeys: newKeys,
-        onGetFieldChilds,
-      });
-      setTreeData(newTreeData);
-    },
-    [treeData]
+    [dataSource]
   );
 
   if (isLoading) {
@@ -100,11 +75,10 @@ export const EMTransfer = ({
     <EMTransferWrapper
       locale={locale}
       disabled={disabled}
-      dataSource={treeData}
+      dataSource={dataSource}
       onLoadData={onLoadData}
       targetKeys={targetKeys}
       onChange={onChange}
-      onLoadMultipleKeys={onLoadMultipleKeys}
     />
   );
 };
