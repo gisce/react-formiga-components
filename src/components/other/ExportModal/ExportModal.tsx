@@ -138,18 +138,20 @@ export const ExportModalWithContext = (props: ExportModalProps) => {
     const { predefinedExports, keysWithChilds } =
       await onGetPredefinedExports();
 
-    let updatedTree: ExportField[] = undefined;
+    if (keysWithChilds.length > 0) {
+      let updatedTree: ExportField[] = undefined;
 
-    for (const entry of keysWithChilds) {
-      const { key, childs } = entry;
-      if (!updatedTree) {
-        updatedTree = updateTreeData(dataSource!, key, childs);
-      } else {
-        updatedTree = updateTreeData(updatedTree, key, childs);
+      for (const entry of keysWithChilds) {
+        const { key, childs } = entry;
+        if (!updatedTree) {
+          updatedTree = updateTreeData(dataSource!, key, childs);
+        } else {
+          updatedTree = updateTreeData(updatedTree, key, childs);
+        }
       }
-      console.log({ key, updatedTree });
+      setDataSource(updatedTree);
     }
-    setDataSource(updatedTree);
+
     return predefinedExports;
   }, [dataSource]);
 
