@@ -1,12 +1,12 @@
 {
   "name": "@gisce/react-formiga-components",
-  "version": "1.0.9-rc.16",
+  "version": "1.0.9-rc.17",
   "lockfileVersion": 2,
   "requires": true,
   "packages": {
     "": {
       "name": "@gisce/react-formiga-components",
-      "version": "1.0.9-rc.16",
+      "version": "1.0.9-rc.17",
       "license": "MIT",
       "dependencies": {
         "antd": "^4.24.3",

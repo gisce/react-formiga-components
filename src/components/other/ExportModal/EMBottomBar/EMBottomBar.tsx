@@ -6,12 +6,7 @@ import { EMBottomBarProps } from "./EMBottomBar.types";
 import { ModalBottomBar } from "@/components/ui/ModalBottomBar/ModalBottomBar";
 
 export const EMBottomBar = (props: EMBottomBarProps) => {
-  const {
-    onSavePredefined,
-    onSaveNewPredefined,
-    showSaveCurrentExport = false,
-    ...rest
-  } = props;
+  const { onSavePredefined, ...rest } = props;
   const { loading, locale } = props;
 
   return (
@@ -20,21 +15,12 @@ export const EMBottomBar = (props: EMBottomBarProps) => {
       rightAdditionalButtons={
         <>
           <Button
-            icon={<PlusCircleOutlined />}
-            onClick={onSaveNewPredefined}
+            icon={<SaveOutlined />}
+            onClick={onSavePredefined}
             disabled={loading}
           >
-            {tForLang("saveNewPredefinedExport", locale)}
+            {tForLang("savePredefinedExport", locale)}
           </Button>
-          {showSaveCurrentExport && (
-            <Button
-              icon={<SaveOutlined />}
-              onClick={onSavePredefined}
-              disabled={loading}
-            >
-              {tForLang("savePredefinedExport", locale)}
-            </Button>
-          )}
         </>
       }
       {...rest}

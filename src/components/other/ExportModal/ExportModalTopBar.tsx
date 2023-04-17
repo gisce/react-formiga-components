@@ -9,9 +9,7 @@ import { ClearOutlined } from "@ant-design/icons";
 export type ExportModalTopBarProps = {
   locale: Locale;
   onClickLoadPredefined: () => void;
-  onClickClearExport: () => void;
   title?: string;
-  mustShowClearButton?: boolean;
   disabled?: boolean;
 };
 
@@ -20,8 +18,6 @@ export const ExportModalTopBar = (props: ExportModalTopBarProps) => {
     locale,
     onClickLoadPredefined,
     title,
-    onClickClearExport,
-    mustShowClearButton = false,
     disabled = false,
   } = props;
 
@@ -31,16 +27,6 @@ export const ExportModalTopBar = (props: ExportModalTopBarProps) => {
         {title ? title : tForLang("export", locale)}
       </Col>
       <Col>
-        {mustShowClearButton && (
-          <Button
-            style={{ marginRight: 20 }}
-            onClick={onClickClearExport}
-            icon={<ClearOutlined />}
-            disabled={disabled}
-          >
-            {tForLang("clearPredefinedExport", locale)}
-          </Button>
-        )}
         <Button
           disabled={disabled}
           onClick={onClickLoadPredefined}

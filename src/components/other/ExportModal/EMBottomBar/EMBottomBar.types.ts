@@ -2,6 +2,4 @@ import { ModalBottomBarProps } from "@/components/ui/ModalBottomBar/ModalBottomB
 
 export type EMBottomBarProps = ModalBottomBarProps & {
   onSavePredefined?: () => void;
-  onSaveNewPredefined?: () => void;
-  showSaveCurrentExport?: boolean;
 };

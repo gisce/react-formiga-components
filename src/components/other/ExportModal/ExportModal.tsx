@@ -113,16 +113,6 @@ export const ExportModalWithContext = (props: ExportModalProps) => {
     setSelectedFields(predefinedExport.fields);
   };
 
-  const onSavePredefined = useCallback(async () => {
-    setLoading(true);
-    const newPredefinedExport = await onSavePredefinedExport({
-      ...currentPredefinedExport,
-      fields: selectedFields,
-    });
-    setCurrentPredefinedExport(newPredefinedExport);
-    setLoading(false);
-  }, [currentPredefinedExport, selectedFields]);
-
   const onSaveNewPredefined = useCallback(
     async (name: string) => {
       const newPredefinedExport = await onSavePredefinedExport({
@@ -163,8 +153,6 @@ export const ExportModalWithContext = (props: ExportModalProps) => {
           locale={locale}
           title={currentPredefinedExport?.name}
           onClickLoadPredefined={() => setPredefinedModalVisible(true)}
-          onClickClearExport={() => setCurrentPredefinedExport(undefined)}
-          mustShowClearButton={!!currentPredefinedExport}
         />
       }
       centered
@@ -206,11 +194,9 @@ export const ExportModalWithContext = (props: ExportModalProps) => {
         onClose={onCancel}
         onConfirm={onConfirm}
         loading={loading}
-        onSavePredefined={onSavePredefined}
-        onSaveNewPredefined={() => {
+        onSavePredefined={() => {
           setPredefinedNameDialogVisible(true);
         }}
-        showSaveCurrentExport={!!currentPredefinedExport}
       />
       <EMPredefinedModal
         locale={locale}

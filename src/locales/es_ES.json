@@ -95,7 +95,5 @@
   "loadPredefinedExport": "Cargar exportación predefinida",
   "enterNameOfExport": "Introduce el nombre de la exportación",
   "nameOfExport": "Nombre de la exportación",
-  "savePredefinedExport": "Guardar exportación predefinida",
-  "saveNewPredefinedExport": "Guardar como nueva exportación predefinida",
-  "clearPredefinedExport": "Limpiar exportación predefinida"
+  "savePredefinedExport": "Guardar exportación predefinida"
 }
