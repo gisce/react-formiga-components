@@ -1,135 +1,55 @@
-import React, { useContext } from "react";
-
-import {
-  FileAddOutlined,
-  SaveOutlined,
-  DeleteOutlined,
-  LeftOutlined,
-  RightOutlined,
-  AlignLeftOutlined,
-  LoadingOutlined,
-  SearchOutlined,
-  ApiOutlined,
-} from "@ant-design/icons";
+import React from "react";
+import { AlignLeftOutlined } from "@ant-design/icons";
 import { Button } from "@/components/ui/Button";
-import {
-  LocaleContext,
-  LocaleContextType,
-  tForLangContext,
-} from "@/context/LocaleContext";
-import { Container, Separator, Title, Wrapper } from "./One2ManyTopBar.styles";
+import { tForLang } from "@/context/LocaleContext";
+import { Container, Title, Wrapper } from "./One2ManyTopBar.styles";
 import { One2manyTopBarProps } from "./One2ManyTopBar.types";
+import { O2MTBButtons } from "./O2MTBButtons";
 
 export const One2ManyTopBar = (props: One2manyTopBarProps) => {
   const {
     title,
     readOnly = false,
-    onCreateItem,
-    onToggleViewMode,
-    mode,
-    saveButtonLoading,
-    onSaveItem,
-    saveButtonDisabled,
-    onDelete,
     totalItems,
     currentItemIndex,
-    onPreviousItem,
-    onNextItem,
-    isMany2Many,
-    onSearchItem,
     locale,
+    onChangeViewMode,
+    viewModes,
+    currentViewMode,
+    buttonOpts,
   } = props;
-
-  const { t: tContext = undefined } =
-    (useContext(LocaleContext) as LocaleContextType) || {};
-  function t(key: string) {
-    return tForLangContext(key, locale, tContext);
-  }
-
-  function saveButton() {
-    return (
-      <Button
-        tooltip={t("save")}
-        icon={saveButtonLoading ? <LoadingOutlined /> : <SaveOutlined />}
-        onClick={onSaveItem}
-        disabled={saveButtonLoading || saveButtonDisabled || readOnly}
-      />
-    );
-  }
-
-  function deleteButton() {
-    return (
-      <Button
-        tooltip={isMany2Many ? t("unlinkItems") : t("delete")}
-        icon={isMany2Many ? <ApiOutlined /> : <DeleteOutlined />}
-        onClick={onDelete}
-        disabled={totalItems === 0 || readOnly}
-      />
-    );
-  }
-
-  function index() {
-    let itemToShow = "_";
-    if (totalItems === 0) {
-      itemToShow = "_";
-    } else {
-      itemToShow = (currentItemIndex + 1).toString();
-    }
-    return (
-      <span style={{ paddingLeft: "0.25rem", paddingRight: "0.25rem" }}>
-        ({itemToShow}/{totalItems})
-      </span>
-    );
-  }
-
-  function itemBrowser() {
-    return (
-      <>
-        <Separator />
-        <Button
-          tooltip={t("previous")}
-          icon={<LeftOutlined />}
-          onClick={onPreviousItem}
-        />
-        {index()}
-        <Button
-          tooltip={t("next")}
-          icon={<RightOutlined />}
-          onClick={onNextItem}
-        />
-      </>
-    );
-  }
 
   return (
     <Container>
       <Title title={title} />
       <Wrapper>
+        <O2MTBButtons locale={locale} buttonOpts={buttonOpts} />
         <Button
-          tooltip={t("createNew")}
-          icon={<FileAddOutlined />}
-          disabled={readOnly}
-          onClick={onCreateItem}
-        />
-        {isMany2Many && (
-          <Button
-            tooltip={t("searchExisting")}
-            icon={<SearchOutlined />}
-            disabled={readOnly}
-            onClick={onSearchItem}
-          />
-        )}
-        <Separator />
-        {mode === "form" && saveButton()}
-        {deleteButton()}
-        {mode === "form" && itemBrowser()}
-        <Separator />
-        <Button
-          tooltip={t("toggleViewMode")}
+          tooltip={tForLang("toggleViewMode", locale)}
           icon={<AlignLeftOutlined />}
-          onClick={onToggleViewMode}
+          onClick={() => {
+            const nextViewMode = getNextValue({
+              current: currentViewMode,
+              array: viewModes,
+            });
+            onChangeViewMode(nextViewMode);
+          }}
         />
       </Wrapper>
     </Container>
   );
 };
+
+function getNextValue({
+  current,
+  array,
+}: {
+  current: string;
+  array: string[];
+}): string | null {
+  const currentIndex = array.indexOf(current);
+  if (currentIndex === -1 || currentIndex === array.length - 1) {
+    return array[0];
+  }
+  return array[currentIndex + 1];
+}
