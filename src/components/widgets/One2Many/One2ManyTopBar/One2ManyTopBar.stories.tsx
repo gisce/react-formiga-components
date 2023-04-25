@@ -232,26 +232,3 @@ BasicFormMany2Many.args = {
     },
   },
 };
-// export const BasicForm = Template.bind({});
-// BasicForm.args = {
-//   title: "Relationship title",
-//   mode: "form",
-//   currentItemIndex: 0,
-//   totalItems: 3,
-// };
-
-// export const BasicTreeMany2Many = Template.bind({});
-// BasicTreeMany2Many.args = {
-//   title: "Relationship title",
-//   mode: "tree",
-//   isMany2Many: true,
-// };
-
-// export const BasicFormMany2Many = Template.bind({});
-// BasicFormMany2Many.args = {
-//   title: "Relationship title",
-//   mode: "form",
-//   currentItemIndex: 0,
-//   totalItems: 3,
-//   isMany2Many: true,
-// };
