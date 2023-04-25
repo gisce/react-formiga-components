@@ -1,5 +1,5 @@
 import React from "react";
-import { AlignLeftOutlined } from "@ant-design/icons";
+import { AlignLeftOutlined, LoadingOutlined } from "@ant-design/icons";
 import { Button } from "@/components/ui/Button";
 import { tForLang } from "@/context/LocaleContext";
 import { Container, Title, Wrapper } from "./One2ManyTopBar.styles";
@@ -9,9 +9,6 @@ import { O2MTBButtons } from "./O2MTBButtons";
 export const One2ManyTopBar = (props: One2manyTopBarProps) => {
   const {
     title,
-    readOnly = false,
-    totalItems,
-    currentItemIndex,
     locale,
     onChangeViewMode,
     viewModes,
@@ -26,7 +23,14 @@ export const One2ManyTopBar = (props: One2manyTopBarProps) => {
         <O2MTBButtons locale={locale} buttonOpts={buttonOpts} />
         <Button
           tooltip={tForLang("toggleViewMode", locale)}
-          icon={<AlignLeftOutlined />}
+          disabled={buttonOpts?.toggleViewMode?.loading}
+          icon={
+            buttonOpts?.toggleViewMode?.loading ? (
+              <LoadingOutlined />
+            ) : (
+              <AlignLeftOutlined />
+            )
+          }
           onClick={() => {
             const nextViewMode = getNextValue({
               current: currentViewMode,

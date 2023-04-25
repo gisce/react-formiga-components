@@ -1,13 +1,16 @@
 import { LocaleType } from "@/context/LocaleContext";
 import { O2MViewMode } from "../One2ManyInput/One2ManyInput.types";
 
-type O2MTopBarButtonOpt = {
+export type O2MTopBarButtonBasicOpt = {
   show?: boolean;
+  tooltip?: string;
+  icon?: React.ReactNode;
+};
+
+type O2MTopBarButtonOpt = O2MTopBarButtonBasicOpt & {
   loading?: boolean;
   disabled?: boolean;
   onClick?: () => void;
-  tooltip?: string;
-  icon?: React.ReactNode;
 };
 
 type O2MTopBarNavigatorOpt = {
@@ -24,13 +27,11 @@ export type O2MTopBarButtonsType = {
   create?: O2MTopBarButtonOpt;
   search?: O2MTopBarButtonOpt;
   navigator?: O2MTopBarNavigatorOpt;
+  toggleViewMode?: { loading?: boolean };
 };
 
 export type One2manyTopBarProps = LocaleType & {
   title: string;
-  readOnly?: boolean;
-  totalItems: number;
-  currentItemIndex: number;
   viewModes: O2MViewMode[];
   currentViewMode: O2MViewMode;
   onChangeViewMode: (viewMode: O2MViewMode) => void;

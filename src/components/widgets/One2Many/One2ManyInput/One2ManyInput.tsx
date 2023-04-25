@@ -1,9 +1,12 @@
 import { Alert } from "antd";
 import React, { useState } from "react";
-import { One2ManyInputProps } from "./One2ManyInput.types";
+import { One2ManyTopBar } from "../One2ManyTopBar";
+import { O2MViewMode, One2ManyInputProps } from "./One2ManyInput.types";
 
 export const One2ManyInput = (props: One2ManyInputProps) => {
   const {
+    title,
+    locale,
     value,
     onChange,
     viewModes,
@@ -15,8 +18,23 @@ export const One2ManyInput = (props: One2ManyInputProps) => {
   const [currentViewMode, setCurrentViewMode] = useState(initialViewMode);
 
   if (!viewModes.includes(initialViewMode)) {
-    return <Alert message={`${initialViewMode} not supported`} type="error" />;
+    return (
+      <Alert message={`${initialViewMode} view not supported`} type="error" />
+    );
   }
 
-  return <>{onRenderMode(currentViewMode)}</>;
+  return (
+    <>
+      <One2ManyTopBar
+        locale={locale}
+        title={title}
+        viewModes={viewModes}
+        currentViewMode={currentViewMode}
+        onChangeViewMode={(mode: O2MViewMode) => {
+          setCurrentViewMode(mode);
+        }}
+      />
+      {onRenderMode(currentViewMode)}
+    </>
+  );
 };
