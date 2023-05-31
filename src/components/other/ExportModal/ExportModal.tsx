@@ -146,7 +146,7 @@ export const ExportModalWithContext = (props: ExportModalProps) => {
   }, [dataSource]);
 
   return (
-    <Modal
+    (<Modal
       title={
         <ExportModalTopBar
           disabled={loading}
@@ -157,7 +157,7 @@ export const ExportModalWithContext = (props: ExportModalProps) => {
       }
       centered
       width={modalWidth}
-      visible={visible}
+      open={visible}
       closable={true && !loading}
       onCancel={onCancel}
       footer={null}
@@ -200,7 +200,7 @@ export const ExportModalWithContext = (props: ExportModalProps) => {
       />
       <EMPredefinedModal
         locale={locale}
-        visible={predefinedModalVisible}
+        open={predefinedModalVisible}
         onCancel={() => {
           setPredefinedModalVisible(false);
         }}
@@ -210,12 +210,12 @@ export const ExportModalWithContext = (props: ExportModalProps) => {
       />
       <EMNameDialog
         locale={locale}
-        visible={predefinedNameDialogVisible}
+        open={predefinedNameDialogVisible}
         onCancel={() => {
           setPredefinedNameDialogVisible(false);
         }}
         onSave={onSaveNewPredefined}
       />
-    </Modal>
+    </Modal>)
   );
 };

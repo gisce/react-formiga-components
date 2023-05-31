@@ -35,11 +35,11 @@ export const EMNameDialog = (props: EMNameDialogProps) => {
   }, [visible]);
 
   return (
-    <Modal
+    (<Modal
       title={tForLang("enterNameOfExport", locale)}
       centered
       width={modalWidth * 0.8}
-      visible={visible}
+      open={visible}
       closable={true && !loading}
       onCancel={onCancel}
       footer={null}
@@ -77,6 +77,6 @@ export const EMNameDialog = (props: EMNameDialogProps) => {
           </Row>
         </Col>
       </Row>
-    </Modal>
+    </Modal>)
   );
 };

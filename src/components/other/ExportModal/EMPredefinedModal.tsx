@@ -87,11 +87,11 @@ export const EMPredefinedModal = (props: EMPredefinedModalProps) => {
   };
 
   return (
-    <Modal
+    (<Modal
       title={tForLang("selectPredefinedExport", locale)}
       centered
       width={modalWidth * 0.8}
-      visible={visible}
+      open={visible}
       closable={!loading && !removeInProgress}
       onCancel={onCancel}
       footer={null}
@@ -134,7 +134,7 @@ export const EMPredefinedModal = (props: EMPredefinedModalProps) => {
           </Row>
         </>
       )}
-    </Modal>
+    </Modal>)
   );
 };
 
