@@ -1,6 +1,6 @@
 import { DatePicker } from "antd";
 import React from "react";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { DatePickerInputProps } from "./DateInput.types";
 import { RequiredDatePicker } from "./DateInput.styles";
 
@@ -29,7 +29,7 @@ export const DateInput: React.FC<DatePickerInputProps> = (
     onChange?.(changedValue);
   }
 
-  function onValueStringChange(momentDate: any) {
+  function onValueStringChange(momentDate: Dayjs) {
     if (momentDate === null) {
       triggerChange(undefined);
       return;

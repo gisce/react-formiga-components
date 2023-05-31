@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { Col, DatePicker, Row, TimePicker } from "antd";
-import { Moment } from "moment";
+import { Dayjs } from "dayjs";
 import { defaultDateFormat } from "../DateSearch/DateSearch.types";
 import { DateTimeSearchProps, defaultTimeFormat } from "./DateTimeSearch.types";
 import {
@@ -27,7 +27,7 @@ export const DateTimeSearch = (props: DateTimeSearchProps) => {
           allowEmpty={[true, true]}
           format={defaultDateFormat}
           value={momentDateValue as any}
-          onChange={(momentValues: Moment[]) => {
+          onChange={(momentValues: Dayjs[]) => {
             dateRef.current = convertMomentDateArrayToStringArray(
               momentValues
             ) as [string, string];
@@ -41,7 +41,7 @@ export const DateTimeSearch = (props: DateTimeSearchProps) => {
           allowEmpty={[true, true]}
           format={defaultTimeFormat}
           value={momentTimeValue as any}
-          onChange={(momentValues: Moment[]) => {
+          onChange={(momentValues: Dayjs[]) => {
             timeRef.current = convertMomentTimeArrayToStringArray(
               momentValues
             ) as [string, string];

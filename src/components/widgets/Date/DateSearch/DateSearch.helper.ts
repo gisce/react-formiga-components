@@ -1,4 +1,4 @@
-import moment, { Moment } from "moment";
+import dayjs, { Dayjs } from "dayjs";
 import { defaultDateFormat } from "./DateSearch.types";
 
 export const getMomentValue = (value: [string, string]) => {
@@ -10,7 +10,7 @@ export const getMomentValue = (value: [string, string]) => {
   );
 };
 
-export const convertMomentDateArrayToStringArray = (momentValues: Moment[]) => {
+export const convertMomentDateArrayToStringArray = (momentValues: Dayjs[]) => {
   const from = momentValues[0]
     ? momentValues[0].format(defaultDateFormat)
     : null;

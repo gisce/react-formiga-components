@@ -200,7 +200,7 @@ export const ExportModalWithContext = (props: ExportModalProps) => {
       />
       <EMPredefinedModal
         locale={locale}
-        open={predefinedModalVisible}
+        visible={predefinedModalVisible}
         onCancel={() => {
           setPredefinedModalVisible(false);
         }}
@@ -210,7 +210,7 @@ export const ExportModalWithContext = (props: ExportModalProps) => {
       />
       <EMNameDialog
         locale={locale}
-        open={predefinedNameDialogVisible}
+        visible={predefinedNameDialogVisible}
         onCancel={() => {
           setPredefinedNameDialogVisible(false);
         }}
