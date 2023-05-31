@@ -10,8 +10,8 @@ export const getMomentDateValue = (
 ) => {
   return value && value[0]
     ? [
-        value[0][0] ? moment(value[0][0], defaultDateFormat) : null,
-        value[0][1] ? moment(value[0][1], defaultDateFormat) : null,
+        value[0][0] ? dayjs(value[0][0], defaultDateFormat) : null,
+        value[0][1] ? dayjs(value[0][1], defaultDateFormat) : null,
       ]
     : [null, null];
 };
@@ -22,13 +22,13 @@ export const getMomentTimeValue = (
   return value && value[1]
     ? [
         value[1][0]
-          ? moment(
+          ? dayjs(
               defaultDateForTimeValue + " " + value[1][0],
               `${defaultDateFormat} ${defaultTimeFormat}`
             )
           : null,
         value[1][1]
-          ? moment(
+          ? dayjs(
               defaultDateForTimeValue + " " + value[1][1],
               `${defaultDateFormat} ${defaultTimeFormat}`
             )

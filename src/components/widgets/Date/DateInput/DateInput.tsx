@@ -1,6 +1,6 @@
 import { DatePicker } from "antd";
 import React from "react";
-import moment from "moment";
+import dayjs from "dayjs";
 import { DatePickerInputProps } from "./DateInput.types";
 import { RequiredDatePicker } from "./DateInput.styles";
 
@@ -39,9 +39,9 @@ export const DateInput: React.FC<DatePickerInputProps> = (
   }
 
   const showTimeParms = showTime
-    ? { defaultValue: moment("00:00:00", "HH:mm:ss") }
+    ? { defaultValue: dayjs("00:00:00", "HH:mm:ss") }
     : undefined;
-  const dateValue = value ? moment(value) : undefined;
+  const dateValue = value ? dayjs(value) : undefined;
 
   return (
     <InputComponent

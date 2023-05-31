@@ -52,7 +52,6 @@
     "antd": "^5.5.2",
     "file-type-buffer-browser": "git+ssh://git@github.com/mguellsegarra/file-type-buffer-browser.git",
     "interweave": "^13.0.0",
-    "moment": "^2.29.1",
     "use-deep-compare-effect": "^1.8.1",
     "validator": "^13.7.0"
   },
