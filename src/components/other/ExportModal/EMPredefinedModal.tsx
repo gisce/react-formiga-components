@@ -35,6 +35,8 @@ interface RowData {
   fields: string;
 }
 
+const MODAL_WIDTH_FACTOR = 0.8;
+
 export const EMPredefinedModal = (props: EMPredefinedModalProps) => {
   const {
     locale,
@@ -92,7 +94,7 @@ export const EMPredefinedModal = (props: EMPredefinedModalProps) => {
     (<Modal
       title={tForLang("selectPredefinedExport", locale)}
       centered
-      width={modalWidth * 0.8}
+      width={modalWidth * MODAL_WIDTH_FACTOR}
       open={visible}
       closable={!loading && !removeInProgress}
       onCancel={onCancel}
