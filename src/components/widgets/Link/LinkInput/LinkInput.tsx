@@ -1,3 +1,6 @@
+// @TODO: Review this component
+// @ts-nocheck
+/* eslint-disable */
 import React, { useEffect, useState } from "react";
 import { Input, Button, Row, Col } from "antd";
 

@@ -1,4 +1,4 @@
-import React from "react";
+import { ChangeEvent } from "react";
 import { Input } from "antd";
 import { CharInputProps } from "./CharInput.types";
 import { RequiredCharInput, RequiredPasswordInput } from "./CharInput.styles";
@@ -25,8 +25,8 @@ export const CharInput = (props: CharInputProps) => {
   const compProps = {
     id: name,
     disabled: readOnly,
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-      onChange(e.target.value);
+    onChange: (e: ChangeEvent<HTMLInputElement>) => {
+      onChange?.(e.target.value);
     },
     value,
     className: requiredClass,

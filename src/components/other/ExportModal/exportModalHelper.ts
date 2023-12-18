@@ -5,14 +5,14 @@ export const filterOption = (inputValue: string, option: ExportField) =>
   option.key.toLowerCase().indexOf(inputValue.toLowerCase()) > -1;
 
 export const isChecked = (
-  selectedKeys: (string | number)[],
-  eventKey: string | number
+  selectedKeys: Array<string | number>,
+  eventKey: string | number,
 ) => selectedKeys.includes(eventKey);
 
 export const updateTreeData = (
   list: ExportField[],
   key: React.Key,
-  children: ExportField[]
+  children: ExportField[],
 ): ExportField[] =>
   list.map((node) => {
     if (node.key === key) {
@@ -59,7 +59,7 @@ export const generateLeftTree = ({
       ...props,
       disabled: targetKeys.includes(props.key as string),
       children: generateLeftTree({
-        treeNodes: children,
+        treeNodes: children as ExportField[],
         targetKeys,
         searchText: undefined,
       }),
@@ -89,7 +89,7 @@ export const generateRightTree = ({
         disabled: false,
         isLeaf: true,
         children: undefined,
-      };
+      } as ExportField;
     })
     .filter((item) => (searchText ? filterOption(searchText, item) : true));
 };

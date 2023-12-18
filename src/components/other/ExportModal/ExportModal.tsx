@@ -1,5 +1,13 @@
+import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { Divider, Modal } from "antd";
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { EMBottomBar } from "./EMBottomBar";
+import { EMExportTypeSelector } from "./EMExportTypeSelector";
+import { EMNameDialog } from "./EMNameDialog";
+import { EMPredefinedModal } from "./EMPredefinedModal";
+import { EMSeparator } from "./EMSeparator";
+import { EMTotalRegSelector } from "./EMTotalRegSelector";
+import { EMTransfer } from "./EMTransfer";
 import {
   ExportField,
   ExportModalProps,
@@ -7,20 +15,13 @@ import {
   ExportType,
   PredefinedExport,
   PredefinedExportField,
+  PredefinedExportMandatoryId,
 } from "./ExportModal.types";
-import useWindowDimensions from "@/hooks/useWindowDimensions";
-import { EMExportTypeSelector } from "./EMExportTypeSelector";
-import { EMTotalRegSelector } from "./EMTotalRegSelector";
-import { EMTransfer } from "./EMTransfer";
-import { EMSeparator } from "./EMSeparator";
-import { ExportModalTopBar } from "./ExportModalTopBar";
-import { EMPredefinedModal } from "./EMPredefinedModal";
-import { EMNameDialog } from "./EMNameDialog";
-import { EMBottomBar } from "./EMBottomBar";
 import {
-  ExportModalContext,
   ExportModalContextProvider,
+  useExportModalContext,
 } from "./ExportModalContext";
+import { ExportModalTopBar } from "./ExportModalTopBar";
 import { updateTreeData } from "./exportModalHelper";
 
 const { error } = Modal;
@@ -53,12 +54,12 @@ export const ExportModalWithContext = (props: ExportModalProps) => {
   const [registersAmount, setRegistersAmount] =
     useState<ExportRegistersAmount>("all");
   const [selectedFields, setSelectedFields] = useState<PredefinedExportField[]>(
-    selectedKeysProps.map((key) => ({ key }))
+    selectedKeysProps.map((key) => ({ key })),
   );
   const [predefinedModalVisible, setPredefinedModalVisible] = useState(false);
   const [predefinedNameDialogVisible, setPredefinedNameDialogVisible] =
     useState(false);
-  const { dataSource, setDataSource } = useContext(ExportModalContext);
+  const { dataSource, setDataSource } = useExportModalContext();
 
   const [currentPredefinedExport, setCurrentPredefinedExport] = useState<
     PredefinedExport | undefined
@@ -66,11 +67,12 @@ export const ExportModalWithContext = (props: ExportModalProps) => {
 
   useEffect(() => {
     if (!visible) {
-      setSelectedFields(undefined);
+      setSelectedFields([]);
       setCurrentPredefinedExport(undefined);
       setExportType("xlsx");
       setRegistersAmount(selectedRegistersToExport ? "selected" : "all");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
   useEffect(() => {
@@ -105,13 +107,16 @@ export const ExportModalWithContext = (props: ExportModalProps) => {
       });
     }
     setLoading(false);
-  }, [exportType, selectedFields, registersAmount]);
+  }, [onSucceed, exportType, selectedFields, registersAmount]);
 
-  const loadPredefinedExport = (predefinedExport: PredefinedExport) => {
-    setPredefinedModalVisible(false);
-    setCurrentPredefinedExport(predefinedExport);
-    setSelectedFields(predefinedExport.fields);
-  };
+  const loadPredefinedExport = useCallback(
+    (predefinedExport: PredefinedExport) => {
+      setPredefinedModalVisible(false);
+      setCurrentPredefinedExport(predefinedExport);
+      setSelectedFields(predefinedExport.fields);
+    },
+    [],
+  );
 
   const onSaveNewPredefined = useCallback(
     async (name: string) => {
@@ -121,7 +126,7 @@ export const ExportModalWithContext = (props: ExportModalProps) => {
       });
       setCurrentPredefinedExport(newPredefinedExport);
     },
-    [currentPredefinedExport, selectedFields]
+    [onSavePredefinedExport, selectedFields],
   );
 
   const onGetPredefinedExportsCallback = useCallback(async () => {
@@ -129,7 +134,7 @@ export const ExportModalWithContext = (props: ExportModalProps) => {
       await onGetPredefinedExports();
 
     if (keysWithChilds.length > 0) {
-      let updatedTree: ExportField[] = undefined;
+      let updatedTree: ExportField[] = [];
 
       for (const entry of keysWithChilds) {
         const { key, childs } = entry;
@@ -142,11 +147,11 @@ export const ExportModalWithContext = (props: ExportModalProps) => {
       setDataSource(updatedTree);
     }
 
-    return predefinedExports;
-  }, [dataSource]);
+    return predefinedExports as PredefinedExportMandatoryId[];
+  }, [dataSource, onGetPredefinedExports, setDataSource]);
 
   return (
-    (<Modal
+    <Modal
       title={
         <ExportModalTopBar
           disabled={loading}
@@ -216,6 +221,6 @@ export const ExportModalWithContext = (props: ExportModalProps) => {
         }}
         onSave={onSaveNewPredefined}
       />
-    </Modal>)
+    </Modal>
   );
 };

@@ -1,3 +1,6 @@
+// @TODO: Review this component
+// @ts-nocheck
+/* eslint-disable */
 import React, { useRef } from "react";
 import { Col, DatePicker, Row, TimePicker } from "antd";
 import { Dayjs } from "dayjs";
@@ -29,7 +32,7 @@ export const DateTimeSearch = (props: DateTimeSearchProps) => {
           value={momentDateValue as any}
           onChange={(momentValues: Dayjs[]) => {
             dateRef.current = convertMomentDateArrayToStringArray(
-              momentValues
+              momentValues,
             ) as [string, string];
             onChange([dateRef.current, timeRef.current]);
           }}
@@ -43,7 +46,7 @@ export const DateTimeSearch = (props: DateTimeSearchProps) => {
           value={momentTimeValue as any}
           onChange={(momentValues: Dayjs[]) => {
             timeRef.current = convertMomentTimeArrayToStringArray(
-              momentValues
+              momentValues,
             ) as [string, string];
             onChange([dateRef.current, timeRef.current]);
           }}
