@@ -1,25 +1,20 @@
-import react from "@vitejs/plugin-react";
-import * as path from "path";
-import { defineConfig } from "vite";
-import dts from "vite-plugin-dts";
+import react from "@vitejs/plugin-react-swc";
+import path from "path";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
-import { terser } from "rollup-plugin-terser";
+import { PluginOption, defineConfig } from "vite";
+import dts from "vite-plugin-dts";
+import viteTsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
-  },
   plugins: [
+    peerDepsExternal({
+      includeDependencies: true,
+    }) as PluginOption,
     react(),
     dts({
       insertTypesEntry: true,
     }),
-    peerDepsExternal({
-      includeDependencies: true,
-    }),
-    terser(),
+    viteTsconfigPaths(),
   ],
   build: {
     emptyOutDir: true,
@@ -27,18 +22,13 @@ export default defineConfig({
     lib: {
       entry: path.resolve(__dirname, "src/index.ts"),
       name: "react-formiga-components",
-      formats: ["es", "umd"],
+      formats: ["es"],
       fileName: (format) => `react-formiga-components.${format}.js`,
     },
     rollupOptions: {
-      external: ["react", "react-dom", "styled-components"],
-      output: {
-        globals: {
-          react: "React",
-          "react-dom": "ReactDOM",
-          "styled-components": "styled",
-        },
-      },
+      // We manually add these since they are not directly in package.json, but they end up in the bundle if we don't exclude them.
+      // Reason for this is using imports for specific components
+      external: ["@ant-design/icons", "moment", "antd/es/alert/ErrorBoundary"],
     },
   },
 });

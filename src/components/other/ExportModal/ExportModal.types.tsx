@@ -13,7 +13,7 @@ export type ExportModalProps = {
   selectedKeys?: string[];
   onGetPredefinedExports: () => Promise<{
     predefinedExports: PredefinedExport[];
-    keysWithChilds: { key: string; childs: ExportField[] }[];
+    keysWithChilds: Array<{ key: string; childs: ExportField[] }>;
   }>;
   onSavePredefinedExport: (
     options: PredefinedExport
@@ -26,6 +26,8 @@ export type PredefinedExport = {
   name: string;
   fields: PredefinedExportField[];
 };
+
+export type PredefinedExportMandatoryId = Required<Pick<PredefinedExport, 'id'>> & Omit<PredefinedExport, 'id'>;
 
 export type PredefinedExportField = {
   key: string;

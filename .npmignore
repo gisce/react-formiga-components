@@ -1,4 +1,1 @@
-src
-coverage
-.storybook
-storybook-static
+package-lock.json

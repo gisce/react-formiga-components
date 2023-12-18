@@ -1,5 +1,6 @@
 import { Locale, tForLang } from "@/context";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
+import { CheckOutlined, CloseOutlined, DeleteFilled } from "@ant-design/icons";
 import {
   Button,
   Col,
@@ -13,17 +14,16 @@ import {
   Tooltip,
 } from "antd";
 import { ColumnsType } from "antd/lib/table";
-import React, { useEffect, useRef, useState } from "react";
-import { DeleteFilled, CloseOutlined, CheckOutlined } from "@ant-design/icons";
+import { useEffect, useRef, useState } from "react";
 import { EMSeparator } from "./EMSeparator";
-import { PredefinedExport } from "./ExportModal.types";
+import { PredefinedExport, PredefinedExportMandatoryId } from "./ExportModal.types";
 
 export type EMPredefinedModalProps = {
   locale: Locale;
   visible: boolean;
   onCancel: () => void;
   onSelectPredefinedExport: (predefinedExport: PredefinedExport) => void;
-  onGetPredefinedExports: () => Promise<PredefinedExport[]>;
+  onGetPredefinedExports: () => Promise<PredefinedExportMandatoryId[]>;
   onRemovePredefinedExport: (
     predefinedExport: PredefinedExport
   ) => Promise<void>;
@@ -57,6 +57,7 @@ export const EMPredefinedModal = (props: EMPredefinedModalProps) => {
     if (visible) {
       fetchData();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
   useEffect(() => {
@@ -65,6 +66,7 @@ export const EMPredefinedModal = (props: EMPredefinedModalProps) => {
     }
 
     previousRemoveInProgressRef.current = removeInProgress;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [removeInProgress]);
 
   const fetchData = async () => {
@@ -163,9 +165,9 @@ const getColumns = ({
         <a
           style={{ userSelect: "none" }}
           onClick={() => {
-            onSelectPredefinedExport(
-              predefinedExports.find((item) => item.id === parseInt(record.key))
-            );
+            const foundExport = predefinedExports.find((item) => item.id === parseInt(record.key));
+            if (!foundExport) return;
+            onSelectPredefinedExport(foundExport);
           }}
         >
           {text}
@@ -188,11 +190,11 @@ const getColumns = ({
               disabled={removeInProgress}
               icon={<CheckOutlined />}
               onClick={() => {
-                onSelectPredefinedExport(
-                  predefinedExports.find(
-                    (item) => item.id === parseInt(record.key)
-                  )
+                const foundExport = predefinedExports.find(
+                  (item) => item.id === parseInt(record.key)
                 );
+                if (!foundExport) return;
+                onSelectPredefinedExport(foundExport);
               }}
             />
           </Tooltip>
@@ -203,11 +205,10 @@ const getColumns = ({
             disabled={removeInProgress}
             onConfirm={async () => {
               setRemoveInProgress(true);
-              await onRemovePredefinedExport(
-                predefinedExports.find(
-                  (item) => item.id === parseInt(record.key)
-                )
-              );
+              const foundExport = predefinedExports.find((item) => item.id === parseInt(record.key));
+              if (foundExport) {
+                await onRemovePredefinedExport(foundExport);
+              }
               setRemoveInProgress(false);
             }}
           >
