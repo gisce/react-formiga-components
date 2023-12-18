@@ -9,7 +9,15 @@ import { tForLang } from "@/context/LocaleContext";
 import { ModalBottomBarProps } from "./ModalBottomBar.types";
 
 export const ModalBottomBar = (props: ModalBottomBarProps) => {
-  const { locale, onClose, onConfirm, loading, left = null } = props;
+  const {
+    locale,
+    onClose,
+    onConfirm,
+    loading,
+    left = null,
+    rightAdditionalButtons = null,
+    okText = tForLang("ok", locale),
+  } = props;
 
   return (
     <Row>
@@ -19,7 +27,9 @@ export const ModalBottomBar = (props: ModalBottomBarProps) => {
       <Col span={12}>
         <Row justify="end">
           <Space>
+            {rightAdditionalButtons}
             <Button
+              style={{ marginLeft: 15 }}
               icon={<CloseOutlined />}
               onClick={onClose}
               disabled={loading}
@@ -33,7 +43,7 @@ export const ModalBottomBar = (props: ModalBottomBarProps) => {
               style={{ marginLeft: 15 }}
               type="primary"
             >
-              {tForLang("ok", locale)}
+              {okText}
             </Button>
           </Space>
         </Row>

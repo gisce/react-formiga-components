@@ -46,21 +46,21 @@ export const flatten = (dataSource: ExportField[]) => {
 
 export const generateLeftTree = ({
   treeNodes = [],
-  checkedKeys = [],
+  targetKeys = [],
   searchText,
 }: {
   treeNodes: ExportField[];
-  checkedKeys: string[];
+  targetKeys: string[];
   searchText?: string;
 }): ExportField[] => {
   return treeNodes
     .filter((item) => (searchText ? filterOption(searchText, item) : true))
     .map(({ children, ...props }) => ({
       ...props,
-      disabled: checkedKeys.includes(props.key as string),
+      disabled: targetKeys.includes(props.key as string),
       children: generateLeftTree({
         treeNodes: children,
-        checkedKeys,
+        targetKeys,
         searchText: undefined,
       }),
     }));
@@ -68,41 +68,40 @@ export const generateLeftTree = ({
 
 export const generateRightTree = ({
   treeNodes = [],
-  checkedKeys = [],
+  targetKeys = [],
   searchText,
 }: {
   treeNodes: ExportField[];
-  checkedKeys: string[];
+  targetKeys: string[];
   searchText?: string;
 }): ExportField[] => {
-  return flatten(treeNodes)
-    .filter((node) => checkedKeys.indexOf(node.key) !== -1)
-    .filter((item) => (searchText ? filterOption(searchText, item) : true))
-    .map(({ children, ...props }) => ({
-      ...props,
-      disabled: false,
-      isLeaf: true,
-    }));
+  const flattenNodes = flatten(treeNodes);
 
-  if (searchText) {
-    return flatten(treeNodes)
-      .filter((item) => (searchText ? filterOption(searchText, item) : true))
-      .map(({ children, ...props }) => ({
-        ...props,
-        disabled: checkedKeys.includes(props.key as string),
-        isLeaf: true,
-      }));
+  if (flattenNodes.length === 0) {
+    return [];
   }
 
-  return flatten(treeNodes)
-    .filter((node) => checkedKeys.indexOf(node.key) !== -1)
-    .map(({ children, ...props }) => ({
-      ...props,
-      isLeaf: true,
-      children: generateRightTree({
-        treeNodes: children,
-        checkedKeys,
-        searchText,
-      }),
-    }));
+  return targetKeys
+    .map((key) => {
+      const node = flattenNodes.find((item) => item.key === key);
+      return {
+        ...node,
+        disabled: false,
+        isLeaf: true,
+        children: undefined,
+      };
+    })
+    .filter((item) => (searchText ? filterOption(searchText, item) : true));
+};
+
+export const getParentKeys = (key: string) => {
+  // Keys are in format parent/child/child2/child3
+  // We want a list of all parent keys, like [parent, parent/child, parent/child/child2]
+  // And also we want them to be sorted by number of levels, like [parent, parent/child, parent/child/child2]
+  const keys = key.split("/");
+  const parentKeys = [];
+  for (let i = 1; i < keys.length; i++) {
+    parentKeys.push(keys.slice(0, i).join("/"));
+  }
+  return parentKeys;
 };

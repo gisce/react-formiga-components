@@ -1,4 +1,4 @@
-import moment from "moment";
+import dayjs from "dayjs";
 import { getMomentValue } from "./DateSearch.helper";
 import { defaultDateFormat } from "./DateSearch.types";
 
@@ -14,7 +14,7 @@ describe("DateSearch.helper", () => {
     });
     it("should return from value and to value as null if we only pass from", () => {
       const result = getMomentValue(["12/12/2020", undefined]);
-      const momentExpected = moment("12/12/2020", defaultDateFormat);
+      const momentExpected = dayjs("12/12/2020", defaultDateFormat);
       expect(Array.isArray(result)).toBeTruthy();
       expect(result.length).toBe(2);
       expect(result[0]).toBeDefined();
@@ -23,7 +23,7 @@ describe("DateSearch.helper", () => {
     });
     it("should return to value and from value as null if we only pass to", () => {
       const result = getMomentValue([undefined, "01/01/2020"]);
-      const momentExpected = moment("01/01/2020", defaultDateFormat);
+      const momentExpected = dayjs("01/01/2020", defaultDateFormat);
       expect(Array.isArray(result)).toBeTruthy();
       expect(result.length).toBe(2);
       expect(result[1]).toBeDefined();
@@ -32,8 +32,8 @@ describe("DateSearch.helper", () => {
     });
     it("should return from and to values", () => {
       const result = getMomentValue(["12/12/2020", "01/01/2020"]);
-      const moment1Expected = moment("12/12/2020", defaultDateFormat);
-      const moment2Expected = moment("01/01/2020", defaultDateFormat);
+      const moment1Expected = dayjs("12/12/2020", defaultDateFormat);
+      const moment2Expected = dayjs("01/01/2020", defaultDateFormat);
 
       expect(Array.isArray(result)).toBeTruthy();
       expect(result.length).toBe(2);

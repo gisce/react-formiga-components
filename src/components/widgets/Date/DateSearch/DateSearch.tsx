@@ -1,7 +1,7 @@
 import React from "react";
 import { DatePicker } from "antd";
 import { DateSearchProps } from "./DateSearch.types";
-import { Moment } from "moment";
+import { Dayjs } from "dayjs";
 import {
   convertMomentDateArrayToStringArray,
   getMomentValue,
@@ -20,7 +20,7 @@ export const DateSearch = (props: DateSearchProps) => {
       allowEmpty={[true, true]}
       format={defaultDateFormat}
       value={momentValue as any}
-      onChange={(momentValues: Moment[]) => {
+      onChange={(momentValues: Dayjs[]) => {
         onChange(
           convertMomentDateArrayToStringArray(momentValues) as [string, string]
         );

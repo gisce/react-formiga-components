@@ -7,15 +7,29 @@ export type ExportModalProps = {
   onSucceed: (options: ExportOptions) => Promise<void>;
   selectedRegistersToExport?: number;
   totalRegisters: number;
+  visibleRegisters: number;
   onGetFields: () => Promise<ExportField[]>;
-  onGetFieldChilds: ({
-    key,
-    title,
-  }: {
-    key: string;
-    title: string;
-  }) => Promise<ExportField[]>;
+  onGetFieldChilds: (key: string) => Promise<ExportField[]>;
   selectedKeys?: string[];
+  onGetPredefinedExports: () => Promise<{
+    predefinedExports: PredefinedExport[];
+    keysWithChilds: { key: string; childs: ExportField[] }[];
+  }>;
+  onSavePredefinedExport: (
+    options: PredefinedExport
+  ) => Promise<PredefinedExport>;
+  onRemovePredefinedExport: (options: PredefinedExport) => Promise<void>;
+};
+
+export type PredefinedExport = {
+  id?: number;
+  name: string;
+  fields: PredefinedExportField[];
+};
+
+export type PredefinedExportField = {
+  key: string;
+  title?: string;
 };
 
 export type ExportType = "csv" | "xlsx";
@@ -38,5 +52,6 @@ export type ExportField = {
   isLeaf?: boolean;
   required?: boolean;
   key: string;
+  disabled?: boolean;
   children?: ExportField[];
 };

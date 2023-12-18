@@ -1,4 +1,4 @@
-import moment from "moment";
+import dayjs from "dayjs";
 import {
   getMomentDateValue,
   getMomentTimeValue,
@@ -23,7 +23,7 @@ describe("DateTimeSearch.helper", () => {
         ["01/01/2020", null],
         [null, null],
       ]);
-      const momentExpected = moment("01/01/2020", defaultDateFormat);
+      const momentExpected = dayjs("01/01/2020", defaultDateFormat);
       expect(Array.isArray(result)).toBeTruthy();
       expect(result.length).toBe(2);
       expect(result[0]).toBeDefined();
@@ -35,7 +35,7 @@ describe("DateTimeSearch.helper", () => {
         [null, "01/01/2020"],
         [null, null],
       ]);
-      const momentExpected = moment("01/01/2020", defaultDateFormat);
+      const momentExpected = dayjs("01/01/2020", defaultDateFormat);
       expect(Array.isArray(result)).toBeTruthy();
       expect(result.length).toBe(2);
       expect(result[1]).toBeDefined();
@@ -47,8 +47,8 @@ describe("DateTimeSearch.helper", () => {
         ["01/01/2020", "01/12/2020"],
         [null, null],
       ]);
-      const momentExpected1 = moment("01/01/2020", defaultDateFormat);
-      const momentExpected2 = moment("01/12/2020", defaultDateFormat);
+      const momentExpected1 = dayjs("01/01/2020", defaultDateFormat);
+      const momentExpected2 = dayjs("01/12/2020", defaultDateFormat);
       expect(Array.isArray(result)).toBeTruthy();
       expect(result.length).toBe(2);
       expect(result[0]).toBeDefined();
@@ -78,7 +78,7 @@ describe("DateTimeSearch.helper", () => {
         [null, null],
         ["00:00", null],
       ]);
-      const momentExpected = moment(
+      const momentExpected = dayjs(
         defaultDateForTimeValue + " " + "00:00",
         defaultDateFormat + " " + defaultTimeFormat
       );
@@ -93,7 +93,7 @@ describe("DateTimeSearch.helper", () => {
         [null, null],
         [null, "03:15"],
       ]);
-      const momentExpected = moment(
+      const momentExpected = dayjs(
         defaultDateForTimeValue + " " + "03:15",
         defaultDateFormat + " " + defaultTimeFormat
       );
@@ -108,12 +108,12 @@ describe("DateTimeSearch.helper", () => {
         [null, null],
         ["01:39", "03:15"],
       ]);
-      const momentExpected1 = moment(
+      const momentExpected1 = dayjs(
         defaultDateForTimeValue + " " + "01:39",
         defaultDateFormat + " " + defaultTimeFormat
       );
 
-      const momentExpected2 = moment(
+      const momentExpected2 = dayjs(
         defaultDateForTimeValue + " " + "03:15",
         defaultDateFormat + " " + defaultTimeFormat
       );
@@ -143,7 +143,7 @@ describe("DateTimeSearch.helper", () => {
     });
     it("should return from value and to value as null if we only pass from", () => {
       const fromDate = "01/04/2018";
-      const fromDateMoment = moment(fromDate, defaultDateFormat);
+      const fromDateMoment = dayjs(fromDate, defaultDateFormat);
 
       const result = convertMomentDateArrayToStringArray([
         fromDateMoment,
@@ -154,7 +154,7 @@ describe("DateTimeSearch.helper", () => {
     });
     it("should return to value and from value as null if we only pass to", () => {
       const toDate = "01/04/2018";
-      const toDateMoment = moment(toDate, defaultDateFormat);
+      const toDateMoment = dayjs(toDate, defaultDateFormat);
 
       const result = convertMomentDateArrayToStringArray([null, toDateMoment]);
       expect(result[1]).toBe(toDate);
@@ -164,8 +164,8 @@ describe("DateTimeSearch.helper", () => {
     it("should return array of both formatted values if we pass two valid moments", () => {
       const fromDate = "01/04/2018";
       const toDate = "23/06/2021";
-      const fromDateMoment = moment(fromDate, defaultDateFormat);
-      const toDateMoment = moment(toDate, defaultDateFormat);
+      const fromDateMoment = dayjs(fromDate, defaultDateFormat);
+      const toDateMoment = dayjs(toDate, defaultDateFormat);
 
       const result = convertMomentDateArrayToStringArray([
         fromDateMoment,
@@ -191,7 +191,10 @@ describe("DateTimeSearch.helper", () => {
     it("should return from value and to value as null if we only pass from", () => {
       const time = "10:01";
       const fromDate = defaultDateForTimeValue + " " + time;
-      const fromDateMoment = moment(fromDate, `${defaultDateFormat} ${defaultTimeFormat}`);
+      const fromDateMoment = dayjs(
+        fromDate,
+        `${defaultDateFormat} ${defaultTimeFormat}`
+      );
 
       const result = convertMomentTimeArrayToStringArray([
         fromDateMoment,
@@ -203,7 +206,10 @@ describe("DateTimeSearch.helper", () => {
     it("should return to value and from value as null if we only pass to", () => {
       const time = "10:01";
       const fromDate = defaultDateForTimeValue + " " + time;
-      const toDateMoment = moment(fromDate, `${defaultDateFormat} ${defaultTimeFormat}`);
+      const toDateMoment = dayjs(
+        fromDate,
+        `${defaultDateFormat} ${defaultTimeFormat}`
+      );
 
       const result = convertMomentTimeArrayToStringArray([null, toDateMoment]);
       expect(result[1]).toBe(time);
@@ -215,8 +221,14 @@ describe("DateTimeSearch.helper", () => {
       const timeTo = "23:59";
       const fromDate = defaultDateForTimeValue + " " + timeFrom;
       const toDate = defaultDateForTimeValue + " " + timeTo;
-      const fromDateMoment = moment(fromDate, `${defaultDateFormat} ${defaultTimeFormat}`);
-      const toDateMoment = moment(toDate, `${defaultDateFormat} ${defaultTimeFormat}`);
+      const fromDateMoment = dayjs(
+        fromDate,
+        `${defaultDateFormat} ${defaultTimeFormat}`
+      );
+      const toDateMoment = dayjs(
+        toDate,
+        `${defaultDateFormat} ${defaultTimeFormat}`
+      );
 
       const result = convertMomentTimeArrayToStringArray([
         fromDateMoment,

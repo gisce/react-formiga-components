@@ -1,9 +1,10 @@
 import { Locale } from "@/context";
-import { ExportRegistersAmount } from "./ExportModal.types";
+import { ExportRegistersAmount } from "../ExportModal.types";
 
 export type EMTotalRegSelectorProps = {
   locale: Locale;
-  selectedRegistersToExport: number;
+  selectedRegistersToExport?: number;
+  visibleRegisters: number;
   totalRegisters: number;
   value: ExportRegistersAmount;
   onChange: (value: ExportRegistersAmount) => void;

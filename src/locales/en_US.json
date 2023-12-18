@@ -79,12 +79,21 @@
   "saveAs": "Save as",
   "exportRegisters": "{total} registers will be exported.",
   "registersToExport": "Registers to export",
-  "registersToExportSummary": "There are <b>{selected}</b> selected registers from a total of <b>{total}</b>. Which registers do you want to export?",
+  "registersToExportSelectedSummary": "There are <b>{selected}</b> selected registers from a total of <b>{total}</b>. Which registers do you want to export?",
+  "registersToExportVisibleSummary": "There are <b>{selected}</b> visible registers from a total of <b>{total}</b>. Which registers do you want to export?",
   "registersSelection": "Selected registers",
+  "registersVisible": "Visible registers",
   "registersSelectionAll": "All registers",
   "availableFields": "Available fields",
   "fieldsToExport": "Fields to export",
   "exportModalItemsUnit": "fields",
   "notFoundContent": "The list is empty",
-  "searchPlaceholder": "Enter text to filter fields.."
+  "searchPlaceholder": "Enter text to filter fields..",
+  "selectPredefinedExport": "Select predefined export",
+  "confirmDeletePredefinedExport": "Are you sure you want to delete this predefined export?",
+  "name": "Name",
+  "loadPredefinedExport": "Load predefined export",
+  "enterNameOfExport": "Enter name of export",
+  "nameOfExport": "Name of export",
+  "savePredefinedExport": "Save predefined export"
 }

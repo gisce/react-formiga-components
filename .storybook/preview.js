@@ -1,4 +1,3 @@
-import "antd/dist/antd.css";
 import "./tailwind.css";
 
 window.global = window;

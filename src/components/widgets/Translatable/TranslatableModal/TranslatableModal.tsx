@@ -145,17 +145,17 @@ export const TranslatableModal = (props: TranslatableModalProps) => {
   }
 
   return (
-    <Modal
+    (<Modal
       title={tForLang("translate", locale)}
       centered
       width={modalWidth}
-      visible={visible}
+      open={visible}
       closable={true}
       onCancel={onClose}
       footer={null}
       destroyOnClose
     >
       {content()}
-    </Modal>
+    </Modal>)
   );
 };

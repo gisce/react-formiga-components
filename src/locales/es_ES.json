@@ -79,12 +79,21 @@
   "saveAs": "Guardar como",
   "exportRegisters": "Se exportaran un total de {total} registros.",
   "registersToExport": "Registros a exportar",
-  "registersToExportSummary": "Hay <b>{selected}</b> registros seleccionados de un total de <b>{total}</b>. ¿Qué registros quieres exportar?",
+  "registersToExportSelectedSummary": "Hay <b>{selected}</b> registros seleccionados de un total de <b>{total}</b>. ¿Qué registros quieres exportar?",
+  "registersToExportVisibleSummary": "Hay <b>{selected}</b> registros visibles de un total de <b>{total}</b>. ¿Qué registros quieres exportar?",
   "registersSelection": "Registros seleccionados",
+  "registersVisible": "Registros visibles",
   "registersSelectionAll": "Todos los registros",
   "availableFields": "Campos disponibles",
   "fieldsToExport": "Campos a exportar",
   "exportModalItemsUnit": "campos",
   "notFoundContent": "La lista está vacía",
-  "searchPlaceholder": "Introducte texto para filtrar los campos..."
+  "searchPlaceholder": "Introducte texto para filtrar los campos...",
+  "selectPredefinedExport": "Selecciona una exportación predefinida",
+  "confirmDeletePredefinedExport": "Estás seguro que quieres eliminar ésta exportación predefinida?",
+  "name": "Nombre",
+  "loadPredefinedExport": "Cargar exportación predefinida",
+  "enterNameOfExport": "Introduce el nombre de la exportación",
+  "nameOfExport": "Nombre de la exportación",
+  "savePredefinedExport": "Guardar exportación predefinida"
 }

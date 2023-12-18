@@ -22,7 +22,8 @@
     "esModuleInterop": false,
     "baseUrl": "./src",
     "skipLibCheck": true,
-    "strictBindCallApply": true
+    "strictBindCallApply": true,
+    "downlevelIteration": true,
   },
   "include": [
     "src/**/*"
@@ -30,5 +31,6 @@
   "exclude": [
     "node_modules",
     "build",
+    "**/*.stories.*"
   ]
 }
