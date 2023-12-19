@@ -1,13 +1,7 @@
 {
   "extends": "./tsconfig.paths.json",
   "include": ["src"],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**/*.test.*",
-    "**/*._test.*",
-    "**/*.mock.*"
-  ],
+  "exclude": [],
   "compilerOptions": {
     "target": "ESNext",
     "useDefineForClassFields": true,
