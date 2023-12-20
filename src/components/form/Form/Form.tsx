@@ -14,7 +14,6 @@ export const Form = (props: FormProps) => {
         onFieldsChange?.();
       }}
       component={false}
-      preserve={false}
     >
       {children}
     </AntForm>
