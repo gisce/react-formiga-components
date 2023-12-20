@@ -73,14 +73,16 @@
   },
   "settings": {
     "react": {
-      "version": "17.0.2" // React version. "detect" automatically picks the version you have installed.
+      "version": "18.2.0" // React version. "detect" automatically picks the version you have installed.
     }
   },
   "ignorePatterns": [
+    "vite.config.ts",
     "node_modules",
     "build",
     "report",
     "coverage",
+    "docs",
     "public",
     "**/*.test.*",
     "**/*.stories.*",
