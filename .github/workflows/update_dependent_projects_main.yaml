@@ -1,4 +1,4 @@
-name: Update dependent projects (v2)
+name: Update dependent projects (main)
 
 on:
   release:
