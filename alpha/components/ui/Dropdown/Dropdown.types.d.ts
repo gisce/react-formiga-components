@@ -1,10 +1,12 @@
 import { ReactNode } from "react";
-export type DropdownProps = {
-    trigger?: Array<"click" | "hover">;
-    onItemClick?: (item: DropdownMenuItem) => void;
-    data: DropdownMenuGroup[];
-    disabled?: boolean;
+export type BaseDropdownProps = {
     searchable?: true | false | "auto";
+    onItemClick?: (item: DropdownMenuItem) => void;
+    onRetrieveData: () => Promise<DropdownMenuGroup[]>;
+};
+export type DropdownProps = BaseDropdownProps & {
+    trigger?: Array<"click" | "hover">;
+    disabled?: boolean;
     children?: ReactNode;
 };
 export type DropdownButtonProps = Omit<DropdownProps, "children"> & {
@@ -18,10 +20,5 @@ export type DropdownMenuGroup = {
 export type DropdownMenuItem = Record<string, any> & {
     id: number | string;
     name: string;
-};
-export type DropdownMenu = {
-    data: DropdownMenuGroup[];
-    searchable: true | false | "auto";
-    onItemClick: (event: any) => void;
 };
 //# sourceMappingURL=Dropdown.types.d.ts.map
