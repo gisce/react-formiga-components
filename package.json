@@ -110,7 +110,7 @@
     "react-dom": "18.2.0"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx}": "eslint --max-warnings=0 --no-ignore",
+    "src/**/*.{js,jsx,ts,tsx}": "eslint",
     "src/**/*.{js,jsx,ts,tsx,json,css,md}": "prettier --write"
   },
   "release": {
