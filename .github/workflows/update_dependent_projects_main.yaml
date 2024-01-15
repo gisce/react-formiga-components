@@ -29,7 +29,7 @@ jobs:
         run: |
           TAG_NAME="${{ github.event.release.tag_name || github.event.inputs.tag_name }}"
           PRERELEASE="${{ github.event.release.prerelease || github.event.inputs.prerelease }}"
-          if [ "$PRERELEASE" != "true" ] then
+          if [ "$PRERELEASE" != "true" ]; then
             SHOULD_RUN="true"
           else
             SHOULD_RUN="false"
