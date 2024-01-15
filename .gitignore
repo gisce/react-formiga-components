@@ -1,0 +1,8 @@
+.github
+.vscode
+node_modules
+coverage
+src
+.DS_Store
+storybook-static
+.husky
