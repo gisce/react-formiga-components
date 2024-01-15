@@ -20,7 +20,7 @@ export type DropdownMenuGroup = {
 };
 
 export type DropdownMenuItem = Record<string, any> & {
-  id: number;
+  id: number | string;
   name: string;
 };
 

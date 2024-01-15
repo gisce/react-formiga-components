@@ -66,7 +66,6 @@ export const DropdownMenu = ({
       <div
         style={{
           width: 300,
-          maxHeight: 300,
           overflowY: "auto",
         }}
       >
@@ -93,7 +92,6 @@ const Root = ({ children }: { children?: React.ReactNode }) => {
         "ant-dropdown-menu ant-dropdown-menu-root ant-dropdown-menu-vertical ant-dropdown-menu-light"
       }
       style={{
-        minHeight: 300,
         overflow: "hidden",
       }}
     >
