@@ -1,0 +1,10 @@
+import{j as l}from"./jsx-runtime-f6d73c06.js";import{r as p}from"./index-8ee6c85d.js";import{B as n}from"./BooleanSearch-9627b00a.js";import{L as c}from"./BaseField.argTypes-d72d00ba.js";import"./_commonjsHelpers-de833af9.js";import"./SelectionInput-093e4ab5.js";import"./styled-components.browser.esm-f33cca5c.js";import"./index-d0686b25.js";import"./assertThisInitialized-601f600e.js";import"./index-8eb238e3.js";import"./index-d5bdaf73.js";import"./isVisible-10508b7a.js";import"./index-c0c995ae.js";import"./toArray-702c099d.js";import"./PurePanel-1447b435.js";import"./pickAttrs-d6bf1a4e.js";import"./Overflow-dccf6226.js";import"./omit-05916825.js";import"./motion-343f592f.js";import"./useVariants-fa326d5c.js";import"./context-b943a423.js";import"./asyncToGenerator-738c820e.js";import"./useLocale-e5a33693.js";import"./useCSSVarCls-2e83a7af.js";import"./Compact-190860f8.js";import"./compact-item-4a97683c.js";import"./slide-b4f9f988.js";import"./CheckOutlined-d31a79fc.js";import"./CloseCircleFilled-2f02bec5.js";import"./CloseOutlined-bc95787e.js";import"./DownOutlined-71c54b6f.js";import"./SearchOutlined-98c63492.js";import"./SelectionValue-320cacef.js";import"./LocaleContext-58eb36ec.js";const Q={title:"Work in progress/Widgets/Boolean/BooleanSearch",component:n,argTypes:{...c}},v=o=>{const[u,e]=p.useState(o.value);return p.useEffect(()=>{e(o.value)},[o.value]),l.jsx(n,{...o,value:u,onChange:t=>{var a;e(t),(a=o.onChange)==null||a.call(o,t)}})},r=v.bind({});r.args={value:"true"};var m,i,s;r.parameters={...r.parameters,docs:{...(m=r.parameters)==null?void 0:m.docs,source:{originalSource:`args => {
+  const [value, setValue] = useState(args.value);
+  useEffect(() => {
+    setValue(args.value);
+  }, [args.value]);
+  return <BooleanSearch {...args} value={value} onChange={(value: string) => {
+    setValue(value);
+    args.onChange?.(value);
+  }} />;
+}`,...(s=(i=r.parameters)==null?void 0:i.docs)==null?void 0:s.source}}};const U=["Basic"];export{r as Basic,U as __namedExportsOrder,Q as default};

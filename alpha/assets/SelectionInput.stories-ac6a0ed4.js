@@ -1,0 +1,10 @@
+import{j as u}from"./jsx-runtime-f6d73c06.js";import{r as i}from"./index-8ee6c85d.js";import{S as m}from"./SelectionInput-093e4ab5.js";import{B as c}from"./BaseField.argTypes-d72d00ba.js";import"./_commonjsHelpers-de833af9.js";import"./styled-components.browser.esm-f33cca5c.js";import"./index-d0686b25.js";import"./assertThisInitialized-601f600e.js";import"./index-8eb238e3.js";import"./index-d5bdaf73.js";import"./isVisible-10508b7a.js";import"./index-c0c995ae.js";import"./toArray-702c099d.js";import"./PurePanel-1447b435.js";import"./pickAttrs-d6bf1a4e.js";import"./Overflow-dccf6226.js";import"./omit-05916825.js";import"./motion-343f592f.js";import"./useVariants-fa326d5c.js";import"./context-b943a423.js";import"./asyncToGenerator-738c820e.js";import"./useLocale-e5a33693.js";import"./useCSSVarCls-2e83a7af.js";import"./Compact-190860f8.js";import"./compact-item-4a97683c.js";import"./slide-b4f9f988.js";import"./CheckOutlined-d31a79fc.js";import"./CloseCircleFilled-2f02bec5.js";import"./CloseOutlined-bc95787e.js";import"./DownOutlined-71c54b6f.js";import"./SearchOutlined-98c63492.js";const v={1:"One",2:"Two",3:"Three"},N={title:"Work in progress/Widgets/Selection/SelectionInput",component:m,argTypes:{...c,locale:{table:{disable:!0}}}},d=e=>{const[l,o]=i.useState(e.value);return i.useEffect(()=>{o(e.value)},[e.value]),u.jsx(m,{...e,value:l,onChange:r=>{var a;o(r),(a=e.onChange)==null||a.call(e,r)}})},t=d.bind({});t.args={required:!1,readOnly:!1,selectionValues:v,value:"2"};var s,p,n;t.parameters={...t.parameters,docs:{...(s=t.parameters)==null?void 0:s.docs,source:{originalSource:`args => {
+  const [value, setValue] = useState(args.value);
+  useEffect(() => {
+    setValue(args.value);
+  }, [args.value]);
+  return <SelectionInput {...args} value={value} onChange={(value: string) => {
+    setValue(value);
+    args.onChange?.(value);
+  }} />;
+}`,...(n=(p=t.parameters)==null?void 0:p.docs)==null?void 0:n.source}}};const P=["Basic"];export{t as Basic,P as __namedExportsOrder,N as default};
