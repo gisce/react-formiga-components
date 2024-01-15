@@ -1,0 +1,2 @@
+export declare const TranslatableSearch: (props: import("../../Char/CharInput/CharInput.types").CharInputProps) => import("react/jsx-runtime").JSX.Element;
+//# sourceMappingURL=TranslatableSearch.d.ts.map

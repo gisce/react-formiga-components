@@ -1,0 +1,1 @@
+{"version":3,"file":"Many2OneSuffix.types.d.ts","sourceRoot":"","sources":["../../../../../src/components/widgets/Many2one/Many2OneSuffix/Many2OneSuffix.types.tsx"],"names":[],"mappings":";AACA,MAAM,MAAM,mBAAmB,GAAG;IAChC,OAAO,CAAC,EAAE,OAAO,CAAC;IAClB,SAAS,EAAE,KAAK,CAAC,SAAS,CAAC;IAC3B,iBAAiB,EAAE,CAAC,KAAK,EAAE,GAAG,KAAK,IAAI,CAAC;IACxC,qBAAqB,EAAE,MAAM,IAAI,CAAC;CACnC,CAAC"}

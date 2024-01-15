@@ -1,0 +1,1 @@
+import{j as r}from"./jsx-runtime-f6d73c06.js";const a=({value:e})=>r.jsx(r.Fragment,{children:e||""});try{a.displayName="CharValue",a.__docgenInfo={description:"",displayName:"CharValue",props:{value:{defaultValue:null,description:"",name:"value",required:!1,type:{name:"string"}}}}}catch{}export{a as C};
