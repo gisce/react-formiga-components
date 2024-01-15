@@ -15,7 +15,10 @@ const Template: FC<DropdownButtonProps> = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {
-  data: DefaultStory.exampleData,
+  onRetrieveData: async () => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    return DefaultStory.exampleData;
+  },
   label: "Dropdown",
   icon: <MobileOutlined />,
 };
