@@ -1,0 +1,2 @@
+export declare const AntButtonStyled: import("styled-components").StyledComponent<(props: import("./Button.types").ButtonWithTooltipProps) => import("react/jsx-runtime").JSX.Element, any, {}, never>;
+//# sourceMappingURL=Button.styles.d.ts.map

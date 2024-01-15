@@ -1,0 +1,5 @@
+import{j as o}from"./jsx-runtime-f6d73c06.js";import{p as u}from"./FloatTime.helper-f755c1c2.js";import"./index-8ee6c85d.js";import"./_commonjsHelpers-de833af9.js";const t=({value:r=0})=>o.jsx(o.Fragment,{children:u(r)});try{t.displayName="FloatTimeValue",t.__docgenInfo={description:"",displayName:"FloatTimeValue",props:{value:{defaultValue:{value:"0"},description:"",name:"value",required:!1,type:{name:"number"}}}}}catch{}const T={title:"Components/Widgets/FloatTime/FloatTimeValue",component:t},p=r=>o.jsx(t,{...r}),e=p.bind({});e.args={};const a=p.bind({});a.args={value:2.5};var s,i,n;e.parameters={...e.parameters,docs:{...(s=e.parameters)==null?void 0:s.docs,source:{originalSource:`args => {
+  return <FloatTimeValue {...args} />;
+}`,...(n=(i=e.parameters)==null?void 0:i.docs)==null?void 0:n.source}}};var l,m,c;a.parameters={...a.parameters,docs:{...(l=a.parameters)==null?void 0:l.docs,source:{originalSource:`args => {
+  return <FloatTimeValue {...args} />;
+}`,...(c=(m=a.parameters)==null?void 0:m.docs)==null?void 0:c.source}}};const V=["Basic","WithValue"];export{e as Basic,a as WithValue,V as __namedExportsOrder,T as default};
