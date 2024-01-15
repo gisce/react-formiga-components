@@ -38,7 +38,7 @@ export const EMNameDialog = memo((props: EMNameDialogProps) => {
   }, [visible]);
 
   return (
-    (<Modal
+    <Modal
       title={tForLang("enterNameOfExport", locale)}
       centered
       width={modalWidth * MODAL_WIDTH_FACTOR}
@@ -80,7 +80,7 @@ export const EMNameDialog = memo((props: EMNameDialogProps) => {
           </Row>
         </Col>
       </Row>
-    </Modal>)
+    </Modal>
   );
 });
 

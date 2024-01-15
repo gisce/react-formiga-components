@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { FloatTimeValue } from "./FloatTimeValue";
 
 export default {
-  title: "Components/Widgets/FloatTime/FloatTimeValue",
+  title: "Work in progress/Widgets/FloatTime/FloatTimeValue",
   component: FloatTimeValue,
 } as ComponentMeta<typeof FloatTimeValue>;
 

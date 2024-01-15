@@ -5,7 +5,7 @@ import { TextInput } from ".";
 import { BaseFieldArgTypes } from "@/components/form/Field/BaseField.argTypes";
 
 export default {
-  title: "Components/Widgets/Text/TextInput",
+  title: "Work in progress/Widgets/Text/TextInput",
   component: TextInput,
   argTypes: {
     ...BaseFieldArgTypes,

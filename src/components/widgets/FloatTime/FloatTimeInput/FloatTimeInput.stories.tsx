@@ -5,7 +5,7 @@ import { FloatTimeInput } from ".";
 import { BaseFieldArgTypes } from "@/components/form/Field/BaseField.argTypes";
 
 export default {
-  title: "Components/Widgets/FloatTime/FloatTimeInput",
+  title: "Work in progress/Widgets/FloatTime/FloatTimeInput",
   component: FloatTimeInput,
   argTypes: {
     ...BaseFieldArgTypes,

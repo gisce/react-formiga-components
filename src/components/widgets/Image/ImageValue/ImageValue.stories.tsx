@@ -7,7 +7,7 @@ import { BaseFieldArgTypes } from "@/components/form/Field/BaseField.argTypes";
 const category = "Image input specific";
 
 export default {
-  title: "Components/Widgets/Image/ImageValue",
+  title: "Work in progress/Widgets/Image/ImageValue",
   component: ImageValue,
   argTypes: {
     ...BaseFieldArgTypes,

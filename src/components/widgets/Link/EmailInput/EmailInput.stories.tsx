@@ -5,7 +5,7 @@ import { EmailInput } from ".";
 import { BaseFieldArgTypes } from "@/components/form/Field/BaseField.argTypes";
 
 export default {
-  title: "Components/Widgets/Link/EmailInput",
+  title: "Work in progress/Widgets/Link/EmailInput",
   component: EmailInput,
   argTypes: {
     ...BaseFieldArgTypes,

@@ -5,7 +5,7 @@ import { CharInput } from ".";
 import { BaseFieldArgTypes } from "@/components/form/Field/BaseField.argTypes";
 
 export default {
-  title: "Components/Widgets/Char/CharInput",
+  title: "Work in progress/Widgets/Char/CharInput",
   component: CharInput,
   argTypes: {
     ...BaseFieldArgTypes,

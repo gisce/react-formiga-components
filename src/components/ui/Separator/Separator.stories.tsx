@@ -5,7 +5,7 @@ import { Separator } from ".";
 import { BaseFieldArgTypes } from "@/components/form/Field/BaseField.argTypes";
 
 export default {
-  title: "Components/UI/Separator",
+  title: "Work in progress/UI/Separator",
   component: Separator,
   argTypes: {
     ...BaseFieldArgTypes,

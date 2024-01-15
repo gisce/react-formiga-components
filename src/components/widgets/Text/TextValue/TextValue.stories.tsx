@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { TextValue } from ".";
 
 export default {
-  title: "Components/Widgets/Text/TextValue",
+  title: "Work in progress/Widgets/Text/TextValue",
   component: TextValue,
 } as ComponentMeta<typeof TextValue>;
 

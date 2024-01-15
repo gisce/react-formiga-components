@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { IntegerSearch } from ".";
 
 export default {
-  title: "Components/Widgets/Integer/IntegerSearch",
+  title: "Work in progress/Widgets/Integer/IntegerSearch",
   component: IntegerSearch,
 } as ComponentMeta<typeof IntegerSearch>;
 

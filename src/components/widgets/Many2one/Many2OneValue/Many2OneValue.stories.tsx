@@ -12,7 +12,7 @@ import {
 } from "@ant-design/icons";
 
 export default {
-  title: "Components/Widgets/Many2One/Many2OneValue",
+  title: "Work in progress/Widgets/Many2One/Many2OneValue",
   component: Many2OneValue,
 } as ComponentMeta<typeof Many2OneValue>;
 

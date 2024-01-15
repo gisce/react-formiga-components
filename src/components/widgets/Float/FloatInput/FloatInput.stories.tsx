@@ -5,7 +5,7 @@ import { FloatInput } from ".";
 import { BaseFieldArgTypes } from "@/components/form/Field/BaseField.argTypes";
 
 export default {
-  title: "Components/Widgets/Float/FloatInput",
+  title: "Work in progress/Widgets/Float/FloatInput",
   component: FloatInput,
   argTypes: {
     ...BaseFieldArgTypes,

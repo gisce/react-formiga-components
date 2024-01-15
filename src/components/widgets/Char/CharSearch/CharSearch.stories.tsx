@@ -5,7 +5,7 @@ import { CharSearch } from ".";
 import { BaseFieldArgTypes } from "@/components/form/Field/BaseField.argTypes";
 
 export default {
-  title: "Components/Widgets/Char/CharSearch",
+  title: "Work in progress/Widgets/Char/CharSearch",
   component: CharSearch,
   argTypes: {
     ...BaseFieldArgTypes,

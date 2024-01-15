@@ -1,4 +1,5 @@
 import type { StorybookConfig } from "@storybook/react-vite";
+import { withoutVitePlugins } from "@storybook/builder-vite";
 import path from "path";
 
 const config: StorybookConfig = {
@@ -25,8 +26,10 @@ const config: StorybookConfig = {
       stream: "stream-browserify",
     };
 
-    // Return the altered config
-    return config;
+    return {
+      ...config,
+      plugins: await withoutVitePlugins(config.plugins, ["peer-deps-external"]),
+    };
   },
 };
 export default config;
