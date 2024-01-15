@@ -46,7 +46,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "antd": "^5.5.2",
+    "antd": "5.13.1",
     "file-type-buffer-browser": "git+ssh://git@github.com/mguellsegarra/file-type-buffer-browser.git",
     "interweave": "^13.0.0",
     "react": "18.2.0",
@@ -108,7 +108,6 @@
     "vite-tsconfig-paths": "3.5.0"
   },
   "overrides": {
-    "rc-dropdown": "3.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
