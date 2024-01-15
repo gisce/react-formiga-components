@@ -1,0 +1,1 @@
+{"version":3,"file":"FloatSearch.types.d.ts","sourceRoot":"","sources":["../../../../../src/components/widgets/Float/FloatSearch/FloatSearch.types.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,cAAc,EAAE,MAAM,UAAU,CAAC;AAC1C,OAAO,EAAE,aAAa,EAAE,MAAM,cAAc,CAAC;AAE7C,MAAM,MAAM,gBAAgB,GAAG,cAAc,GAAG,aAAa,CAAC,CAAC,MAAM,EAAE,MAAM,CAAC,CAAC,GAAG;IAChF,IAAI,EAAE,MAAM,CAAC;CACd,CAAC"}

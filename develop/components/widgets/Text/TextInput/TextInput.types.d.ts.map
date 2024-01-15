@@ -1,0 +1,1 @@
+{"version":3,"file":"TextInput.types.d.ts","sourceRoot":"","sources":["../../../../../src/components/widgets/Text/TextInput/TextInput.types.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,cAAc,EAAE,MAAM,yBAAyB,CAAC;AAEzD,MAAM,MAAM,cAAc,GAAG,cAAc,CAAC,MAAM,CAAC,GAAG;IACpD,MAAM,CAAC,EAAE,MAAM,CAAC;CACjB,CAAC;AAEF,MAAM,MAAM,mBAAmB,GAAG;IAChC,MAAM,EAAE,MAAM,CAAC;CAChB,CAAC"}
