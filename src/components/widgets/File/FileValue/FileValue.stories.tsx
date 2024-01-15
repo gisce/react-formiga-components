@@ -7,7 +7,7 @@ import { BaseFieldArgTypes } from "@/components/form/Field/BaseField.argTypes";
 const category = "File value specific";
 
 export default {
-  title: "Components/Widgets/File/FileValue",
+  title: "Work in progress/Widgets/File/FileValue",
   component: FileValue,
   argTypes: {
     ...BaseFieldArgTypes,

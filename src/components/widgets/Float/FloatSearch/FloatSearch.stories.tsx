@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { FloatSearch } from ".";
 
 export default {
-  title: "Components/Widgets/Float/FloatSearch",
+  title: "Work in progress/Widgets/Float/FloatSearch",
   component: FloatSearch,
 } as ComponentMeta<typeof FloatSearch>;
 

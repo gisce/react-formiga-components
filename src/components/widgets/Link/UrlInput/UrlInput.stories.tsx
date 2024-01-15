@@ -5,7 +5,7 @@ import { UrlInput } from ".";
 import { BaseFieldArgTypes } from "@/components/form/Field/BaseField.argTypes";
 
 export default {
-  title: "Components/Widgets/Link/UrlInput",
+  title: "Work in progress/Widgets/Link/UrlInput",
   component: UrlInput,
   argTypes: {
     ...BaseFieldArgTypes,

@@ -10,7 +10,7 @@ const selectionValues = {
 };
 
 export default {
-  title: "Components/Widgets/Selection/SelectionValue",
+  title: "Work in progress/Widgets/Selection/SelectionValue",
   component: SelectionValue,
 } as ComponentMeta<typeof SelectionValue>;
 

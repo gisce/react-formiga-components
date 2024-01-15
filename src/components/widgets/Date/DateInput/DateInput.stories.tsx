@@ -7,7 +7,7 @@ import { BaseFieldArgTypes } from "@/components/form/Field/BaseField.argTypes";
 const category = "Date specific";
 
 export default {
-  title: "Components/Widgets/Date/DateInput",
+  title: "Work in progress/Widgets/Date/DateInput",
   component: DateInput,
   argTypes: {
     ...BaseFieldArgTypes,

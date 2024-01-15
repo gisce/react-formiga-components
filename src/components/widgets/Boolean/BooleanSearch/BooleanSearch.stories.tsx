@@ -5,7 +5,7 @@ import { BooleanSearch } from "./BooleanSearch";
 import { LocaleArgTypes } from "@/components/form/Field/BaseField.argTypes";
 
 export default {
-  title: "Components/Widgets/Boolean/BooleanSearch",
+  title: "Work in progress/Widgets/Boolean/BooleanSearch",
   component: BooleanSearch,
   argTypes: {
     ...LocaleArgTypes,

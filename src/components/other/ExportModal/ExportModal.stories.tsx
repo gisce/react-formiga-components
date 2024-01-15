@@ -6,7 +6,7 @@ import { Button } from "antd";
 import { ExportOptions, PredefinedExport } from "./ExportModal.types";
 
 export default {
-  title: "Components/Other/ExportModal",
+  title: "Components/ExportModal",
   component: ExportModal,
 } as ComponentMeta<typeof ExportModal>;
 
@@ -335,7 +335,7 @@ export const Default: ComponentStory<typeof ExportModal> = () => {
         onSavePredefinedExport={async (options: PredefinedExport) => {
           await new Promise((resolve) => setTimeout(resolve, 3000));
           console.log(
-            "onSavePredefinedExport: " + JSON.stringify(options, null, 2)
+            "onSavePredefinedExport: " + JSON.stringify(options, null, 2),
           );
           return {
             ...options,
@@ -344,7 +344,7 @@ export const Default: ComponentStory<typeof ExportModal> = () => {
         }}
         onRemovePredefinedExport={async (options: PredefinedExport) => {
           console.log(
-            "onRemovePredefinedExport: " + JSON.stringify(options, null, 2)
+            "onRemovePredefinedExport: " + JSON.stringify(options, null, 2),
           );
           return await new Promise((resolve) => setTimeout(resolve, 3000));
         }}

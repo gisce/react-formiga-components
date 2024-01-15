@@ -5,7 +5,7 @@ import { IntegerInput } from "./IntegerInput";
 import { BaseFieldArgTypes } from "@/components/form/Field/BaseField.argTypes";
 
 export default {
-  title: "Components/Widgets/Integer/IntegerInput",
+  title: "Work in progress/Widgets/Integer/IntegerInput",
   component: IntegerInput,
   argTypes: {
     ...BaseFieldArgTypes,
