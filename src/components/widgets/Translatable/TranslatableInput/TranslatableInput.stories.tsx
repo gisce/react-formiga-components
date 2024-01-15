@@ -5,7 +5,7 @@ import { TranslatableInput } from ".";
 import { BaseFieldArgTypes } from "@/components/form/Field/BaseField.argTypes";
 
 export default {
-  title: "Components/Widgets/Translatable/TranslatableInput",
+  title: "Work in progress/Widgets/Translatable/TranslatableInput",
   component: TranslatableInput,
   argTypes: {
     ...BaseFieldArgTypes,

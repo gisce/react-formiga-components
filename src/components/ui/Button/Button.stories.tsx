@@ -6,7 +6,7 @@ import { Button } from "./Button";
 const buttonSpecificCategory = { category: "Button specific" };
 
 export default {
-  title: "Components/UI/Button",
+  title: "Work in progress/UI/Button",
   component: Button,
   argTypes: {
     icon: {

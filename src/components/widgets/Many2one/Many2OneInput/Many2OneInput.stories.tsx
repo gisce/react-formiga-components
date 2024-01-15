@@ -9,7 +9,7 @@ import { Modal } from "antd";
 const { info } = Modal;
 
 export default {
-  title: "Components/Widgets/Many2One/Many2OneInput",
+  title: "Work in progress/Widgets/Many2One/Many2OneInput",
   component: Many2OneInput,
   argTypes: {
     ...BaseFieldArgTypes,

@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { One2ManyTopBar } from "./One2ManyTopBar";
 
 export default {
-  title: "Components/Widgets/One2Many/One2ManyTopBar",
+  title: "Work in progress/Widgets/One2Many/One2ManyTopBar",
   component: One2ManyTopBar,
 } as ComponentMeta<typeof One2ManyTopBar>;
 

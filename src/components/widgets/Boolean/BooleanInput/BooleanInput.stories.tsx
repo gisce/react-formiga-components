@@ -5,7 +5,7 @@ import { BooleanInput } from "./BooleanInput";
 import { BaseFieldArgTypes } from "@/components/form/Field/BaseField.argTypes";
 
 export default {
-  title: "Components/Widgets/Boolean/BooleanInput",
+  title: "Work in progress/Widgets/Boolean/BooleanInput",
   component: BooleanInput,
   argTypes: {
     ...BaseFieldArgTypes,

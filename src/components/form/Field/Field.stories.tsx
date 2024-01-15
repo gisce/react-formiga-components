@@ -21,7 +21,7 @@ const validatorOptions = [
 ];
 
 export default {
-  title: "Components/Form/Field",
+  title: "Work in progress/Form/Field",
   component: CharInput,
   argTypes: {
     ...BaseFieldArgTypes,

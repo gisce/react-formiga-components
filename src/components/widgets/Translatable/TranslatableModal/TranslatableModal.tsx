@@ -1,3 +1,6 @@
+// @TODO: Review this component
+// @ts-nocheck
+/* eslint-disable */
 import React, { useEffect, useRef, useState } from "react";
 import { Modal, Divider, Row, Spin, Col } from "antd";
 import { tForLang } from "@/context/LocaleContext";
@@ -145,7 +148,7 @@ export const TranslatableModal = (props: TranslatableModalProps) => {
   }
 
   return (
-    (<Modal
+    <Modal
       title={tForLang("translate", locale)}
       centered
       width={modalWidth}
@@ -156,6 +159,6 @@ export const TranslatableModal = (props: TranslatableModalProps) => {
       destroyOnClose
     >
       {content()}
-    </Modal>)
+    </Modal>
   );
 };

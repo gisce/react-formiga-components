@@ -11,7 +11,7 @@ const selectionValues = {
 };
 
 export default {
-  title: "Components/Widgets/Selection/SelectionInput",
+  title: "Work in progress/Widgets/Selection/SelectionInput",
   component: SelectionInput,
   argTypes: {
     ...BaseFieldArgTypes,

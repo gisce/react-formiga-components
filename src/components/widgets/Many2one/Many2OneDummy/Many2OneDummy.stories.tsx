@@ -13,7 +13,7 @@ import {
 } from "@ant-design/icons";
 
 export default {
-  title: "Components/Widgets/Many2One/Many2OneDummy",
+  title: "Work in progress/Widgets/Many2One/Many2OneDummy",
   component: Many2OneDummy,
   argTypes: {
     ...BaseFieldArgTypes,

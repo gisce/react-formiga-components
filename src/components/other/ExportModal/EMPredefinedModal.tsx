@@ -1,8 +1,9 @@
+import { useCallback, useEffect, useState, useMemo } from "react";
 import { Locale, tForLang } from "@/context";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
+import { CheckOutlined, CloseOutlined, DeleteFilled } from "@ant-design/icons";
 import {
   Button,
-  Col,
   Divider,
   Modal,
   Popconfirm,
@@ -13,19 +14,20 @@ import {
   Tooltip,
 } from "antd";
 import { ColumnsType } from "antd/lib/table";
-import React, { useEffect, useRef, useState } from "react";
-import { DeleteFilled, CloseOutlined, CheckOutlined } from "@ant-design/icons";
 import { EMSeparator } from "./EMSeparator";
-import { PredefinedExport } from "./ExportModal.types";
+import {
+  PredefinedExport,
+  PredefinedExportMandatoryId,
+} from "./ExportModal.types";
 
 export type EMPredefinedModalProps = {
   locale: Locale;
   visible: boolean;
   onCancel: () => void;
   onSelectPredefinedExport: (predefinedExport: PredefinedExport) => void;
-  onGetPredefinedExports: () => Promise<PredefinedExport[]>;
+  onGetPredefinedExports: () => Promise<PredefinedExportMandatoryId[]>;
   onRemovePredefinedExport: (
-    predefinedExport: PredefinedExport
+    predefinedExport: PredefinedExport,
   ) => Promise<void>;
 };
 
@@ -35,15 +37,14 @@ interface RowData {
   fields: string;
 }
 
-export const EMPredefinedModal = (props: EMPredefinedModalProps) => {
-  const {
-    locale,
-    visible,
-    onCancel,
-    onSelectPredefinedExport,
-    onGetPredefinedExports,
-    onRemovePredefinedExport,
-  } = props;
+export const EMPredefinedModal = ({
+  locale,
+  visible,
+  onCancel,
+  onSelectPredefinedExport,
+  onGetPredefinedExports,
+  onRemovePredefinedExport,
+}: EMPredefinedModalProps) => {
   const { modalWidth } = useWindowDimensions();
   const [loading, setLoading] = useState(false);
   const [rows, setRows] = useState<RowData[]>([]);
@@ -51,43 +52,108 @@ export const EMPredefinedModal = (props: EMPredefinedModalProps) => {
     PredefinedExport[]
   >([]);
   const [removeInProgress, setRemoveInProgress] = useState(false);
-  const previousRemoveInProgressRef = useRef(false);
 
-  useEffect(() => {
-    if (visible) {
-      fetchData();
-    }
-  }, [visible]);
-
-  useEffect(() => {
-    if (previousRemoveInProgressRef.current && !removeInProgress) {
-      fetchData();
-    }
-
-    previousRemoveInProgressRef.current = removeInProgress;
-  }, [removeInProgress]);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     try {
       const data = await onGetPredefinedExports();
       setPredefinedExports(data);
-      const rows = data.map((item) => {
-        return {
+      setRows(
+        data.map((item) => ({
           key: item.id.toString(),
           name: item.name,
           fields: item.fields.map((field) => field.title).join(", "),
-        };
-      });
-      setRows(rows);
+        })),
+      );
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
-  };
+  }, [onGetPredefinedExports]);
+
+  useEffect(() => {
+    if (visible) fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visible]);
+
+  const handleSelectPredefinedExport = useCallback(
+    (id: number) => {
+      const foundExport = predefinedExports.find((item) => item.id === id);
+      if (foundExport) onSelectPredefinedExport(foundExport);
+    },
+    [predefinedExports, onSelectPredefinedExport],
+  );
+
+  const handleRemovePredefinedExport = useCallback(
+    async (id: number) => {
+      setRemoveInProgress(true);
+      const foundExport = predefinedExports.find((item) => item.id === id);
+      if (foundExport) {
+        await onRemovePredefinedExport(foundExport);
+      }
+      setRemoveInProgress(false);
+    },
+    [predefinedExports, onRemovePredefinedExport],
+  );
+
+  const columns: ColumnsType<RowData> = useMemo(
+    () => [
+      {
+        title: tForLang("name", locale),
+        dataIndex: "name",
+        render: (text, { key }) => (
+          <a
+            onClick={() => handleSelectPredefinedExport(parseInt(key))}
+            style={{ userSelect: "none" }}
+          >
+            {text}
+          </a>
+        ),
+      },
+      {
+        title: tForLang("fieldsToExport", locale),
+        dataIndex: "fields",
+      },
+      {
+        title: tForLang("action", locale),
+        key: "action",
+        render: (_, { key }) => (
+          <Space size="middle">
+            <Tooltip title={tForLang("select", locale)}>
+              <Button
+                type="primary"
+                shape="circle"
+                disabled={removeInProgress}
+                icon={<CheckOutlined />}
+                onClick={() => handleSelectPredefinedExport(parseInt(key))}
+              />
+            </Tooltip>
+            <Popconfirm
+              title={tForLang("confirmDeletePredefinedExport", locale)}
+              okText={tForLang("true", locale)}
+              cancelText={tForLang("false", locale)}
+              disabled={removeInProgress}
+              onConfirm={() => handleRemovePredefinedExport(parseInt(key))}
+            >
+              <Tooltip title={tForLang("delete", locale)}>
+                <Button danger shape="circle" icon={<DeleteFilled />} />
+              </Tooltip>
+            </Popconfirm>
+          </Space>
+        ),
+      },
+    ],
+    [
+      locale,
+      removeInProgress,
+      handleSelectPredefinedExport,
+      handleRemovePredefinedExport,
+    ],
+  );
 
   return (
-    (<Modal
+    <Modal
       title={tForLang("selectPredefinedExport", locale)}
       centered
       width={modalWidth * 0.8}
@@ -103,120 +169,26 @@ export const EMPredefinedModal = (props: EMPredefinedModalProps) => {
         <>
           <Table
             pagination={false}
-            columns={getColumns({
-              locale,
-              predefinedExports,
-              onSelectPredefinedExport,
-              onRemovePredefinedExport,
-              removeInProgress,
-              setRemoveInProgress,
-            })}
+            columns={columns}
             dataSource={rows}
             bordered
-          ></Table>
+          />
           <EMSeparator />
           <Divider />
-          <Row>
-            <Col span={24}>
-              <Row justify="end">
-                <Space>
-                  <Button
-                    icon={<CloseOutlined />}
-                    onClick={onCancel}
-                    disabled={loading || removeInProgress}
-                    style={{ marginLeft: 15 }}
-                  >
-                    {tForLang("cancel", locale)}
-                  </Button>
-                </Space>
-              </Row>
-            </Col>
+          <Row justify="end">
+            <Space>
+              <Button
+                icon={<CloseOutlined />}
+                onClick={onCancel}
+                disabled={loading || removeInProgress}
+                style={{ marginLeft: 15 }}
+              >
+                {tForLang("cancel", locale)}
+              </Button>
+            </Space>
           </Row>
         </>
       )}
-    </Modal>)
+    </Modal>
   );
-};
-
-const getColumns = ({
-  locale,
-  onSelectPredefinedExport,
-  onRemovePredefinedExport,
-  predefinedExports,
-  removeInProgress,
-  setRemoveInProgress,
-}: {
-  locale: Locale;
-  predefinedExports: PredefinedExport[];
-  onSelectPredefinedExport: (predefinedExport: PredefinedExport) => void;
-  onRemovePredefinedExport: (
-    predefinedExport: PredefinedExport
-  ) => Promise<void>;
-  removeInProgress: boolean;
-  setRemoveInProgress: (value: boolean) => void;
-}): ColumnsType<RowData> => {
-  return [
-    {
-      title: tForLang("name", locale),
-      dataIndex: "name",
-      render: (text, record) => (
-        <a
-          style={{ userSelect: "none" }}
-          onClick={() => {
-            onSelectPredefinedExport(
-              predefinedExports.find((item) => item.id === parseInt(record.key))
-            );
-          }}
-        >
-          {text}
-        </a>
-      ),
-    },
-    {
-      title: tForLang("fieldsToExport", locale),
-      dataIndex: "fields",
-    },
-    {
-      title: tForLang("action", locale),
-      key: "action",
-      render: (_, record) => (
-        <Space size="middle">
-          <Tooltip title={tForLang("select", locale)}>
-            <Button
-              type="primary"
-              shape="circle"
-              disabled={removeInProgress}
-              icon={<CheckOutlined />}
-              onClick={() => {
-                onSelectPredefinedExport(
-                  predefinedExports.find(
-                    (item) => item.id === parseInt(record.key)
-                  )
-                );
-              }}
-            />
-          </Tooltip>
-          <Popconfirm
-            title={tForLang("confirmDeletePredefinedExport", locale)}
-            okText={tForLang("true", locale)}
-            cancelText={tForLang("false", locale)}
-            disabled={removeInProgress}
-            onConfirm={async () => {
-              setRemoveInProgress(true);
-              await onRemovePredefinedExport(
-                predefinedExports.find(
-                  (item) => item.id === parseInt(record.key)
-                )
-              );
-              setRemoveInProgress(false);
-            }}
-          >
-            <Tooltip title={tForLang("delete", locale)}>
-              <Button danger shape="circle" icon={<DeleteFilled />} />
-            </Tooltip>
-          </Popconfirm>
-        </Space>
-      ),
-    },
-  ];
 };

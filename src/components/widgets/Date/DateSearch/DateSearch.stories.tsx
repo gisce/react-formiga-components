@@ -6,7 +6,7 @@ import { DateSearch } from ".";
 const category = "Date specific";
 
 export default {
-  title: "Components/Widgets/Date/DateSearch",
+  title: "Work in progress/Widgets/Date/DateSearch",
   component: DateSearch,
   argTypes: {
     onChange: {

@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { BooleanValue } from "./BooleanValue";
 
 export default {
-  title: "Components/Widgets/Boolean/BooleanValue",
+  title: "Work in progress/Widgets/Boolean/BooleanValue",
   component: BooleanValue,
 } as ComponentMeta<typeof BooleanValue>;
 
