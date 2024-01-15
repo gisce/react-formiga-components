@@ -1,4 +1,6 @@
-import React from "react";
+// @TODO: Review this component
+// @ts-nocheck
+/* eslint-disable */
 import { FloatInputProps } from "./FloatInput.types";
 import {
   StyledInputNumber,

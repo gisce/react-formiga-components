@@ -52,7 +52,7 @@ export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
   useEffect(() => {
     if (mode === "left") {
       const filteredSelectedKeys = selectedKeys.filter(
-        (item) => !targetKeys.includes(item)
+        (item) => !targetKeys.includes(item),
       );
 
       onChange?.({
@@ -65,6 +65,7 @@ export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
         targetKeys,
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [targetKeys, mode]);
 
   useEffect(() => {
@@ -73,8 +74,9 @@ export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
         treeNodes: dataSource,
         targetKeys,
         searchText,
-      })
+      }),
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataSource, targetKeys, searchText]);
 
   useEffect(() => {
@@ -85,6 +87,7 @@ export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
       setIndeterminate(false);
       setCheckAll(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedKeys]);
 
   useEffect(() => {
@@ -93,6 +96,7 @@ export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
       setIndeterminate(false);
       setCheckAll(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [targetKeys]);
 
   const getAllFlattenItems = useCallback(() => {
@@ -126,7 +130,7 @@ export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
         setCheckAll(false);
       }
     },
-    [getAllFlattenItems, targetKeys]
+    [getAllFlattenItems, mode, setSelectedKeys, targetKeys],
   );
 
   const onSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -148,7 +152,7 @@ export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
                   }
                 })
                 .map((entry) => entry.key)
-            : []
+            : [],
         );
         setIndeterminate(false);
         setCheckAll(e.target.checked);
@@ -158,11 +162,11 @@ export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
         setCheckAll(e.target.checked);
       }
     },
-    [mode, targetKeys, getAllFlattenItems]
+    [mode, setSelectedKeys, getAllFlattenItems, targetKeys],
   );
 
   const onDropCallback = useCallback(
-    (info) => {
+    (info: any) => {
       const { dragNode, dropPosition } = info;
       const { key } = dragNode;
 
@@ -178,7 +182,7 @@ export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
       }
       setTargetKeys(newSelectedKeys);
     },
-    [targetKeys]
+    [setTargetKeys, targetKeys],
   );
 
   const draggableProps =
@@ -202,7 +206,7 @@ export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
             {selectedKeys.length > 0 ? `${selectedKeys.length}/` : ""}
             {`${flatten(treeData)?.length || 0} ${tForLang(
               "exportModalItemsUnit",
-              locale
+              locale,
             )}`}
           </Checkbox>
         </Col>

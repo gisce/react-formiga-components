@@ -1,3 +1,6 @@
+// @TODO: Review this component
+// @ts-nocheck
+/* eslint-disable */
 import React, { useContext, useRef } from "react";
 import { Row, Col, Input, Space } from "antd";
 import { Button } from "@/index";

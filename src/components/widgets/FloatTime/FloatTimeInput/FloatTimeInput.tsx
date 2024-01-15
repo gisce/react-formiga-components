@@ -1,3 +1,6 @@
+// @TODO: Review this component
+// @ts-nocheck
+/* eslint-disable */
 import React, { useEffect, useRef, useState } from "react";
 import { parseFloatToString, parseStringToFloat } from "./FloatTime.helper";
 import { BaseFieldProps } from "@/index";

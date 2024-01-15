@@ -1,12 +1,12 @@
 import { Locale, tForLang } from "@/context";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
-import { Button, Col, Divider, Input, Modal, Row, Space } from "antd";
-import React, { useCallback, useEffect, useState } from "react";
 import {
-  LoadingOutlined,
-  CloseOutlined,
   CheckOutlined,
+  CloseOutlined,
+  LoadingOutlined,
 } from "@ant-design/icons";
+import { Button, Col, Divider, Input, Modal, Row, Space } from "antd";
+import { memo, useCallback, useEffect, useState } from "react";
 
 export type EMNameDialogProps = {
   locale: Locale;
@@ -15,18 +15,21 @@ export type EMNameDialogProps = {
   onSave: (name: string) => Promise<void>;
 };
 
-export const EMNameDialog = (props: EMNameDialogProps) => {
+const MODAL_WIDTH_FACTOR = 0.8;
+
+export const EMNameDialog = memo((props: EMNameDialogProps) => {
   const { locale, visible, onCancel, onSave } = props;
   const { modalWidth } = useWindowDimensions();
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState<string>();
 
   const onSaveCallback = useCallback(async () => {
+    if (!name) return;
     setLoading(true);
     await onSave(name);
     setLoading(false);
     onCancel();
-  }, [name]);
+  }, [name, onSave, onCancel]);
 
   useEffect(() => {
     if (!visible) {
@@ -35,12 +38,12 @@ export const EMNameDialog = (props: EMNameDialogProps) => {
   }, [visible]);
 
   return (
-    (<Modal
+    <Modal
       title={tForLang("enterNameOfExport", locale)}
       centered
-      width={modalWidth * 0.8}
+      width={modalWidth * MODAL_WIDTH_FACTOR}
       open={visible}
-      closable={true && !loading}
+      closable={!loading}
       onCancel={onCancel}
       footer={null}
       destroyOnClose
@@ -77,6 +80,8 @@ export const EMNameDialog = (props: EMNameDialogProps) => {
           </Row>
         </Col>
       </Row>
-    </Modal>)
+    </Modal>
   );
-};
+});
+
+EMNameDialog.displayName = "EMNameDialog";

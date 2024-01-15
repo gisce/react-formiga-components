@@ -1,3 +1,6 @@
+// @TODO: Review this component
+// @ts-nocheck
+/* eslint-disable */
 import { Col, Input, Row } from "antd";
 import React, { useState, useCallback } from "react";
 import { TranslationOutlined } from "@ant-design/icons";

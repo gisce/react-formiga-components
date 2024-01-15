@@ -1,9 +1,9 @@
 import { Locale } from "@/context";
 import { Modal, Spin } from "antd";
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { EMTransferWrapper } from "./EMTransferWrapper";
 import { ExportField, PredefinedExportField } from "./ExportModal.types";
-import { ExportModalContext } from "./ExportModalContext";
+import { useExportModalContext } from "./ExportModalContext";
 import { updateTreeData } from "./exportModalHelper";
 const { error } = Modal;
 
@@ -24,11 +24,12 @@ export const EMTransfer = ({
   onChange,
   disabled = false,
 }: EMTransferProps) => {
-  const { dataSource, setDataSource } = useContext(ExportModalContext);
+  const { dataSource, setDataSource } = useExportModalContext();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     fetchInitialItems();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchInitialItems = useCallback(async () => {
@@ -47,7 +48,7 @@ export const EMTransfer = ({
     }
 
     setIsLoading(false);
-  }, []);
+  }, [onGetFields, setDataSource]);
 
   const onLoadData = useCallback(
     async ({ key }: any) => {
@@ -64,7 +65,7 @@ export const EMTransfer = ({
         });
       }
     },
-    [dataSource]
+    [dataSource, onGetFieldChilds, setDataSource],
   );
 
   if (isLoading) {

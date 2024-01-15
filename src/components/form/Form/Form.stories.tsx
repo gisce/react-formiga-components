@@ -1,4 +1,3 @@
-import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 import {
@@ -14,6 +13,7 @@ import {
   FloatInput,
   SelectionInput,
 } from "@/index";
+import { useForm } from "antd/es/form/Form";
 
 export default {
   title: "Components/Form/Form",
@@ -25,7 +25,8 @@ export default {
 } as ComponentMeta<typeof Form>;
 
 const Template: ComponentStory<typeof Form> = (args) => {
-  return <Form {...args} initialValues={{ name: "Hohn" }} />;
+  const [antForm] = useForm();
+  return <Form {...args} form={antForm} initialValues={{ name: "Hohn" }} />;
 };
 
 const formItems = [
