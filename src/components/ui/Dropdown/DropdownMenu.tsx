@@ -1,24 +1,38 @@
-import { Input } from "antd";
+import { Input, Spin } from "antd";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { DropdownMenuGroup, DropdownMenuItem } from "./Dropdown.types";
+import {
+  BaseDropdownProps,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+} from "./Dropdown.types";
 
 const { Search } = Input;
 
 export const DropdownMenu = ({
-  data,
+  onRetrieveData,
   searchable,
   onItemClick,
-}: {
-  data: DropdownMenuGroup[];
-  searchable: true | false | "auto";
-  onItemClick: (event: any) => void;
-}) => {
+}: BaseDropdownProps) => {
   const inputRef = useRef<any>(null);
   const [searchValue, setSearchValue] = useState<string>();
+  const [data, setData] = useState<DropdownMenuGroup[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     setTimeout(() => (inputRef.current as any)?.select());
   }, []);
+
+  const fetchData = useCallback(async () => {
+    setIsLoading(true);
+    const data = await onRetrieveData?.();
+    setData(data);
+    setIsLoading(false);
+  }, [onRetrieveData]);
 
   const allItemsFromGroups = flattenDropdownItems(data);
 
@@ -51,6 +65,23 @@ export const DropdownMenu = ({
     return data;
   }, [data, searchValue]);
 
+  if (isLoading) {
+    return (
+      <Root>
+        <div
+          style={{
+            padding: 15,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Spin />
+        </div>
+      </Root>
+    );
+  }
+
   return (
     <Root>
       {mustShowSearch && (
@@ -75,7 +106,7 @@ export const DropdownMenu = ({
               <Item
                 key={item.id}
                 item={item}
-                onClick={() => onItemClick(item)}
+                onClick={() => onItemClick?.(item)}
               />
             ))}
           </Group>

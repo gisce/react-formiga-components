@@ -1,11 +1,12 @@
-import { memo, useState } from "react";
+import { memo, useCallback, useState } from "react";
 import { Dropdown as AntDropdown } from "antd";
 import { DropdownProps } from "./Dropdown.types";
-import { DropdownMenu } from "./DropdownMenu";
+import { DropdownMenu, flattenDropdownItems } from "./DropdownMenu";
+import ErrorBoundary from "antd/es/alert/ErrorBoundary";
 
 export const Dropdown: React.FC<DropdownProps> = memo(
   ({
-    data = [],
+    onRetrieveData,
     onItemClick,
     disabled = false,
     searchable = "auto",
@@ -13,31 +14,42 @@ export const Dropdown: React.FC<DropdownProps> = memo(
     trigger = ["click"],
   }: DropdownProps) => {
     const [internalOpen, setInternalOpen] = useState(false);
+    const [internalDisabled, setInternalDisabled] = useState(disabled);
+
+    const onRetrieveDataCallback = useCallback(async () => {
+      const data = await onRetrieveData?.();
+      if (flattenDropdownItems(data).length === 0) {
+        setInternalDisabled(true);
+      }
+      return data;
+    }, [onRetrieveData]);
 
     return (
-      <AntDropdown
-        dropdownRender={() => {
-          return (
-            <DropdownMenu
-              searchable={searchable}
-              data={data}
-              onItemClick={(item) => {
-                setInternalOpen(false);
-                onItemClick?.(item);
-              }}
-            />
-          );
-        }}
-        disabled={disabled || data.length === 0}
-        trigger={trigger}
-        onOpenChange={(open) => {
-          setInternalOpen(open);
-        }}
-        open={internalOpen}
-        destroyPopupOnHide
-      >
-        {children}
-      </AntDropdown>
+      <ErrorBoundary>
+        <AntDropdown
+          dropdownRender={() => {
+            return (
+              <DropdownMenu
+                searchable={searchable}
+                onRetrieveData={onRetrieveDataCallback}
+                onItemClick={(item) => {
+                  setInternalOpen(false);
+                  onItemClick?.(item);
+                }}
+              />
+            );
+          }}
+          disabled={internalDisabled || disabled}
+          trigger={trigger}
+          onOpenChange={(open) => {
+            setInternalOpen(open);
+          }}
+          open={internalOpen}
+          destroyPopupOnHide
+        >
+          {children}
+        </AntDropdown>
+      </ErrorBoundary>
     );
   },
 );

@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Dropdown } from "./Dropdown";
 import { MobileOutlined } from "@ant-design/icons";
-import { DropdownMenuGroup } from "./Dropdown.types";
+import { DropdownMenuGroup, DropdownProps } from "./Dropdown.types";
 
 export default {
   title: "Components/Dropdown",
@@ -46,12 +46,15 @@ const exampleData: DropdownMenuGroup[] = [
   },
 ];
 
-const Template: FC<any> = (args) => <Dropdown {...args} />;
+const Template: FC<DropdownProps> = (args) => <Dropdown {...args} />;
 
 export const Default = Template.bind({});
 Default.exampleData = exampleData;
 Default.args = {
-  data: exampleData,
+  onRetrieveData: async () => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    return exampleData;
+  },
   children: (
     <button
       style={{
