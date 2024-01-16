@@ -10,6 +10,7 @@ export default {
 
 const exampleData: DropdownMenuGroup[] = [
   {
+    sticky: true,
     items: [
       { id: 1, name: "Item 1" },
       { id: 2, name: "Item 2", disabled: true },
