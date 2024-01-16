@@ -220,13 +220,14 @@ const Group = ({
         className="ant-dropdown-menu-item-group-title"
         title={label}
       >
-        {icon ? (
-          <Fragment>
-            {icon} <span> {label}</span>
-          </Fragment>
-        ) : (
-          label
-        )}
+        <Row wrap={false}>
+          {icon && (
+            <Col flex="none" style={{ paddingRight: 20 }}>
+              {icon}
+            </Col>
+          )}
+          <Col flex="auto">{label}</Col>
+        </Row>
       </div>
       <ul role="group" className="ant-dropdown-menu-item-group-list">
         {children}
