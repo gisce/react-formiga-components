@@ -30,6 +30,7 @@ export type DropdownMenuGroup = {
     label?: string;
     icon?: ReactNode;
     items: DropdownMenuItem[];
+    sticky?: boolean;
 };
 export type DropdownMenuItem = DropdownMenuItemType & Record<string, any> & {
     id: number | string;
