@@ -35,15 +35,12 @@ export const DropdownMenu = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    setTimeout(() => (inputRef.current as any)?.select());
-  }, []);
-
   const fetchData = useCallback(async () => {
     setIsLoading(true);
     const data = await onRetrieveData?.();
     setData(data);
     setIsLoading(false);
+    setTimeout(() => (inputRef.current as any)?.select());
   }, [onRetrieveData]);
 
   const allItemsFromGroups = flattenDropdownItems(data);
