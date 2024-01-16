@@ -1,17 +1,29 @@
-import { Input, Spin } from "antd";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Col, Input, Row, Spin } from "antd";
+import {
+  Fragment,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   BaseDropdownProps,
   DropdownMenuGroup,
   DropdownMenuItem,
 } from "./Dropdown.types";
+import cls from "classnames";
+import { CheckOutlined } from "@ant-design/icons";
 
 const { Search } = Input;
+
+const DROPDOWN_MENU_FIXED_WIDTH = 300;
 
 export const DropdownMenu = ({
   onRetrieveData,
   searchable,
   onItemClick,
+  maxHeight,
 }: BaseDropdownProps) => {
   const inputRef = useRef<any>(null);
   const [searchValue, setSearchValue] = useState<string>();
@@ -55,8 +67,10 @@ export const DropdownMenu = ({
         .map((group) => {
           return {
             ...group,
-            items: group.items.filter((item) =>
-              item.name.toLowerCase().includes(searchValue.toLowerCase()),
+            items: group.items.filter(
+              (item) =>
+                item.name &&
+                item.name.toLowerCase().includes(searchValue.toLowerCase()),
             ),
           };
         })
@@ -96,19 +110,24 @@ export const DropdownMenu = ({
       )}
       <div
         style={{
-          width: 300,
+          width: mustShowSearch ? DROPDOWN_MENU_FIXED_WIDTH : "auto",
           overflowY: "auto",
+          maxHeight,
         }}
       >
         {filteredData.map((group, idx) => (
-          <Group key={`${group.label}-${idx}`} title={group.label}>
-            {group.items.map((item) => (
-              <Item
-                key={item.id}
-                item={item}
-                onClick={() => onItemClick?.(item)}
-              />
-            ))}
+          <Group key={`group-${group.label}-${idx}`} data={group}>
+            {group.items.map((item) =>
+              item.type === "divider" ? (
+                <Divider key={item.id} />
+              ) : (
+                <Item
+                  key={item.id}
+                  item={item}
+                  onClick={() => onItemClick?.(item)}
+                />
+              ),
+            )}
           </Group>
         ))}
       </div>
@@ -140,11 +159,31 @@ const Item = ({
 }) => {
   const content = (
     <li
-      className="ant-dropdown-menu-item ant-dropdown-menu-item-only-child"
+      className={cls({
+        "ant-dropdown-menu-item": true,
+        "ant-dropdown-menu-item-only-child": !item.disabled,
+        "ant-dropdown-menu-item-disabled": item.disabled,
+      })}
       role="menuitem"
       onClick={onClick}
     >
-      <span className="ant-dropdown-menu-title-content">{item.name}</span>
+      <span className="ant-dropdown-menu-title-content">
+        <Row wrap={false}>
+          {item.icon && (
+            <Col flex="none" style={{ paddingRight: 20 }}>
+              {item.icon}
+            </Col>
+          )}
+          <Col flex="auto" style={{ paddingRight: 20 }}>
+            {item.name}
+          </Col>
+          {item.selected && (
+            <Col flex="none">
+              <CheckOutlined />
+            </Col>
+          )}
+        </Row>
+      </span>
     </li>
   );
 
@@ -152,20 +191,31 @@ const Item = ({
 };
 
 const Group = ({
-  title,
+  data,
   children,
 }: {
-  title: string;
+  data: DropdownMenuGroup;
   children?: React.ReactNode;
 }) => {
+  const { icon, label } = data;
+  if (!label) {
+    return <Fragment>{children}</Fragment>;
+  }
+
   return (
     <li role="presentation" className="ant-dropdown-menu-item-group">
       <div
         role="presentation"
         className="ant-dropdown-menu-item-group-title"
-        title={title}
+        title={label}
       >
-        {title}
+        {icon ? (
+          <Fragment>
+            {icon} <span> {label}</span>
+          </Fragment>
+        ) : (
+          label
+        )}
       </div>
       <ul role="group" className="ant-dropdown-menu-item-group-list">
         {children}
@@ -174,11 +224,14 @@ const Group = ({
   );
 };
 
+const Divider = () => {
+  return <li role="separator" className="ant-dropdown-menu-item-divider" />;
+};
+
 export const flattenDropdownItems = (
   data: DropdownMenuGroup[],
 ): DropdownMenuItem[] => {
-  return data.reduce<DropdownMenuItem[]>(
-    (acc, group) => [...acc, ...group.items],
-    [],
-  );
+  return data
+    .reduce<DropdownMenuItem[]>((acc, group) => [...acc, ...group.items], [])
+    .filter((item) => item.type !== "divider");
 };
