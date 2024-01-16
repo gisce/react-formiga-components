@@ -12,15 +12,15 @@ export const Dropdown: React.FC<DropdownProps> = memo(
     searchable = "auto",
     children,
     trigger = ["click"],
+    placement,
+    maxHeight,
   }: DropdownProps) => {
     const [internalOpen, setInternalOpen] = useState(false);
-    const [internalDisabled, setInternalDisabled] = useState(disabled);
+    const [emptyMenu, setEmptyMenu] = useState(false);
 
     const onRetrieveDataCallback = useCallback(async () => {
       const data = await onRetrieveData?.();
-      if (flattenDropdownItems(data).length === 0) {
-        setInternalDisabled(true);
-      }
+      setEmptyMenu(flattenDropdownItems(data).length === 0);
       return data;
     }, [onRetrieveData]);
 
@@ -30,6 +30,7 @@ export const Dropdown: React.FC<DropdownProps> = memo(
           dropdownRender={() => {
             return (
               <DropdownMenu
+                maxHeight={maxHeight}
                 searchable={searchable}
                 onRetrieveData={onRetrieveDataCallback}
                 onItemClick={(item) => {
@@ -39,8 +40,9 @@ export const Dropdown: React.FC<DropdownProps> = memo(
               />
             );
           }}
-          disabled={internalDisabled || disabled}
+          disabled={emptyMenu || disabled}
           trigger={trigger}
+          placement={placement}
           onOpenChange={(open) => {
             setInternalOpen(open);
           }}

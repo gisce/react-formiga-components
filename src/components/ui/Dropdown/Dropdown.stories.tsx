@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Dropdown } from "./Dropdown";
-import { MobileOutlined } from "@ant-design/icons";
+import { EnterOutlined, MobileOutlined } from "@ant-design/icons";
 import { DropdownMenuGroup, DropdownProps } from "./Dropdown.types";
 
 export default {
@@ -10,23 +10,24 @@ export default {
 
 const exampleData: DropdownMenuGroup[] = [
   {
-    label: "Group 1",
     items: [
       { id: 1, name: "Item 1" },
-      { id: 2, name: "Item 2" },
+      { id: 2, name: "Item 2", disabled: true },
+      { id: 3, type: "divider" },
     ],
   },
   {
     label: "Group 2",
+    icon: <MobileOutlined />,
     items: [
-      { id: 3, name: "Item 3" },
+      { id: 3, name: "Item 3", icon: <EnterOutlined /> },
       { id: 4, name: "Item 4" },
     ],
   },
   {
     label: "Group 3",
     items: [
-      { id: 5, name: "Item 5" },
+      { id: 5, name: "Item 5", selected: true },
       { id: 6, name: "Item 6" },
     ],
   },
