@@ -67,11 +67,13 @@ export const DropdownMenu = ({
         .map((group) => {
           return {
             ...group,
-            items: group.items.filter(
-              (item) =>
-                item.name &&
-                item.name.toLowerCase().includes(searchValue.toLowerCase()),
-            ),
+            items: group.sticky
+              ? group.items
+              : group.items.filter(
+                  (item) =>
+                    item.name &&
+                    item.name.toLowerCase().includes(searchValue.toLowerCase()),
+                ),
           };
         })
         .filter((group) => group.items.length > 0);
@@ -95,6 +97,7 @@ export const DropdownMenu = ({
       </Root>
     );
   }
+  console.log({ filteredData });
 
   return (
     <Root>
@@ -130,6 +133,14 @@ export const DropdownMenu = ({
             )}
           </Group>
         ))}
+        {flattenDropdownItems(filteredData.filter((group) => !group.sticky))
+          .length === 0 && (
+          <Group
+            key={"no-data-group"}
+            // @TODO: maybe make this translatabe
+            data={{ label: "No matches found", items: [] }}
+          />
+        )}
       </div>
     </Root>
   );
@@ -209,13 +220,14 @@ const Group = ({
         className="ant-dropdown-menu-item-group-title"
         title={label}
       >
-        {icon ? (
-          <Fragment>
-            {icon} <span> {label}</span>
-          </Fragment>
-        ) : (
-          label
-        )}
+        <Row wrap={false}>
+          {icon && (
+            <Col flex="none" style={{ paddingRight: 20 }}>
+              {icon}
+            </Col>
+          )}
+          <Col flex="auto">{label}</Col>
+        </Row>
       </div>
       <ul role="group" className="ant-dropdown-menu-item-group-list">
         {children}
