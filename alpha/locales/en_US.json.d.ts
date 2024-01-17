@@ -95,7 +95,8 @@ declare const _default: {
   "loadPredefinedExport": "Load predefined export",
   "enterNameOfExport": "Enter name of export",
   "nameOfExport": "Name of export",
-  "savePredefinedExport": "Save predefined export"
+  "savePredefinedExport": "Save predefined export",
+  "noMatches": "No matches found"
 }
 ;
 

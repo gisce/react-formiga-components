@@ -95,7 +95,8 @@ declare const _default: {
   "loadPredefinedExport": "Cargar exportación predefinida",
   "enterNameOfExport": "Introduce el nombre de la exportación",
   "nameOfExport": "Nombre de la exportación",
-  "savePredefinedExport": "Guardar exportación predefinida"
+  "savePredefinedExport": "Guardar exportación predefinida",
+  "noMatches": "No hay coincidencias"
 }
 ;
 
