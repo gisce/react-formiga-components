@@ -1,13 +1,8 @@
-import React, { useContext } from "react";
 import { Col } from "antd";
 import { Rule } from "antd/lib/form";
 
 import { Label } from "@/components/ui/Label/Label";
-import {
-  LocaleContext,
-  LocaleContextType,
-  tForLangContext,
-} from "@/context/LocaleContext";
+import { useLocale } from "@/context/LocaleContext";
 import { FieldProps } from "./Field.types";
 import {
   FormItemStyled,
@@ -27,11 +22,7 @@ export function Field(props: FieldProps) {
     locale,
   } = props;
 
-  const { t: tContext = undefined } =
-    (useContext(LocaleContext) as LocaleContextType) || {};
-  function t(key: string) {
-    return tForLangContext(key, locale, tContext);
-  }
+  const { t } = useLocale(locale);
 
   let rules: Rule[];
   if (validatorOpts && required) {

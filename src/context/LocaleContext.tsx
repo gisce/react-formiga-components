@@ -1,9 +1,11 @@
-import React from "react";
+import { createContext, memo, useCallback, useContext, useMemo } from "react";
 import ca_ES from "@/locales/ca_ES.json";
 import en_US from "@/locales/en_US.json";
 import es_ES from "@/locales/es_ES.json";
 
-const localeStrings: any = {
+const DEFAULT_LOCALE = "en_US";
+
+const localeStrings: Record<Locale, Record<string, string>> = {
   ca_ES,
   en_US,
   es_ES,
@@ -16,57 +18,84 @@ export type LocaleType = {
 };
 
 export type LocaleContextType = {
-  lang: string;
+  locale: Locale;
   t: (key: string) => string;
 };
 
+const defaultContextValue: LocaleContextType = {
+  locale: DEFAULT_LOCALE,
+  t: (key: string) => key,
+};
+
 export const LocaleContext =
-  React.createContext<LocaleContextType | null>(null);
+  createContext<LocaleContextType>(defaultContextValue);
+
+type Strings = Record<string, Record<string, string>>;
 
 type LocaleContextProps = {
-  children: React.ReactNode;
-  lang: string;
-  locales?: { [key: string]: { [key: string]: string } };
+  locale?: Locale;
+  children?: React.ReactNode;
+  strings?: Strings;
 };
 
-export const LocaleContextProvider = (props: LocaleContextProps): any => {
-  const { children, lang, locales } = props;
+export const LocaleContextProvider = memo(
+  ({ children, locale = DEFAULT_LOCALE, strings = {} }: LocaleContextProps) => {
+    const mergedStrings = useMemo(() => {
+      return { ...localeStrings, ...strings };
+    }, [strings]);
 
-  function t(key: string): string {
-    const mergedLocales = { ...localeStrings, ...locales };
-    const translated = mergedLocales[lang]?.[key];
-    return translated || key;
-  }
+    const t = useCallback(
+      (key: string): string => {
+        return mergedStrings[locale]?.[key] || key;
+      },
+      [mergedStrings, locale],
+    );
 
-  return (
-    <LocaleContext.Provider
-      value={{
-        lang,
+    const contextValue = useMemo(
+      () => ({
+        locale,
         t,
-      }}
-    >
-      {children}
-    </LocaleContext.Provider>
-  );
+      }),
+      [locale, t],
+    );
+
+    return (
+      <LocaleContext.Provider value={contextValue}>
+        {children}
+      </LocaleContext.Provider>
+    );
+  },
+);
+LocaleContextProvider.displayName = "LocaleContextProvider";
+
+export const useLocale = (propLocale?: Locale): LocaleContextType => {
+  const context = useContext(LocaleContext);
+
+  if (propLocale) {
+    return {
+      locale: propLocale,
+      t: (key: string) => tForLang(key, propLocale),
+    };
+  }
+
+  if (!context) {
+    console.error(
+      "useLocale must be used within a LocaleContextProvider - assuming default locale value",
+    );
+    return {
+      locale: DEFAULT_LOCALE,
+      t: (key: string) => tForLang(key, DEFAULT_LOCALE),
+    };
+  }
+
+  return context;
 };
 
-export const tForLang = (key: string, lang: string) => {
-  const translated = localeStrings[lang]?.[key];
-  return translated || key;
-};
-
-export const tForLangContext = (
+export const tForLang = (
   key: string,
-  locale?: string,
-  tContext?: Function
+  locale: Locale,
+  inlineStrings: Strings = {},
 ) => {
-  if (!tContext && !locale) {
-    return tForLang(key, "en_US");
-  }
-
-  if (locale) {
-    return tForLang(key, locale);
-  }
-
-  return tContext?.(key);
+  const translated = { ...localeStrings, ...inlineStrings }[locale]?.[key];
+  return translated || key;
 };
