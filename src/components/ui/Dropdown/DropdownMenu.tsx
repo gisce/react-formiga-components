@@ -14,6 +14,7 @@ import {
 } from "./Dropdown.types";
 import cls from "classnames";
 import { CheckOutlined } from "@ant-design/icons";
+import { useLocale } from "@/context";
 
 const { Search } = Input;
 
@@ -29,6 +30,7 @@ export const DropdownMenu = ({
   const [searchValue, setSearchValue] = useState<string>();
   const [data, setData] = useState<DropdownMenuGroup[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { t } = useLocale();
 
   useEffect(() => {
     fetchData();
@@ -135,7 +137,7 @@ export const DropdownMenu = ({
           <Group
             key={"no-data-group"}
             // @TODO: maybe make this translatabe
-            data={{ label: "No matches found", items: [] }}
+            data={{ label: t("noMatches"), items: [] }}
           />
         )}
       </div>

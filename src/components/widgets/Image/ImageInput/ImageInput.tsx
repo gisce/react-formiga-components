@@ -1,9 +1,8 @@
 // @TODO: Review this component
-// @ts-nocheck
 /* eslint-disable */
-import React, { useContext, useRef } from "react";
+import { useRef } from "react";
 import { Row, Space } from "antd";
-import { BaseFieldProps, Button } from "@/index";
+import { BaseFieldProps, Button, useLocale } from "@/index";
 import {
   FolderOpenOutlined,
   DownloadOutlined,
@@ -11,19 +10,10 @@ import {
 } from "@ant-design/icons";
 
 import { downloadFile, toBase64 } from "@/helpers/fileHelper";
-import {
-  LocaleContext,
-  LocaleContextType,
-  tForLangContext,
-} from "@/context/LocaleContext";
 
 export const ImageInput = (props: BaseFieldProps<string>) => {
   const { readOnly, value, onChange, locale } = props;
-  const { t: tContext = undefined } =
-    (useContext(LocaleContext) as LocaleContextType) || {};
-  function t(key: string) {
-    return tForLangContext(key, locale, tContext);
-  }
+  const { t } = useLocale(locale);
   const inputFile = useRef(null);
 
   const triggerChange = (changedValue?: string) => {
