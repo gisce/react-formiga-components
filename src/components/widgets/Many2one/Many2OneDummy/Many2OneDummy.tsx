@@ -1,14 +1,9 @@
-import React, { useContext } from "react";
 import { Col, Input, Row } from "antd";
 import { RequiredMany2OneDummy } from "./Many2OneDummy.styles";
 import { SearchOutlined, FolderOpenOutlined } from "@ant-design/icons";
 import { Many2OneDummyProps } from "./Many2OneDummy.types";
 import { Button } from "@/components/ui/Button";
-import {
-  LocaleContext,
-  LocaleContextType,
-  tForLangContext,
-} from "@/context/LocaleContext";
+import { useLocale } from "@/context";
 
 export const Many2OneDummy = (props: Many2OneDummyProps) => {
   const {
@@ -29,11 +24,7 @@ export const Many2OneDummy = (props: Many2OneDummyProps) => {
     locale,
   } = props;
 
-  const { t: tContext = undefined } =
-    (useContext(LocaleContext) as LocaleContextType) || {};
-  function t(key: string) {
-    return tForLangContext(key, locale, tContext);
-  }
+  const { t } = useLocale(locale);
 
   const CustomInput: any =
     required && !readOnly ? RequiredMany2OneDummy : Input;

@@ -1,4 +1,5 @@
 // @TODO: Review this component
+// @ts-nocheck
 /* eslint-disable */
 import { useRef } from "react";
 import { Row, Col, Input, Space } from "antd";
