@@ -1,7 +1,7 @@
 import { FieldSet } from "@/components/ui";
-import { tForLang } from "@/context";
+import { useLocale } from "@/context";
 import { Radio, RadioChangeEvent } from "antd";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { EMTotalRegSelectorProps } from "./EMTotalRegSelector.types";
 import { Interweave } from "interweave";
 
@@ -9,19 +9,22 @@ export const EMTotalRegSelector = (props: EMTotalRegSelectorProps) => {
   const {
     value,
     onChange,
-    locale,
     totalRegisters,
     selectedRegistersToExport,
     visibleRegisters,
   } = props;
+  const { t } = useLocale();
 
-  const onExportTypeChange = useCallback((e: RadioChangeEvent) => {
-    onChange(e.target.value);
-  }, []);
+  const onExportTypeChange = useCallback(
+    (e: RadioChangeEvent) => {
+      onChange(e.target.value);
+    },
+    [onChange],
+  );
 
   const title = selectedRegistersToExport
-    ? tForLang("registersToExportSelectedSummary", locale)
-    : tForLang("registersToExportVisibleSummary", locale);
+    ? t("registersToExportSelectedSummary")
+    : t("registersToExportVisibleSummary");
 
   const text = title
     .replace("{total}", totalRegisters.toString())
@@ -29,15 +32,15 @@ export const EMTotalRegSelector = (props: EMTotalRegSelectorProps) => {
       "{selected}",
       selectedRegistersToExport
         ? selectedRegistersToExport?.toString()
-        : visibleRegisters.toString()
+        : visibleRegisters.toString(),
     );
 
   const option = selectedRegistersToExport
-    ? tForLang("registersSelection", locale)
-    : tForLang("registersVisible", locale);
+    ? t("registersSelection")
+    : t("registersVisible");
 
   return (
-    <FieldSet label={tForLang("registersToExport", locale)}>
+    <FieldSet label={t("registersToExport")}>
       <p>
         <Interweave content={text} />
       </p>
@@ -50,7 +53,7 @@ export const EMTotalRegSelector = (props: EMTotalRegSelectorProps) => {
           {option + ` (${selectedRegistersToExport || visibleRegisters})`}
         </Radio>
         <Radio value={"all"}>
-          {tForLang("registersSelectionAll", locale) + ` (${totalRegisters})`}
+          {t("registersSelectionAll") + ` (${totalRegisters})`}
         </Radio>
       </Radio.Group>
     </FieldSet>

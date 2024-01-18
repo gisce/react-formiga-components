@@ -1,18 +1,22 @@
 import { FieldSet } from "@/components/ui";
-import { tForLang } from "@/context";
+import { useLocale } from "@/context";
 import { Radio, RadioChangeEvent } from "antd";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { EMExportTypeSelectorProps } from "./EMExportTypeSelector.types";
 
 export const EMExportTypeSelector = (props: EMExportTypeSelectorProps) => {
-  const { value, onChange, locale } = props;
+  const { value, onChange } = props;
+  const { t } = useLocale();
 
-  const onExportTypeChange = useCallback((e: RadioChangeEvent) => {
-    onChange(e.target.value);
-  }, []);
+  const onExportTypeChange = useCallback(
+    (e: RadioChangeEvent) => {
+      onChange(e.target.value);
+    },
+    [onChange],
+  );
 
   return (
-    <FieldSet label={tForLang("saveAs", locale)}>
+    <FieldSet label={t("saveAs")}>
       <Radio.Group onChange={onExportTypeChange} value={value}>
         <Radio value={"xlsx"}>Excel</Radio>
         <Radio value={"csv"}>CSV</Radio>

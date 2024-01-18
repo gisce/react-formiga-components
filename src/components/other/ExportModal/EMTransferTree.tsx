@@ -8,12 +8,11 @@ import {
   generateRightTree,
 } from "./exportModalHelper";
 import { SearchOutlined } from "@ant-design/icons";
-import { Locale, tForLang } from "@/context/LocaleContext";
+import { useLocale } from "@/context/LocaleContext";
 import type { CheckboxChangeEvent } from "antd/es/checkbox";
 
 export type EMTransferLeftTreeProps = {
   mode: "left" | "right";
-  locale: Locale;
   targetKeys: string[];
   dataSource: ExportField[];
   onLoadData: (treeNode: any) => Promise<void>;
@@ -35,7 +34,6 @@ export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
     targetKeys,
     dataSource,
     onLoadData,
-    locale,
     onChange,
     mode,
     selectedKeys,
@@ -48,6 +46,7 @@ export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
   const [checkAll, setCheckAll] = useState(false);
   const [treeData, setTreeData] = useState<ExportField[]>([]);
   const treeDataMethod = mode === "left" ? generateLeftTree : generateRightTree;
+  const { t } = useLocale();
 
   useEffect(() => {
     if (mode === "left") {
@@ -204,16 +203,11 @@ export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
             checked={checkAll}
           >
             {selectedKeys.length > 0 ? `${selectedKeys.length}/` : ""}
-            {`${flatten(treeData)?.length || 0} ${tForLang(
-              "exportModalItemsUnit",
-              locale,
-            )}`}
+            {`${flatten(treeData)?.length || 0} ${t("exportModalItemsUnit")}`}
           </Checkbox>
         </Col>
         <Col flex={1} style={{ textAlign: "right" }}>
-          {mode === "left"
-            ? tForLang("availableFields", locale)
-            : tForLang("fieldsToExport", locale)}
+          {mode === "left" ? t("availableFields") : t("fieldsToExport")}
         </Col>
       </div>
       <div className="ant-transfer-list-body ant-transfer-list-body-with-search">
@@ -221,7 +215,7 @@ export const EMTransferTree = (props: EMTransferLeftTreeProps) => {
           <Input
             style={{ marginBottom: 8 }}
             allowClear
-            placeholder={tForLang("searchPlaceholder", locale)}
+            placeholder={t("searchPlaceholder")}
             onChange={onSearch}
             prefix={<SearchOutlined style={{ color: "#ccc" }} />}
           />
