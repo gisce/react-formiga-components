@@ -1,15 +1,7 @@
+import { strings } from "@/locales";
 import { createContext, memo, useCallback, useContext, useMemo } from "react";
-import ca_ES from "@/locales/ca_ES.json";
-import en_US from "@/locales/en_US.json";
-import es_ES from "@/locales/es_ES.json";
 
 const DEFAULT_LOCALE = "en_US";
-
-const localeStrings: Record<Locale, Record<string, string>> = {
-  ca_ES,
-  en_US,
-  es_ES,
-};
 
 export type Locale = "es_ES" | "en_US" | "ca_ES";
 
@@ -22,27 +14,27 @@ export type LocaleContextType = {
   t: (key: string) => string;
 };
 
-const defaultContextValue: LocaleContextType = {
-  locale: DEFAULT_LOCALE,
-  t: (key: string) => key,
-};
+export const LocaleContext = createContext<LocaleContextType | undefined>(
+  undefined,
+);
 
-export const LocaleContext =
-  createContext<LocaleContextType>(defaultContextValue);
-
-type Strings = Record<string, Record<string, string>>;
+export type Strings = Record<string, Record<string, string>>;
 
 type LocaleContextProps = {
   locale?: Locale;
   children?: React.ReactNode;
-  strings?: Strings;
+  localizedStrings?: Strings;
 };
 
 export const LocaleContextProvider = memo(
-  ({ children, locale = DEFAULT_LOCALE, strings = {} }: LocaleContextProps) => {
+  ({
+    children,
+    locale = DEFAULT_LOCALE,
+    localizedStrings = {},
+  }: LocaleContextProps) => {
     const mergedStrings = useMemo(() => {
-      return { ...localeStrings, ...strings };
-    }, [strings]);
+      return mergeStrings(strings, localizedStrings);
+    }, [localizedStrings]);
 
     const t = useCallback(
       (key: string): string => {
@@ -96,6 +88,18 @@ export const tForLang = (
   locale: Locale,
   inlineStrings: Strings = {},
 ) => {
-  const translated = { ...localeStrings, ...inlineStrings }[locale]?.[key];
+  const translated = mergeStrings(strings, inlineStrings)[locale]?.[key];
   return translated || key;
+};
+
+export const mergeStrings = (a: Strings, b: Strings): Strings => {
+  const keys = new Set([...Object.keys(a), ...Object.keys(b)]);
+  const merged = Array.from(keys).reduce<Strings>((acc, key) => {
+    acc[key] = {
+      ...(a[key] || {}),
+      ...(b[key] || {}),
+    };
+    return acc;
+  }, {});
+  return merged;
 };

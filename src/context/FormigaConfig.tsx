@@ -1,14 +1,17 @@
-import { ReactNode, createContext, memo, useContext, useMemo } from "react";
-import { Locale, LocaleContextProvider } from "./LocaleContext";
+import { ReactNode, createContext, memo, useContext } from "react";
+import { Locale, LocaleContextProvider, Strings } from "./LocaleContext";
 
 interface FormigaConfigProps {
   locale?: Locale;
+  localizedStrings?: Strings;
+  children?: ReactNode;
 }
 
-const defaultFormigaConfig: FormigaConfigProps = {};
+type FormigaContextValues = {};
+const defaultFormigaConfig: FormigaContextValues = {};
 
 export const FormigaConfig =
-  createContext<FormigaConfigProps>(defaultFormigaConfig);
+  createContext<FormigaContextValues>(defaultFormigaConfig);
 
 export const useFormigaConfig = () => {
   const context = useContext(FormigaConfig);
@@ -23,20 +26,20 @@ export const useFormigaConfig = () => {
 };
 
 export const FormigaConfigProvider = memo(
-  ({
-    children,
-    locale,
-  }: FormigaConfigProps & { children?: ReactNode }): ReactNode => {
-    const providerValue = useMemo(
-      () => ({
-        locale,
-      }),
-      [locale],
-    );
+  ({ children, locale, localizedStrings }: FormigaConfigProps): ReactNode => {
+    // const providerValue = useMemo(
+    //   () => ({
+    //     locale,
+    //   }),
+    //   [locale],
+    // );
 
     return (
-      <FormigaConfig.Provider value={providerValue}>
-        <LocaleContextProvider locale={locale}>
+      <FormigaConfig.Provider value={{}}>
+        <LocaleContextProvider
+          locale={locale}
+          localizedStrings={localizedStrings}
+        >
           {children}
         </LocaleContextProvider>
       </FormigaConfig.Provider>

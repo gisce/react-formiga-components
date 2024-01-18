@@ -9,7 +9,6 @@ import { flatten } from "./exportModalHelper";
 import useDeepCompareEffect from "use-deep-compare-effect";
 
 export type EMTransferWrapperProps = {
-  locale: Locale;
   targetKeys: string[];
   onChange: (targetFields: PredefinedExportField[]) => void;
   dataSource: ExportField[];
@@ -30,7 +29,6 @@ export const EMTransferWrapper = (props: EMTransferWrapperProps) => {
     targetKeys: targetKeysProps = [],
     dataSource,
     onLoadData,
-    locale,
     onChange,
     disabled = false,
   } = props;
@@ -44,7 +42,7 @@ export const EMTransferWrapper = (props: EMTransferWrapperProps) => {
       targetKeys.map((key) => ({
         key,
         title: flatten(dataSource).find((item) => item.key === key)?.title,
-      }))
+      })),
     );
   }, [targetKeys, dataSource]);
 
@@ -63,7 +61,7 @@ export const EMTransferWrapper = (props: EMTransferWrapperProps) => {
 
   const toLeft = useCallback(() => {
     const newTargetKeys = targetKeys.filter(
-      (key) => !rightSelectedKeys.includes(key)
+      (key) => !rightSelectedKeys.includes(key),
     );
     setTargetKeys(newTargetKeys);
     setRightSelectedKeys([]);
@@ -73,7 +71,7 @@ export const EMTransferWrapper = (props: EMTransferWrapperProps) => {
     ({ selectedKeys }: { selectedKeys: string[] }) => {
       setLeftSelectedKeys(selectedKeys);
     },
-    [targetKeys]
+    [targetKeys],
   );
 
   const onChangeRight = useCallback(
@@ -87,21 +85,21 @@ export const EMTransferWrapper = (props: EMTransferWrapperProps) => {
       setRightSelectedKeys(selectedKeys);
       setTargetKeys(targetKeys);
     },
-    []
+    [],
   );
 
   const onSetLeftSelectedKeys = useCallback(
     (keys: string[]) => {
       setLeftSelectedKeys(keys.filter((key) => !targetKeys.includes(key)));
     },
-    [targetKeys]
+    [targetKeys],
   );
 
   const onSetRightSelectedKeys = useCallback(
     (keys: string[]) => {
       setRightSelectedKeys(keys);
     },
-    [targetKeys]
+    [targetKeys],
   );
 
   return (
@@ -109,7 +107,6 @@ export const EMTransferWrapper = (props: EMTransferWrapperProps) => {
       <ColumnContainer>
         <EMTransferTree
           mode="left"
-          locale={locale}
           targetKeys={targetKeys}
           dataSource={dataSource}
           onLoadData={onLoadData}
@@ -131,7 +128,6 @@ export const EMTransferWrapper = (props: EMTransferWrapperProps) => {
       <ColumnContainer>
         <EMTransferTree
           mode="right"
-          locale={locale}
           targetKeys={targetKeys}
           dataSource={dataSource}
           onLoadData={onLoadData}
