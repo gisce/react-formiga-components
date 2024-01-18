@@ -1,6 +1,4 @@
-import { Locale } from '../../../context/LocaleContext';
 export type ExportModalProps = {
-    locale: Locale;
     visible: boolean;
     onCancel: () => void;
     onSucceed: (options: ExportOptions) => Promise<void>;

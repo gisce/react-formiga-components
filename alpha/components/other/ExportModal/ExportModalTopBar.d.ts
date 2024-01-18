@@ -1,6 +1,4 @@
-import { Locale } from '../../../context/LocaleContext';
 export type ExportModalTopBarProps = {
-    locale: Locale;
     onClickLoadPredefined: () => void;
     title?: string;
     disabled?: boolean;
