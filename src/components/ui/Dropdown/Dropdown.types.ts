@@ -24,6 +24,7 @@ export type DropdownProps = BaseDropdownProps & {
   disabled?: boolean;
   children?: ReactNode;
   placement?: Placement;
+  onOpenChange?: (open: boolean) => void;
 };
 
 export type DropdownButtonProps = Omit<DropdownProps, "children"> & {

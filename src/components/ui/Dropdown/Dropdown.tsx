@@ -14,6 +14,7 @@ export const Dropdown: React.FC<DropdownProps> = memo(
     trigger = ["click"],
     placement,
     maxHeight,
+    onOpenChange,
   }: DropdownProps) => {
     const [internalOpen, setInternalOpen] = useState(false);
     const [emptyMenu, setEmptyMenu] = useState(false);
@@ -44,6 +45,7 @@ export const Dropdown: React.FC<DropdownProps> = memo(
           trigger={trigger}
           placement={placement}
           onOpenChange={(open) => {
+            onOpenChange?.(open);
             setInternalOpen(open);
           }}
           open={internalOpen}

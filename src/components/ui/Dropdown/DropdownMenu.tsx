@@ -96,7 +96,6 @@ export const DropdownMenu = ({
       </Root>
     );
   }
-  console.log({ filteredData });
 
   return (
     <Root>
