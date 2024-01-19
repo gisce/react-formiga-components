@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 
 import { Many2OneValue } from "./Many2OneValue";
-import { Many2oneSuffix } from "../Many2OneSuffix/Many2OneSuffix";
+import { Many2OneSuffix } from "../Many2OneSuffix/Many2OneSuffix";
 import { Menu } from "antd";
 import {
   PrinterOutlined,
@@ -28,28 +28,28 @@ Basic.args = {
 export const BasicWithSuffix = Template.bind({});
 BasicWithSuffix.args = {
   value: "Customer #23",
-  suffix: (
-    <Many2oneSuffix
-      loading={false}
-      menuItems={
-        <>
-          <Menu.Item key="action_1" icon={<ThunderboltOutlined />}>
-            action_1
-          </Menu.Item>
-          <Menu.Item key="action_2" icon={<PrinterOutlined />}>
-            action_2
-          </Menu.Item>
-          <Menu.Item key="action_3" icon={<EnterOutlined />}>
-            action_3
-          </Menu.Item>
-        </>
-      }
-      onMenuItemClicked={(e) => {
-        action("onMenuItemClicked")(e);
-      }}
-      onSuffixExpandClicked={() => {
-        action("onSuffixExpandClicked")();
-      }}
-    />
-  ),
+  // suffix: (
+  //   <Many2OneSuffix
+  //     loading={false}
+  //     menuItems={
+  //       <>
+  //         <Menu.Item key="action_1" icon={<ThunderboltOutlined />}>
+  //           action_1
+  //         </Menu.Item>
+  //         <Menu.Item key="action_2" icon={<PrinterOutlined />}>
+  //           action_2
+  //         </Menu.Item>
+  //         <Menu.Item key="action_3" icon={<EnterOutlined />}>
+  //           action_3
+  //         </Menu.Item>
+  //       </>
+  //     }
+  //     onMenuItemClicked={(e) => {
+  //       action("onMenuItemClicked")(e);
+  //     }}
+  //     onSuffixExpandClicked={() => {
+  //       action("onSuffixExpandClicked")();
+  //     }}
+  //   />
+  // ),
 };
