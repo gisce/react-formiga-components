@@ -1,5 +1,3 @@
-import React, { useContext } from "react";
-
 import {
   FileAddOutlined,
   SaveOutlined,
@@ -12,11 +10,7 @@ import {
   ApiOutlined,
 } from "@ant-design/icons";
 import { Button } from "@/components/ui/Button";
-import {
-  LocaleContext,
-  LocaleContextType,
-  tForLangContext,
-} from "@/context/LocaleContext";
+import { useLocale } from "@/context/LocaleContext";
 import { Container, Separator, Title, Wrapper } from "./One2ManyTopBar.styles";
 import { One2manyTopBarProps } from "./One2ManyTopBar.types";
 
@@ -40,11 +34,7 @@ export const One2ManyTopBar = (props: One2manyTopBarProps) => {
     locale,
   } = props;
 
-  const { t: tContext = undefined } =
-    (useContext(LocaleContext) as LocaleContextType) || {};
-  function t(key: string) {
-    return tForLangContext(key, locale, tContext);
-  }
+  const { t } = useLocale(locale);
 
   function saveButton() {
     return (

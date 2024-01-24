@@ -20,7 +20,7 @@
   "engines": {
     "node": "20.5.0"
   },
-  "version": "1.1.0",
+  "version": "1.2.0",
   "module": "./dist/react-formiga-components.es.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -46,7 +46,8 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "antd": "^5.5.2",
+    "antd": "5.13.1",
+    "classnames": "^2.5.1",
     "file-type-buffer-browser": "git+ssh://git@github.com/mguellsegarra/file-type-buffer-browser.git",
     "interweave": "^13.0.0",
     "react": "18.2.0",
@@ -101,14 +102,13 @@
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "semantic-release": "21.0.7",
     "storybook": "^7.6.8",
-    "typescript": "^5.0.4",
-    "vite": "^4.5.1",
+    "typescript": "5.3.3",
+    "vite": "4.5.2",
     "vite-bundle-visualizer": "^0.10.0",
     "vite-plugin-dts": "^3.6.0",
     "vite-tsconfig-paths": "3.5.0"
   },
   "overrides": {
-    "rc-dropdown": "3.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },

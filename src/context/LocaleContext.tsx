@@ -1,13 +1,7 @@
-import React from "react";
-import ca_ES from "@/locales/ca_ES.json";
-import en_US from "@/locales/en_US.json";
-import es_ES from "@/locales/es_ES.json";
+import { strings } from "@/locales";
+import { createContext, memo, useCallback, useContext, useMemo } from "react";
 
-const localeStrings: any = {
-  ca_ES,
-  en_US,
-  es_ES,
-};
+const DEFAULT_LOCALE = "en_US";
 
 export type Locale = "es_ES" | "en_US" | "ca_ES";
 
@@ -16,57 +10,96 @@ export type LocaleType = {
 };
 
 export type LocaleContextType = {
-  lang: string;
+  locale: Locale;
   t: (key: string) => string;
 };
 
-export const LocaleContext =
-  React.createContext<LocaleContextType | null>(null);
+export const LocaleContext = createContext<LocaleContextType | undefined>(
+  undefined,
+);
+
+export type Strings = Record<string, Record<string, string>>;
 
 type LocaleContextProps = {
-  children: React.ReactNode;
-  lang: string;
-  locales?: { [key: string]: { [key: string]: string } };
+  locale?: Locale;
+  children?: React.ReactNode;
+  localizedStrings?: Strings;
 };
 
-export const LocaleContextProvider = (props: LocaleContextProps): any => {
-  const { children, lang, locales } = props;
+export const LocaleContextProvider = memo(
+  ({
+    children,
+    locale = DEFAULT_LOCALE,
+    localizedStrings = {},
+  }: LocaleContextProps) => {
+    const mergedStrings = useMemo(() => {
+      return mergeStrings(strings, localizedStrings);
+    }, [localizedStrings]);
 
-  function t(key: string): string {
-    const mergedLocales = { ...localeStrings, ...locales };
-    const translated = mergedLocales[lang]?.[key];
-    return translated || key;
+    const t = useCallback(
+      (key: string): string => {
+        return mergedStrings[locale]?.[key] || key;
+      },
+      [mergedStrings, locale],
+    );
+
+    const contextValue = useMemo(
+      () => ({
+        locale,
+        t,
+      }),
+      [locale, t],
+    );
+
+    return (
+      <LocaleContext.Provider value={contextValue}>
+        {children}
+      </LocaleContext.Provider>
+    );
+  },
+);
+LocaleContextProvider.displayName = "LocaleContextProvider";
+
+export const useLocale = (propLocale?: Locale): LocaleContextType => {
+  const context = useContext(LocaleContext);
+
+  if (propLocale) {
+    return {
+      locale: propLocale,
+      t: (key: string) => tForLang(key, propLocale),
+    };
   }
 
-  return (
-    <LocaleContext.Provider
-      value={{
-        lang,
-        t,
-      }}
-    >
-      {children}
-    </LocaleContext.Provider>
-  );
+  if (!context) {
+    console.error(
+      "useLocale must be used within a LocaleContextProvider - assuming default locale value",
+    );
+    return {
+      locale: DEFAULT_LOCALE,
+      t: (key: string) => tForLang(key, DEFAULT_LOCALE),
+    };
+  }
+
+  return context;
 };
 
-export const tForLang = (key: string, lang: string) => {
-  const translated = localeStrings[lang]?.[key];
+export const tForLang = (
+  key: string,
+  locale: Locale,
+  inlineStrings: Strings = {},
+) => {
+  const translated = mergeStrings(strings, inlineStrings)[locale]?.[key];
   return translated || key;
 };
 
-export const tForLangContext = (
-  key: string,
-  locale?: string,
-  tContext?: Function
-) => {
-  if (!tContext && !locale) {
-    return tForLang(key, "en_US");
-  }
-
-  if (locale) {
-    return tForLang(key, locale);
-  }
-
-  return tContext?.(key);
+export const mergeStrings = (a: Strings, b: Strings): Strings => {
+  const keys = new Set([...Object.keys(a), ...Object.keys(b)]);
+  const merged = Array.from(keys).reduce<Strings>((acc, key) => {
+    acc[key] = {
+      ...(a[key] || {}),
+      ...(b[key] || {}),
+    };
+    return acc;
+  }, {});
+  return merged;
 };

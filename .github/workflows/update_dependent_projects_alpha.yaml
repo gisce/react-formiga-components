@@ -24,6 +24,8 @@ jobs:
         include:
           - project: "gisce/react-ooui"
             branch: "alpha"
+          - project: "gisce/webclient"
+            branch: "alpha"
     steps:
       - name: Set environment variables and check condition
         run: |

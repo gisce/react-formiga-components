@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState, useMemo } from "react";
-import { Locale, tForLang } from "@/context";
+import { useLocale } from "@/context";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { CheckOutlined, CloseOutlined, DeleteFilled } from "@ant-design/icons";
 import {
@@ -21,7 +21,6 @@ import {
 } from "./ExportModal.types";
 
 export type EMPredefinedModalProps = {
-  locale: Locale;
   visible: boolean;
   onCancel: () => void;
   onSelectPredefinedExport: (predefinedExport: PredefinedExport) => void;
@@ -38,7 +37,6 @@ interface RowData {
 }
 
 export const EMPredefinedModal = ({
-  locale,
   visible,
   onCancel,
   onSelectPredefinedExport,
@@ -52,6 +50,7 @@ export const EMPredefinedModal = ({
     PredefinedExport[]
   >([]);
   const [removeInProgress, setRemoveInProgress] = useState(false);
+  const { t } = useLocale();
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -100,7 +99,7 @@ export const EMPredefinedModal = ({
   const columns: ColumnsType<RowData> = useMemo(
     () => [
       {
-        title: tForLang("name", locale),
+        title: t("name"),
         dataIndex: "name",
         render: (text, { key }) => (
           <a
@@ -112,15 +111,15 @@ export const EMPredefinedModal = ({
         ),
       },
       {
-        title: tForLang("fieldsToExport", locale),
+        title: t("fieldsToExport"),
         dataIndex: "fields",
       },
       {
-        title: tForLang("action", locale),
+        title: t("action"),
         key: "action",
         render: (_, { key }) => (
           <Space size="middle">
-            <Tooltip title={tForLang("select", locale)}>
+            <Tooltip title={t("select")}>
               <Button
                 type="primary"
                 shape="circle"
@@ -130,13 +129,13 @@ export const EMPredefinedModal = ({
               />
             </Tooltip>
             <Popconfirm
-              title={tForLang("confirmDeletePredefinedExport", locale)}
-              okText={tForLang("true", locale)}
-              cancelText={tForLang("false", locale)}
+              title={t("confirmDeletePredefinedExport")}
+              okText={t("true")}
+              cancelText={t("false")}
               disabled={removeInProgress}
               onConfirm={() => handleRemovePredefinedExport(parseInt(key))}
             >
-              <Tooltip title={tForLang("delete", locale)}>
+              <Tooltip title={t("delete")}>
                 <Button danger shape="circle" icon={<DeleteFilled />} />
               </Tooltip>
             </Popconfirm>
@@ -145,16 +144,16 @@ export const EMPredefinedModal = ({
       },
     ],
     [
-      locale,
-      removeInProgress,
+      t,
       handleSelectPredefinedExport,
+      removeInProgress,
       handleRemovePredefinedExport,
     ],
   );
 
   return (
     <Modal
-      title={tForLang("selectPredefinedExport", locale)}
+      title={t("selectPredefinedExport")}
       centered
       width={modalWidth * 0.8}
       open={visible}
@@ -183,7 +182,7 @@ export const EMPredefinedModal = ({
                 disabled={loading || removeInProgress}
                 style={{ marginLeft: 15 }}
               >
-                {tForLang("cancel", locale)}
+                {t("cancel")}
               </Button>
             </Space>
           </Row>
