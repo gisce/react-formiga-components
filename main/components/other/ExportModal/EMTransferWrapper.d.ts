@@ -1,8 +1,6 @@
-import { Locale } from '../../../context/LocaleContext';
 import React from "react";
 import { ExportField, PredefinedExportField } from "./ExportModal.types";
 export type EMTransferWrapperProps = {
-    locale: Locale;
     targetKeys: string[];
     onChange: (targetFields: PredefinedExportField[]) => void;
     dataSource: ExportField[];

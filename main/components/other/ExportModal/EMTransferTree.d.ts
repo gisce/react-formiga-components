@@ -1,8 +1,6 @@
 import { ExportField } from "./ExportModal.types";
-import { Locale } from '../../../context/LocaleContext';
 export type EMTransferLeftTreeProps = {
     mode: "left" | "right";
-    locale: Locale;
     targetKeys: string[];
     dataSource: ExportField[];
     onLoadData: (treeNode: any) => Promise<void>;

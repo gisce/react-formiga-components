@@ -1,1 +1,1 @@
-{"version":3,"file":"Many2OneSuffix.d.ts","sourceRoot":"","sources":["../../../../../src/components/widgets/Many2One/Many2OneSuffix/Many2OneSuffix.tsx"],"names":[],"mappings":"AAGA,OAAO,EAAE,mBAAmB,EAAE,MAAM,wBAAwB,CAAC;AAE7D,eAAO,MAAM,cAAc,UAAW,mBAAmB,4CAuCxD,CAAC"}
+{"version":3,"file":"Many2OneSuffix.d.ts","sourceRoot":"","sources":["../../../../../src/components/widgets/Many2One/Many2OneSuffix/Many2OneSuffix.tsx"],"names":[],"mappings":"AAEA,OAAO,EAAE,mBAAmB,EAAE,MAAM,wBAAwB,CAAC;AAE7D,eAAO,MAAM,cAAc,mDAIxB,mBAAmB,4CAYrB,CAAC"}

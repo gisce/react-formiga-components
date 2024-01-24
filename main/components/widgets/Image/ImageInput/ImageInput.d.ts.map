@@ -1,1 +1,1 @@
-{"version":3,"file":"ImageInput.d.ts","sourceRoot":"","sources":["../../../../../src/components/widgets/Image/ImageInput/ImageInput.tsx"],"names":[],"mappings":"AAKA,OAAO,EAAE,cAAc,EAAU,MAAM,SAAS,CAAC;AAcjD,eAAO,MAAM,UAAU,UAAW,eAAe,MAAM,CAAC,4CA6EvD,CAAC"}
+{"version":3,"file":"ImageInput.d.ts","sourceRoot":"","sources":["../../../../../src/components/widgets/Image/ImageInput/ImageInput.tsx"],"names":[],"mappings":"AAKA,OAAO,EAAE,cAAc,EAAqB,MAAM,SAAS,CAAC;AAS5D,eAAO,MAAM,UAAU,UAAW,eAAe,MAAM,CAAC,4CAyEvD,CAAC"}
