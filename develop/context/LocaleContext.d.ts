@@ -1,24 +1,22 @@
-import React from "react";
+/// <reference types="react" />
 export type Locale = "es_ES" | "en_US" | "ca_ES";
 export type LocaleType = {
     locale?: Locale;
 };
 export type LocaleContextType = {
-    lang: string;
+    locale: Locale;
     t: (key: string) => string;
 };
-export declare const LocaleContext: React.Context<LocaleContextType | null>;
+export declare const LocaleContext: import("react").Context<LocaleContextType | undefined>;
+export type Strings = Record<string, Record<string, string>>;
 type LocaleContextProps = {
-    children: React.ReactNode;
-    lang: string;
-    locales?: {
-        [key: string]: {
-            [key: string]: string;
-        };
-    };
+    locale?: Locale;
+    children?: React.ReactNode;
+    localizedStrings?: Strings;
 };
-export declare const LocaleContextProvider: (props: LocaleContextProps) => any;
-export declare const tForLang: (key: string, lang: string) => any;
-export declare const tForLangContext: (key: string, locale?: string, tContext?: Function) => any;
+export declare const LocaleContextProvider: import("react").MemoExoticComponent<({ children, locale, localizedStrings, }: LocaleContextProps) => import("react/jsx-runtime").JSX.Element>;
+export declare const useLocale: (propLocale?: Locale) => LocaleContextType;
+export declare const tForLang: (key: string, locale: Locale, inlineStrings?: Strings) => string;
+export declare const mergeStrings: (a: Strings, b: Strings) => Strings;
 export {};
 //# sourceMappingURL=LocaleContext.d.ts.map
