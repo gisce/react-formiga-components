@@ -1,20 +1,11 @@
 import { SelectionInput } from "../../Selection";
-import React, { useContext } from "react";
 import { BooleanSearchProps } from "./BooleanSearch.types";
-import {
-  LocaleContext,
-  LocaleContextType,
-  tForLangContext,
-} from "@/context/LocaleContext";
+import { useLocale } from "@/context/LocaleContext";
 
 export const BooleanSearch = (props: BooleanSearchProps) => {
   const { locale } = props;
 
-  const { t: tContext = undefined } =
-    (useContext(LocaleContext) as LocaleContextType) || {};
-  function t(key: string) {
-    return tForLangContext(key, locale, tContext);
-  }
+  const { t } = useLocale(locale);
 
   return (
     <SelectionInput

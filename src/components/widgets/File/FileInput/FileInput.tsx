@@ -1,9 +1,9 @@
 // @TODO: Review this component
 // @ts-nocheck
 /* eslint-disable */
-import React, { useContext, useRef } from "react";
+import { useRef } from "react";
 import { Row, Col, Input, Space } from "antd";
-import { Button } from "@/index";
+import { Button, useLocale } from "@/index";
 
 import {
   getFilesize,
@@ -19,11 +19,6 @@ import {
   ClearOutlined,
   EyeOutlined,
 } from "@ant-design/icons";
-import {
-  LocaleContext,
-  LocaleContextType,
-  tForLangContext,
-} from "@/context/LocaleContext";
 import { FileInputProps } from "./FileInput.types";
 import { RequiredCharInput } from "./FileInput.styles";
 
@@ -40,11 +35,7 @@ export const FileInput = (props: FileInputProps) => {
 
   const InputComponent = required && !readOnly ? RequiredCharInput : Input;
 
-  const { t: tContext = undefined } =
-    (useContext(LocaleContext) as LocaleContextType) || {};
-  function t(key: string) {
-    return tForLangContext(key, locale, tContext);
-  }
+  const { t } = useLocale(locale);
 
   const inputFile = useRef(null);
 

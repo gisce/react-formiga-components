@@ -37,7 +37,6 @@ export const ExportModal = (props: ExportModalProps) => {
 export const ExportModalWithContext = (props: ExportModalProps) => {
   const {
     visible,
-    locale,
     onCancel,
     onSucceed,
     totalRegisters,
@@ -155,7 +154,6 @@ export const ExportModalWithContext = (props: ExportModalProps) => {
       title={
         <ExportModalTopBar
           disabled={loading}
-          locale={locale}
           title={currentPredefinedExport?.name}
           onClickLoadPredefined={() => setPredefinedModalVisible(true)}
         />
@@ -173,20 +171,14 @@ export const ExportModalWithContext = (props: ExportModalProps) => {
           selectedFields ? selectedFields.map((field) => field.key) : []
         }
         onChange={onTransferChange}
-        locale={locale}
         onGetFieldChilds={props.onGetFieldChilds}
         onGetFields={props.onGetFields}
         disabled={loading}
       />
       <EMSeparator />
-      <EMExportTypeSelector
-        locale={locale}
-        value={exportType}
-        onChange={setExportType}
-      />
+      <EMExportTypeSelector value={exportType} onChange={setExportType} />
       <EMSeparator />
       <EMTotalRegSelector
-        locale={locale}
         totalRegisters={totalRegisters}
         selectedRegistersToExport={selectedRegistersToExport}
         visibleRegisters={visibleRegisters}
@@ -195,7 +187,6 @@ export const ExportModalWithContext = (props: ExportModalProps) => {
       />
       <Divider />
       <EMBottomBar
-        locale={locale}
         onClose={onCancel}
         onConfirm={onConfirm}
         loading={loading}
@@ -204,7 +195,6 @@ export const ExportModalWithContext = (props: ExportModalProps) => {
         }}
       />
       <EMPredefinedModal
-        locale={locale}
         visible={predefinedModalVisible}
         onCancel={() => {
           setPredefinedModalVisible(false);
@@ -214,7 +204,6 @@ export const ExportModalWithContext = (props: ExportModalProps) => {
         onRemovePredefinedExport={onRemovePredefinedExport}
       />
       <EMNameDialog
-        locale={locale}
         visible={predefinedNameDialogVisible}
         onCancel={() => {
           setPredefinedNameDialogVisible(false);

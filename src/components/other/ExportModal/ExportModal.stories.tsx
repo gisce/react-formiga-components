@@ -6,7 +6,7 @@ import { Button } from "antd";
 import { ExportOptions, PredefinedExport } from "./ExportModal.types";
 
 export default {
-  title: "Components/ExportModal",
+  title: "Components/Export/ExportModal",
   component: ExportModal,
 } as ComponentMeta<typeof ExportModal>;
 

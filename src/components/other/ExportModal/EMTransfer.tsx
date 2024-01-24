@@ -10,7 +10,6 @@ const { error } = Modal;
 export type EMTransferProps = {
   targetKeys: string[];
   onChange: (targetFields: PredefinedExportField[]) => void;
-  locale: Locale;
   onGetFields: () => Promise<ExportField[]>;
   onGetFieldChilds: (key: string) => Promise<ExportField[]>;
   disabled?: boolean;
@@ -18,7 +17,6 @@ export type EMTransferProps = {
 
 export const EMTransfer = ({
   targetKeys,
-  locale,
   onGetFields,
   onGetFieldChilds,
   onChange,
@@ -74,7 +72,6 @@ export const EMTransfer = ({
 
   return (
     <EMTransferWrapper
-      locale={locale}
       disabled={disabled}
       dataSource={dataSource}
       onLoadData={onLoadData}

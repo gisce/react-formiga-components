@@ -4,7 +4,6 @@ import { action } from "@storybook/addon-actions";
 
 import { Many2OneDummy } from "./Many2OneDummy";
 import { BaseFieldArgTypes } from "@/components/form/Field/BaseField.argTypes";
-import { Many2oneSuffix } from "../Many2OneSuffix/Many2OneSuffix";
 import { Menu } from "antd";
 import {
   PrinterOutlined,
@@ -133,18 +132,18 @@ WithSuffixLoading.args = {
   searching: false,
   disableFolderButton: true,
   disableSearchButton: true,
-  suffix: (
-    <Many2oneSuffix
-      loading={true}
-      menuItems={<></>}
-      onMenuItemClicked={(e) => {
-        action("onMenuItemClicked")(e);
-      }}
-      onSuffixExpandClicked={() => {
-        action("onSuffixExpandClicked");
-      }}
-    />
-  ),
+  // suffix: (
+  //   <Many2OneSuffix
+  //     loading={true}
+  //     menuItems={<></>}
+  //     onMenuItemClicked={(e) => {
+  //       action("onMenuItemClicked")(e);
+  //     }}
+  //     onSuffixExpandClicked={() => {
+  //       action("onSuffixExpandClicked");
+  //     }}
+  //   />
+  // ),
 };
 
 export const WithSuffixWithOptions = Template.bind({});
@@ -157,28 +156,28 @@ WithSuffixWithOptions.args = {
   searching: false,
   disableFolderButton: true,
   disableSearchButton: true,
-  suffix: (
-    <Many2oneSuffix
-      loading={false}
-      menuItems={
-        <>
-          <Menu.Item key="action_1" icon={<ThunderboltOutlined />}>
-            action_1
-          </Menu.Item>
-          <Menu.Item key="action_2" icon={<PrinterOutlined />}>
-            action_2
-          </Menu.Item>
-          <Menu.Item key="action_3" icon={<EnterOutlined />}>
-            action_3
-          </Menu.Item>
-        </>
-      }
-      onMenuItemClicked={(e) => {
-        action("onMenuItemClicked")(e);
-      }}
-      onSuffixExpandClicked={() => {
-        action("onSuffixExpandClicked")();
-      }}
-    />
-  ),
+  // suffix: (
+  //   <Many2OneSuffix
+  //     loading={false}
+  //     menuItems={
+  //       <>
+  //         <Menu.Item key="action_1" icon={<ThunderboltOutlined />}>
+  //           action_1
+  //         </Menu.Item>
+  //         <Menu.Item key="action_2" icon={<PrinterOutlined />}>
+  //           action_2
+  //         </Menu.Item>
+  //         <Menu.Item key="action_3" icon={<EnterOutlined />}>
+  //           action_3
+  //         </Menu.Item>
+  //       </>
+  //     }
+  //     onMenuItemClicked={(e) => {
+  //       action("onMenuItemClicked")(e);
+  //     }}
+  //     onSuffixExpandClicked={() => {
+  //       action("onSuffixExpandClicked")();
+  //     }}
+  //   />
+  // ),
 };
