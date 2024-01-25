@@ -1,11 +1,22 @@
 import { StarOutlined, StarFilled, DownOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { FavouriteButtonProps } from "./FavouriteButton.types";
-import { Fragment, forwardRef, useImperativeHandle, useRef } from "react";
+import {
+  ForwardRefExoticComponent,
+  Fragment,
+  RefAttributes,
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+} from "react";
 import { Dropdown, DropdownRef } from "@/components";
 
-export const FavouriteButton = forwardRef<DropdownRef, FavouriteButtonProps>(
-  ({ isFavourite, onToggleFavourite, ...rest }, ref) => {
+export const FavouriteButton: ForwardRefExoticComponent<
+  FavouriteButtonProps & RefAttributes<DropdownRef>
+> = forwardRef<DropdownRef, FavouriteButtonProps>(
+  (props: FavouriteButtonProps, ref) => {
+    const { isFavourite, onToggleFavourite, ...rest } = props;
+
     const dropdownRef = useRef<DropdownRef>(null);
 
     useImperativeHandle(ref, () => ({
