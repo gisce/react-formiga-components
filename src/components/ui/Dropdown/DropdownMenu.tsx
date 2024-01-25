@@ -25,6 +25,7 @@ export const DropdownMenu = ({
   searchable,
   onItemClick,
   maxHeight,
+  header = null,
 }: BaseDropdownProps) => {
   const inputRef = useRef<any>(null);
   const [searchValue, setSearchValue] = useState<string>();
@@ -99,6 +100,7 @@ export const DropdownMenu = ({
 
   return (
     <Root>
+      {header}
       {mustShowSearch && (
         <div style={{ padding: 5 }}>
           <Search
