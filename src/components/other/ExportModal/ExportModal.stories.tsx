@@ -298,39 +298,44 @@ export const Default: ComponentStory<typeof ExportModal> = () => {
           ];
         }}
         onGetPredefinedExports={async () => {
+          console.log("onGetPredefinedExports");
           await new Promise((resolve) => setTimeout(resolve, 1000));
-          return [
-            {
-              id: 3,
-              name: "Exportación de prueba 3",
-              fields: [
-                {
-                  key: "active/contador",
-                },
-                {
-                  key: "parent1/parent2/test",
-                },
-              ],
-            },
-            {
-              id: 1,
-              name: "Exportación de prueba",
-              fields: [
-                {
-                  key: "active",
-                },
-              ],
-            },
-            {
-              id: 2,
-              name: "Exportación de prueba 2",
-              fields: [
-                {
-                  key: "city",
-                },
-              ],
-            },
-          ];
+          console.log("onGetPredefinedExports 2");
+          return {
+            predefinedExports: [
+              {
+                id: 3,
+                name: "Exportación de prueba 3",
+                fields: [
+                  {
+                    key: "active/contador",
+                  },
+                  {
+                    key: "parent1/parent2/test",
+                  },
+                ],
+              },
+              {
+                id: 1,
+                name: "Exportación de prueba",
+                fields: [
+                  {
+                    key: "active",
+                  },
+                ],
+              },
+              {
+                id: 2,
+                name: "Exportación de prueba 2",
+                fields: [
+                  {
+                    key: "city",
+                  },
+                ],
+              },
+            ],
+            keysWithChilds: [],
+          };
         }}
         onSavePredefinedExport={async (options: PredefinedExport) => {
           await new Promise((resolve) => setTimeout(resolve, 3000));
