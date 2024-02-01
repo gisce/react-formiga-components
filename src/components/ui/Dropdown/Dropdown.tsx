@@ -20,7 +20,7 @@ const DropdownComponent = forwardRef<DropdownRef, DropdownProps>(
       children,
       trigger = ["click"],
       placement,
-      maxHeight,
+      maxHeight = 300,
       header,
       onOpenChange,
     },
