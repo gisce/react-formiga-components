@@ -131,9 +131,8 @@ export const ExportModalWithContext = (props: ExportModalProps) => {
   const onGetPredefinedExportsCallback = useCallback(async () => {
     const { predefinedExports, keysWithChilds } =
       await onGetPredefinedExports();
-
     if (keysWithChilds.length > 0) {
-      let updatedTree: ExportField[] = [];
+      let updatedTree;
 
       for (const entry of keysWithChilds) {
         const { key, childs } = entry;
@@ -143,7 +142,7 @@ export const ExportModalWithContext = (props: ExportModalProps) => {
           updatedTree = updateTreeData(updatedTree, key, childs);
         }
       }
-      setDataSource(updatedTree);
+      setDataSource(updatedTree as ExportField[]);
     }
 
     return predefinedExports as PredefinedExportMandatoryId[];
