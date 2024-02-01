@@ -71,7 +71,7 @@ export const useLocale = (propLocale?: Locale): LocaleContextType => {
   }
 
   if (!context) {
-    console.error(
+    console.warn(
       "useLocale must be used within a LocaleContextProvider - assuming default locale value",
     );
     return {
