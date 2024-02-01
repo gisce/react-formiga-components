@@ -13,7 +13,7 @@ export const Dropdown: React.FC<DropdownProps> = memo(
     children,
     trigger = ["click"],
     placement,
-    maxHeight,
+    maxHeight = 300,
     onOpenChange,
   }: DropdownProps) => {
     const [internalOpen, setInternalOpen] = useState(false);
