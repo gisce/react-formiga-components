@@ -5,6 +5,7 @@ export type BaseDropdownProps = {
   searchable?: true | false | "auto";
   onItemClick?: (item: DropdownMenuItem) => void;
   onRetrieveData: () => Promise<DropdownMenuGroup[]>;
+  header?: ReactNode;
 };
 
 declare const Placements: readonly [
@@ -50,4 +51,8 @@ export type DropdownMenuItem = DropdownMenuItemType &
 
 export type DropdownMenuItemType = {
   type?: "item" | "divider";
+};
+
+export type DropdownRef = {
+  close: () => void;
 };
