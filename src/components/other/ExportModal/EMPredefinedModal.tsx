@@ -19,6 +19,7 @@ import {
   PredefinedExport,
   PredefinedExportMandatoryId,
 } from "./ExportModal.types";
+import { raiseError } from "./ExportModal";
 
 export type EMPredefinedModalProps = {
   visible: boolean;
@@ -65,7 +66,7 @@ export const EMPredefinedModal = ({
         })),
       );
     } catch (error) {
-      console.error(error);
+      raiseError(error);
     } finally {
       setLoading(false);
     }
@@ -89,7 +90,11 @@ export const EMPredefinedModal = ({
       setRemoveInProgress(true);
       const foundExport = predefinedExports.find((item) => item.id === id);
       if (foundExport) {
-        await onRemovePredefinedExport(foundExport);
+        try {
+          await onRemovePredefinedExport(foundExport);
+        } catch (error) {
+          raiseError(error);
+        }
       }
       setRemoveInProgress(false);
     },

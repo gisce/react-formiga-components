@@ -34,6 +34,21 @@ export const ExportModal = (props: ExportModalProps) => {
   );
 };
 
+export const raiseError = (err: Error) => {
+  console.error(err);
+  error({
+    title: "Error",
+    centered: true,
+    content: (
+      <>
+        {err instanceof Error
+          ? JSON.stringify(err, ["message", "stack", "name"], 2)
+          : JSON.stringify(err)}
+      </>
+    ),
+  });
+};
+
 export const ExportModalWithContext = (props: ExportModalProps) => {
   const {
     visible,
@@ -98,12 +113,7 @@ export const ExportModalWithContext = (props: ExportModalProps) => {
         registersAmount,
       });
     } catch (err) {
-      console.error(err);
-      error({
-        title: "Error",
-        centered: true,
-        content: <>{JSON.stringify(err, null, 2)}</>,
-      });
+      raiseError(err);
     }
     setLoading(false);
   }, [onSucceed, exportType, selectedFields, registersAmount]);
@@ -119,11 +129,15 @@ export const ExportModalWithContext = (props: ExportModalProps) => {
 
   const onSaveNewPredefined = useCallback(
     async (name: string) => {
-      const newPredefinedExport = await onSavePredefinedExport({
-        name,
-        fields: selectedFields,
-      });
-      setCurrentPredefinedExport(newPredefinedExport);
+      try {
+        const newPredefinedExport = await onSavePredefinedExport({
+          name,
+          fields: selectedFields,
+        });
+        setCurrentPredefinedExport(newPredefinedExport);
+      } catch (err) {
+        raiseError(err);
+      }
     },
     [onSavePredefinedExport, selectedFields],
   );
