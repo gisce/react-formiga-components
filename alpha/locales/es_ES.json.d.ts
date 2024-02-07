@@ -96,7 +96,8 @@ declare const _default: {
   "enterNameOfExport": "Introduce el nombre de la exportación",
   "nameOfExport": "Nombre de la exportación",
   "savePredefinedExport": "Guardar exportación predefinida",
-  "noMatches": "No hay coincidencias"
+  "noMatches": "No hay coincidencias",
+  "noExportFieldFound": "Campo no encontrado en el modelo. Puede haber sido migrado o eliminado?"
 }
 ;
 

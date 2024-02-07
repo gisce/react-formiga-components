@@ -96,7 +96,8 @@ declare const _default: {
   "enterNameOfExport": "Enter name of export",
   "nameOfExport": "Name of export",
   "savePredefinedExport": "Save predefined export",
-  "noMatches": "No matches found"
+  "noMatches": "No matches found",
+  "noExportFieldFound": "Field not found in the model. It may have been migrated or deleted?"
 }
 ;
 
