@@ -1,0 +1,1 @@
+{"version":3,"file":"ConfirmDialog.d.ts","sourceRoot":"","sources":["../../../../src/components/ui/Dialog/ConfirmDialog.tsx"],"names":[],"mappings":"AAEA,OAAO,EAAE,SAAS,EAAE,MAAM,OAAO,CAAC;AAIlC,QAAA,MAAM,UAAU;UAKR,MAAM,IAAI;oBACA,SAAS;aAChB,MAAM,KAAK,MAAM;UAW3B,CAAC;AAEF,eAAe,UAAU,CAAC"}
