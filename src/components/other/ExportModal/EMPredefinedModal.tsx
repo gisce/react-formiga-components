@@ -145,11 +145,18 @@ export const EMPredefinedModal = ({
     [predefinedExports, onRemovePredefinedExport],
   );
 
-  const checkIfPredefinedExportCanBeExported = useCallback(
+  const checkIfPredefinedExportCanNotBeExported = useCallback(
     (id: number) => {
       const pExport = predefinedExports.find((item) => item.id === id);
-      // Check if all fields have title
-      return pExport?.fields.every((field) => field.title);
+      const corruptedExportFields = pExport?.fields.filter(
+        (field) => !field.title,
+      );
+
+      return (
+        corruptedExportFields &&
+        corruptedExportFields.length >= 1 &&
+        corruptedExportFields.length === pExport?.fields.length
+      );
     },
     [predefinedExports],
   );
@@ -209,7 +216,7 @@ export const EMPredefinedModal = ({
                 shape="circle"
                 disabled={
                   removeInProgress ||
-                  !checkIfPredefinedExportCanBeExported(parseInt(key))
+                  checkIfPredefinedExportCanNotBeExported(parseInt(key))
                 }
                 icon={<CheckOutlined />}
                 onClick={() => handleSelectPredefinedExport(parseInt(key))}
@@ -234,7 +241,7 @@ export const EMPredefinedModal = ({
       t,
       handleSelectPredefinedExport,
       removeInProgress,
-      checkIfPredefinedExportCanBeExported,
+      checkIfPredefinedExportCanNotBeExported,
       handleRemovePredefinedExport,
     ],
   );
