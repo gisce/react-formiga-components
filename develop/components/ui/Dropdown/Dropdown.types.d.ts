@@ -4,6 +4,7 @@ export type BaseDropdownProps = {
     searchable?: true | false | "auto";
     onItemClick?: (item: DropdownMenuItem) => void;
     onRetrieveData: () => Promise<DropdownMenuGroup[]>;
+    header?: ReactNode;
 };
 declare const Placements: readonly [
     "topLeft",
@@ -42,6 +43,9 @@ export type DropdownMenuItem = DropdownMenuItemType & Record<string, any> & {
 };
 export type DropdownMenuItemType = {
     type?: "item" | "divider";
+};
+export type DropdownRef = {
+    close: () => void;
 };
 export {};
 //# sourceMappingURL=Dropdown.types.d.ts.map
