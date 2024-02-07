@@ -26,6 +26,7 @@ import {
   PredefinedExportMandatoryId,
 } from "./ExportModal.types";
 import { raiseError } from "./ExportModal";
+import showDialog from "@/components/ui/Dialog/ConfirmDialog";
 
 export type EMPredefinedModalProps = {
   visible: boolean;
@@ -88,14 +89,44 @@ export const EMPredefinedModal = ({
       const foundExport = predefinedExports.find((item) => item.id === id);
 
       if (foundExport) {
-        // we should also filter all the fields of foundExport childs that don't have title
-        onSelectPredefinedExport({
-          ...foundExport,
-          fields: foundExport.fields.filter((field) => field.title),
-        });
+        const fieldsWithoutTitle = foundExport.fields.filter(
+          (field) => !field.title,
+        );
+
+        if (fieldsWithoutTitle.length > 0) {
+          showDialog({
+            onOk: () => {
+              // we should also filter all the fields of foundExport childs that don't have title
+              onSelectPredefinedExport({
+                ...foundExport,
+                fields: foundExport.fields.filter((field) => field.title),
+              });
+            },
+            confirmMessage: (
+              <>
+                {t("exportHasFieldsUnavailable")}
+                <strong
+                  style={{
+                    display: "block",
+                    paddingTop: 15,
+                    paddingBottom: 15,
+                    fontFamily: "'Courier New', Courier, monospace",
+                  }}
+                >
+                  {fieldsWithoutTitle.map((field) => field.key).join(", ")}
+                </strong>
+                {t("continueAndIgnoreFieldsUnavailable")}
+              </>
+            ),
+            t,
+          });
+          return;
+        }
+
+        onSelectPredefinedExport(foundExport);
       }
     },
-    [predefinedExports, onSelectPredefinedExport],
+    [predefinedExports, t, onSelectPredefinedExport],
   );
 
   const handleRemovePredefinedExport = useCallback(
