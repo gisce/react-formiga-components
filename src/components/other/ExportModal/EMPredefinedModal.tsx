@@ -1,7 +1,12 @@
-import { useCallback, useEffect, useState, useMemo } from "react";
+import { useCallback, useEffect, useState, useMemo, Fragment } from "react";
 import { useLocale } from "@/context";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
-import { CheckOutlined, CloseOutlined, DeleteFilled } from "@ant-design/icons";
+import {
+  CheckOutlined,
+  CloseOutlined,
+  DeleteFilled,
+  WarningFilled,
+} from "@ant-design/icons";
 import {
   Button,
   Divider,
@@ -17,8 +22,11 @@ import { ColumnsType } from "antd/lib/table";
 import { EMSeparator } from "./EMSeparator";
 import {
   PredefinedExport,
+  PredefinedExportField,
   PredefinedExportMandatoryId,
 } from "./ExportModal.types";
+import { raiseError } from "./ExportModal";
+import showDialog from "@/components/ui/Dialog/ConfirmDialog";
 
 export type EMPredefinedModalProps = {
   visible: boolean;
@@ -33,7 +41,7 @@ export type EMPredefinedModalProps = {
 interface RowData {
   key: string;
   name: string;
-  fields: string;
+  fields: PredefinedExportField[];
 }
 
 export const EMPredefinedModal = ({
@@ -61,11 +69,11 @@ export const EMPredefinedModal = ({
         data.map((item) => ({
           key: item.id.toString(),
           name: item.name,
-          fields: item.fields.map((field) => field.title).join(", "),
+          fields: item.fields,
         })),
       );
     } catch (error) {
-      console.error(error);
+      raiseError(error);
     } finally {
       setLoading(false);
     }
@@ -79,9 +87,46 @@ export const EMPredefinedModal = ({
   const handleSelectPredefinedExport = useCallback(
     (id: number) => {
       const foundExport = predefinedExports.find((item) => item.id === id);
-      if (foundExport) onSelectPredefinedExport(foundExport);
+
+      if (foundExport) {
+        const fieldsWithoutTitle = foundExport.fields.filter(
+          (field) => !field.title,
+        );
+
+        if (fieldsWithoutTitle.length > 0) {
+          showDialog({
+            onOk: () => {
+              // we should also filter all the fields of foundExport childs that don't have title
+              onSelectPredefinedExport({
+                ...foundExport,
+                fields: foundExport.fields.filter((field) => field.title),
+              });
+            },
+            confirmMessage: (
+              <>
+                {t("exportHasFieldsUnavailable")}
+                <strong
+                  style={{
+                    display: "block",
+                    paddingTop: 15,
+                    paddingBottom: 15,
+                    fontFamily: "'Courier New', Courier, monospace",
+                  }}
+                >
+                  {fieldsWithoutTitle.map((field) => field.key).join(", ")}
+                </strong>
+                {t("continueAndIgnoreFieldsUnavailable")}
+              </>
+            ),
+            t,
+          });
+          return;
+        }
+
+        onSelectPredefinedExport(foundExport);
+      }
     },
-    [predefinedExports, onSelectPredefinedExport],
+    [predefinedExports, t, onSelectPredefinedExport],
   );
 
   const handleRemovePredefinedExport = useCallback(
@@ -89,11 +134,31 @@ export const EMPredefinedModal = ({
       setRemoveInProgress(true);
       const foundExport = predefinedExports.find((item) => item.id === id);
       if (foundExport) {
-        await onRemovePredefinedExport(foundExport);
+        try {
+          await onRemovePredefinedExport(foundExport);
+        } catch (error) {
+          raiseError(error);
+        }
       }
       setRemoveInProgress(false);
     },
     [predefinedExports, onRemovePredefinedExport],
+  );
+
+  const checkIfPredefinedExportCanNotBeExported = useCallback(
+    (id: number) => {
+      const pExport = predefinedExports.find((item) => item.id === id);
+      const corruptedExportFields = pExport?.fields.filter(
+        (field) => !field.title,
+      );
+
+      return (
+        corruptedExportFields &&
+        corruptedExportFields.length >= 1 &&
+        corruptedExportFields.length === pExport?.fields.length
+      );
+    },
+    [predefinedExports],
   );
 
   const columns: ColumnsType<RowData> = useMemo(
@@ -113,6 +178,32 @@ export const EMPredefinedModal = ({
       {
         title: t("fieldsToExport"),
         dataIndex: "fields",
+        render: (fields: PredefinedExportField[]) => {
+          return (
+            <>
+              {fields.map((field, index) => {
+                // Determine whether to add a comma after this element
+                const addComma = index < fields.length - 1; // true for all but the last element
+                return (
+                  <Fragment key={field.key}>
+                    {field.title ? (
+                      <span>{field.title}</span>
+                    ) : (
+                      <Tooltip title={t("noExportFieldFound")}>
+                        <span style={{ color: "grey" }}>{field.key}</span>
+                        <WarningFilled
+                          style={{ color: "#FE8D59", paddingLeft: 5 }}
+                        />
+                      </Tooltip>
+                    )}
+                    {/* Add comma and space if this is not the last element */}
+                    {addComma && ", "}
+                  </Fragment>
+                );
+              })}
+            </>
+          );
+        },
       },
       {
         title: t("action"),
@@ -123,7 +214,10 @@ export const EMPredefinedModal = ({
               <Button
                 type="primary"
                 shape="circle"
-                disabled={removeInProgress}
+                disabled={
+                  removeInProgress ||
+                  checkIfPredefinedExportCanNotBeExported(parseInt(key))
+                }
                 icon={<CheckOutlined />}
                 onClick={() => handleSelectPredefinedExport(parseInt(key))}
               />
@@ -147,6 +241,7 @@ export const EMPredefinedModal = ({
       t,
       handleSelectPredefinedExport,
       removeInProgress,
+      checkIfPredefinedExportCanNotBeExported,
       handleRemovePredefinedExport,
     ],
   );
@@ -160,6 +255,11 @@ export const EMPredefinedModal = ({
       closable={!loading && !removeInProgress}
       onCancel={onCancel}
       footer={null}
+      styles={{
+        body: {
+          paddingTop: 15,
+        },
+      }}
       destroyOnClose
     >
       {loading ? (
