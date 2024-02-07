@@ -1,5 +1,3 @@
-import { Locale } from "@/context/LocaleContext";
-
 export type ExportModalProps = {
   visible: boolean;
   onCancel: () => void;
