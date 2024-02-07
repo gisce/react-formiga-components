@@ -1,21 +1,31 @@
-import { memo, useCallback, useState } from "react";
+import {
+  memo,
+  useCallback,
+  useState,
+  useImperativeHandle,
+  forwardRef,
+} from "react";
 import { Dropdown as AntDropdown } from "antd";
-import { DropdownProps } from "./Dropdown.types";
+import { DropdownProps, DropdownRef } from "./Dropdown.types";
 import { DropdownMenu, flattenDropdownItems } from "./DropdownMenu";
 import ErrorBoundary from "antd/es/alert/ErrorBoundary";
 
-export const Dropdown: React.FC<DropdownProps> = memo(
-  ({
-    onRetrieveData,
-    onItemClick,
-    disabled = false,
-    searchable = "auto",
-    children,
-    trigger = ["click"],
-    placement,
-    maxHeight = 300,
-    onOpenChange,
-  }: DropdownProps) => {
+const DropdownComponent = forwardRef<DropdownRef, DropdownProps>(
+  (
+    {
+      onRetrieveData,
+      onItemClick,
+      disabled = false,
+      searchable = "auto",
+      children,
+      trigger = ["click"],
+      placement,
+      maxHeight = 300,
+      header,
+      onOpenChange,
+    },
+    ref,
+  ) => {
     const [internalOpen, setInternalOpen] = useState(false);
     const [emptyMenu, setEmptyMenu] = useState(false);
 
@@ -25,12 +35,17 @@ export const Dropdown: React.FC<DropdownProps> = memo(
       return data;
     }, [onRetrieveData]);
 
+    useImperativeHandle(ref, () => ({
+      close: () => setInternalOpen(false),
+    }));
+
     return (
       <ErrorBoundary>
         <AntDropdown
           dropdownRender={() => {
             return (
               <DropdownMenu
+                header={header}
                 maxHeight={maxHeight}
                 searchable={searchable}
                 onRetrieveData={onRetrieveDataCallback}
@@ -58,4 +73,6 @@ export const Dropdown: React.FC<DropdownProps> = memo(
   },
 );
 
+export const Dropdown = memo(DropdownComponent);
+DropdownComponent.displayName = "DropdownComponent";
 Dropdown.displayName = "Dropdown";
