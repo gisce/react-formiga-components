@@ -178,6 +178,11 @@ export const ExportModalWithContext = (props: ExportModalProps) => {
       onCancel={onCancel}
       footer={null}
       destroyOnClose
+      styles={{
+        body: {
+          paddingTop: 15,
+        },
+      }}
     >
       <EMTransfer
         targetKeys={

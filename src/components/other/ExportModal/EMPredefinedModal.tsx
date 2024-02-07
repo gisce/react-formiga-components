@@ -165,6 +165,11 @@ export const EMPredefinedModal = ({
       closable={!loading && !removeInProgress}
       onCancel={onCancel}
       footer={null}
+      styles={{
+        body: {
+          paddingTop: 15,
+        },
+      }}
       destroyOnClose
     >
       {loading ? (
