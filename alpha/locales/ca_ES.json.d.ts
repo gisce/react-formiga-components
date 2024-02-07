@@ -97,7 +97,9 @@ declare const _default: {
   "nameOfExport": "Nom de l'exportació",
   "savePredefinedExport": "Guardar exportació predefinida",
   "noMatches": "No s'han trobat coincidències",
-  "noExportFieldFound": "No s'ha trobat el camp en el model. Pot ser que s'hagi migrat o eliminat?"
+  "noExportFieldFound": "No s'ha trobat el camp en el model. Pot ser que s'hagi migrat o eliminat?",
+  "exportHasFieldsUnavailable": "L'exportació té els següents camps no disponibles. Pot ser que s'hagin migrat o eliminat.",
+  "continueAndIgnoreFieldsUnavailable": "Vols continuar i ignorar els camps no disponibles?"
 }
 ;
 

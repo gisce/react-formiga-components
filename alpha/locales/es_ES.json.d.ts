@@ -26,7 +26,7 @@ declare const _default: {
   "fillRequiredField": "Por favor, rellena éste campo obligatorio",
   "fillRequiredFields": "Por favor, rellena todos los campos obligatorios",
   "generatingReport": "Generando informe...",
-  "confirmation": "Confirmacióm",
+  "confirmation": "Confirmación",
   "ok": "De acuerdo",
   "cancel": "Cancelar",
   "formHasErrors": "El formulario tiene errores",
@@ -97,7 +97,9 @@ declare const _default: {
   "nameOfExport": "Nombre de la exportación",
   "savePredefinedExport": "Guardar exportación predefinida",
   "noMatches": "No hay coincidencias",
-  "noExportFieldFound": "Campo no encontrado en el modelo. Puede haber sido migrado o eliminado?"
+  "noExportFieldFound": "Campo no encontrado en el modelo. Puede haber sido migrado o eliminado?",
+  "exportHasFieldsUnavailable": "La exportación tiene los siguientes campos no disponibles. Puede ser que se hayan migrado o eliminado.",
+  "continueAndIgnoreFieldsUnavailable": "Quieres continuar y ignorar los campos no disponibles?"
 }
 ;
 
