@@ -7,7 +7,7 @@ import {
 } from "react";
 import { Dropdown as AntDropdown } from "antd";
 import { DropdownProps, DropdownRef } from "./Dropdown.types";
-import { DropdownMenu, flattenDropdownItems } from "./DropdownMenu";
+import { DropdownMenu } from "./DropdownMenu";
 import ErrorBoundary from "antd/es/alert/ErrorBoundary";
 
 const DropdownComponent = forwardRef<DropdownRef, DropdownProps>(
@@ -27,11 +27,9 @@ const DropdownComponent = forwardRef<DropdownRef, DropdownProps>(
     ref,
   ) => {
     const [internalOpen, setInternalOpen] = useState(false);
-    const [emptyMenu, setEmptyMenu] = useState(false);
 
     const onRetrieveDataCallback = useCallback(async () => {
       const data = await onRetrieveData?.();
-      setEmptyMenu(flattenDropdownItems(data).length === 0);
       return data;
     }, [onRetrieveData]);
 
@@ -56,7 +54,7 @@ const DropdownComponent = forwardRef<DropdownRef, DropdownProps>(
               />
             );
           }}
-          disabled={emptyMenu || disabled}
+          disabled={disabled}
           trigger={trigger}
           placement={placement}
           onOpenChange={(open) => {
