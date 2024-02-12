@@ -137,7 +137,6 @@ export const DropdownMenu = ({
           .length === 0 && (
           <Group
             key={"no-data-group"}
-            // @TODO: maybe make this translatabe
             data={{ label: t("noMatches"), items: [] }}
           />
         )}
