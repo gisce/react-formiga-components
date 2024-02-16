@@ -175,7 +175,8 @@ const Item = ({
         "ant-dropdown-menu-item-disabled": item.disabled,
       })}
       role="menuitem"
-      onClick={onClick}
+      style={item.disableClick && { cursor: "default" }}
+      onClick={item.disableClick ? undefined : onClick}
     >
       <span className="ant-dropdown-menu-title-content">
         <Row wrap={false}>
@@ -192,6 +193,7 @@ const Item = ({
               <CheckOutlined />
             </Col>
           )}
+          {item.right && <Col flex="none">{item.right}</Col>}
         </Row>
       </span>
     </li>
