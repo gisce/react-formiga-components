@@ -5,6 +5,7 @@ export type BaseDropdownProps = {
     onItemClick?: (item: DropdownMenuItem) => void;
     onRetrieveData: () => Promise<DropdownMenuGroup[]>;
     header?: ReactNode;
+    disableClickItems?: boolean;
 };
 declare const Placements: readonly [
     "topLeft",
@@ -38,8 +39,10 @@ export type DropdownMenuItem = DropdownMenuItemType & Record<string, any> & {
     id: number | string;
     name?: string;
     icon?: ReactNode;
+    right?: ReactNode;
     disabled?: boolean;
     selected?: boolean;
+    disableClick?: boolean;
 };
 export type DropdownMenuItemType = {
     type?: "item" | "divider";
