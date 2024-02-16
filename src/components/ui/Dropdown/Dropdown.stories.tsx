@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Dropdown } from "./Dropdown";
 import { EnterOutlined, MobileOutlined } from "@ant-design/icons";
 import { DropdownMenuGroup, DropdownProps } from "./Dropdown.types";
+import { Button } from "antd";
 
 export default {
   title: "Components/Dropdown",
@@ -22,7 +23,19 @@ const exampleData: DropdownMenuGroup[] = [
     icon: <MobileOutlined />,
     items: [
       { id: 3, name: "Item 3", icon: <EnterOutlined /> },
-      { id: 4, name: "Item 4" },
+      {
+        id: 4,
+        name: "Item 4",
+        right: (
+          <Button
+            onClick={() => {
+              alert("hi");
+            }}
+          >
+            <EnterOutlined>holas</EnterOutlined>
+          </Button>
+        ),
+      },
     ],
   },
   {
