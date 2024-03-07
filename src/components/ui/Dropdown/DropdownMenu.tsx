@@ -15,6 +15,7 @@ import {
 import cls from "classnames";
 import { CheckOutlined } from "@ant-design/icons";
 import { useLocale } from "@/context";
+import { removeAccents } from "@/helpers";
 
 const { Search } = Input;
 
@@ -72,7 +73,9 @@ export const DropdownMenu = ({
               : group.items.filter(
                   (item) =>
                     item.name &&
-                    item.name.toLowerCase().includes(searchValue.toLowerCase()),
+                    removeAccents(item.name.toLowerCase()).includes(
+                      removeAccents(searchValue.toLowerCase()),
+                    ),
                 ),
           };
         })
