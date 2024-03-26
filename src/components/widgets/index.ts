@@ -11,3 +11,4 @@ export * from "./Link";
 export * from "./ProgressBar";
 export * from "./Translatable";
 export * from "./Many2One";
+export * from "./HTMLPreview";
