@@ -1,5 +1,9 @@
-import { Markup } from "interweave";
+import DOMPurify from "dompurify";
 
 export const HTMLPreview = ({ value }: { value?: string }) => {
-  return <Markup content={value} allowAttributes />;
+  if (value) {
+    return (
+      <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(value) }} />
+    );
+  }
 };
