@@ -1,0 +1,23 @@
+import{j as q}from"./jsx-runtime-f6d73c06.js";import{r as l}from"./index-8ee6c85d.js";import{p as x,a as C}from"./FloatTime.helper-f755c1c2.js";import{s as I}from"./styled-components.browser.esm-d9ff1479.js";import{R}from"./Field-c5431efa.js";import{A}from"./index-5a0ad9a9.js";import{B}from"./BaseField.argTypes-d72d00ba.js";import"./_commonjsHelpers-de833af9.js";import"./index-4cbabd78.js";import"./assertThisInitialized-4fab7dd0.js";import"./index-8eb238e3.js";import"./Label-3ebc22b0.js";import"./index-8d7211d9.js";import"./toArray-fde42edc.js";import"./isVisible-21091144.js";import"./index-7d371500.js";import"./motion-343f592f.js";import"./roundedArrow-1c6c6973.js";import"./reactNode-c432c2b0.js";import"./Compact-5059a700.js";import"./LocaleContext-948e5f1f.js";import"./context-4b385781.js";import"./asyncToGenerator-0e679def.js";import"./omit-699eb5ab.js";import"./collapse-97de76d4.js";import"./row-0fcba45e.js";import"./useLocale-4d1812fe.js";import"./CheckCircleFilled-69f018f7.js";import"./CloseCircleFilled-f91b490c.js";import"./ExclamationCircleFilled-7836cda2.js";import"./compact-item-5948db7d.js";import"./index-ab145b10.js";import"./useVariants-a5c7fa8d.js";import"./SearchOutlined-4644c241.js";import"./button-459101f3.js";import"./index-71ed9248.js";const i=I(A)`
+  width: 100%;
+`,d=I(i)`
+  ${R}
+`;try{i.displayName="Input",i.__docgenInfo={description:"",displayName:"Input",props:{theme:{defaultValue:null,description:"",name:"theme",required:!1,type:{name:"any"}},as:{defaultValue:null,description:"",name:"as",required:!1,type:{name:"undefined"}},forwardedAs:{defaultValue:null,description:"",name:"forwardedAs",required:!1,type:{name:"undefined"}}}}}catch{}try{d.displayName="RequiredInput",d.__docgenInfo={description:"",displayName:"RequiredInput",props:{theme:{defaultValue:null,description:"",name:"theme",required:!1,type:{name:"any"}},as:{defaultValue:null,description:"",name:"as",required:!1,type:{name:"undefined"}},forwardedAs:{defaultValue:null,description:"",name:"forwardedAs",required:!1,type:{name:"undefined"}}}}}catch{}const p=e=>{const{readOnly:u,required:o,value:t,onChange:a}=e,T=o&&!u?d:i,b=l.useRef(),[m,c]=l.useState();l.useEffect(()=>{c(x(t))},[t]);const F=s=>{a==null||a(s)};function E(s){b.current=s.target.value,c(s.target.value)}function S(){F(C(m))}return q.jsx(T,{value:m,disabled:u,placeholder:"00:00",onChange:E,onBlur:S})};try{p.displayName="FloatTimeInput",p.__docgenInfo={description:"",displayName:"FloatTimeInput",props:{locale:{defaultValue:null,description:"",name:"locale",required:!1,type:{name:"enum",value:[{value:'"en_US"'},{value:'"es_ES"'},{value:'"ca_ES"'}]}},value:{defaultValue:null,description:"",name:"value",required:!1,type:{name:"number"}},onChange:{defaultValue:null,description:"",name:"onChange",required:!1,type:{name:"((value: number) => void)"}},name:{defaultValue:null,description:"",name:"name",required:!0,type:{name:"string"}},readOnly:{defaultValue:null,description:"",name:"readOnly",required:!1,type:{name:"boolean"}},required:{defaultValue:null,description:"",name:"required",required:!1,type:{name:"boolean"}},tabIndex:{defaultValue:null,description:"",name:"tabIndex",required:!1,type:{name:"number"}},onBlur:{defaultValue:null,description:"",name:"onBlur",required:!1,type:{name:"((event: FocusEvent<HTMLInputElement, Element>) => void)"}}}}}catch{}const ve={title:"Work in progress/Widgets/FloatTime/FloatTimeInput",component:p,argTypes:{...B,locale:{table:{disable:!0}}}},h=e=>{const[u,o]=l.useState(e.value);return l.useEffect(()=>{o(e.value)},[e.value]),q.jsx(p,{...e,value:u,onChange:t=>{var a;o(t),(a=e.onChange)==null||a.call(e,t)}})},r=h.bind({});r.args={required:!1,readOnly:!1};const n=h.bind({});n.args={required:!1,readOnly:!1,value:2.5};var f,v,y;r.parameters={...r.parameters,docs:{...(f=r.parameters)==null?void 0:f.docs,source:{originalSource:`args => {
+  const [value, setValue] = useState(args.value);
+  useEffect(() => {
+    setValue(args.value);
+  }, [args.value]);
+  return <FloatTimeInput {...args} value={value} onChange={(value: number) => {
+    setValue(value);
+    args.onChange?.(value);
+  }} />;
+}`,...(y=(v=r.parameters)==null?void 0:v.docs)==null?void 0:y.source}}};var g,_,V;n.parameters={...n.parameters,docs:{...(g=n.parameters)==null?void 0:g.docs,source:{originalSource:`args => {
+  const [value, setValue] = useState(args.value);
+  useEffect(() => {
+    setValue(args.value);
+  }, [args.value]);
+  return <FloatTimeInput {...args} value={value} onChange={(value: number) => {
+    setValue(value);
+    args.onChange?.(value);
+  }} />;
+}`,...(V=(_=n.parameters)==null?void 0:_.docs)==null?void 0:V.source}}};const ye=["Basic","WithValue"];export{r as Basic,n as WithValue,ye as __namedExportsOrder,ve as default};
