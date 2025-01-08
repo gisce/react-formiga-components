@@ -71,6 +71,24 @@ jobs:
         run: echo "branch_name=${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
         shell: bash
 
+  create-sync-prs:
+    name: Create sync PRs
+    needs: release
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target: ['alpha', 'develop']
+    steps:
+      - name: Call create sync pr
+        uses: gisce/create-sync-pr@v0.0.9
+        with:
+          repository: ${{ env.LIBRARY_NAME }}
+          targetBranch: ${{ matrix.target }}
+          baseBranch: main
+          githubToken: ${{ secrets.GH_PAT }}
+          releaseType: ${{ needs.release.outputs.release_type }}
+
   update-dependents:
     name: Update dependent projects
     needs: release
