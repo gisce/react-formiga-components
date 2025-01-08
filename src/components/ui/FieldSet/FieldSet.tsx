@@ -4,8 +4,7 @@ import { FieldSetProps } from "./FieldSet.types";
 import { Space } from "antd";
 
 export const FieldSet = (props: FieldSetProps): React.ReactElement => {
-  const { label, children, icon: Icon } = props;
-  const [isOpen, setIsOpen] = useState(true);
+  const { label, children, icon: Icon, borderRadius } = props;
   const labelComponent = (
     <Space>
       {Icon ? <Icon /> : null}
@@ -14,7 +13,7 @@ export const FieldSet = (props: FieldSetProps): React.ReactElement => {
   );
 
   return (
-    <FieldSetElement>
+    <FieldSetElement borderRadius={borderRadius}>
       <Legend>{labelComponent}</Legend>
       {children}
     </FieldSetElement>
