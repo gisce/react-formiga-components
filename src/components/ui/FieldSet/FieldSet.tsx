@@ -16,7 +16,7 @@ export const FieldSet = (props: FieldSetProps): React.ReactElement => {
   );
 
   return (
-    <FieldSetElement borderRadius={`${borderRadius || token.borderRadius}px`}>
+    <FieldSetElement $borderRadius={`${borderRadius || token.borderRadius}px`}>
       <Legend>{labelComponent}</Legend>
       {children}
     </FieldSetElement>

@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
-export const FieldSetElement = styled.fieldset<{ borderRadius?: string }>`
+export const FieldSetElement = styled.fieldset<{ $borderRadius?: string }>`
   padding: 0.5rem;
   border-color: #d9d9d9;
   border-width: 1px;
   border-style: solid;
-  border-radius: ${(props) => props.borderRadius || "5px"};
+  border-radius: ${(props) => props.$borderRadius || "5px"};
   font-family:
     ui-sans-serif,
     system-ui,
