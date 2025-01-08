@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { FieldSetElement, Legend } from "./FieldSet.styles";
 import { FieldSetProps } from "./FieldSet.types";
-import { Space } from "antd";
+import { Space, theme } from "antd";
+
+const { useToken } = theme;
 
 export const FieldSet = (props: FieldSetProps): React.ReactElement => {
   const { label, children, icon: Icon, borderRadius } = props;
+  const { token } = useToken();
   const labelComponent = (
     <Space>
       {Icon ? <Icon /> : null}
@@ -13,7 +16,7 @@ export const FieldSet = (props: FieldSetProps): React.ReactElement => {
   );
 
   return (
-    <FieldSetElement borderRadius={borderRadius}>
+    <FieldSetElement borderRadius={`${borderRadius || token.borderRadius}px`}>
       <Legend>{labelComponent}</Legend>
       {children}
     </FieldSetElement>
