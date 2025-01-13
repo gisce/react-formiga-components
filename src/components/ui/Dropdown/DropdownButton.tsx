@@ -8,7 +8,7 @@ export const DropdownButton: React.FC<DropdownButtonProps> = memo(
   ({ icon, label, ...restProps }: DropdownButtonProps) => {
     return (
       <Dropdown {...restProps}>
-        <Button>
+        <Button style={{ maxHeight: 28 }}>
           {icon} {label} <DownOutlined />
         </Button>
       </Dropdown>
