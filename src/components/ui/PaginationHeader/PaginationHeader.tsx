@@ -50,11 +50,6 @@ const PaginationHeaderComponent = (props: PaginationHeaderProps) => {
     [onPageSizeChange, onRequestPageChange],
   );
 
-  const mustShowSelectAllGlobalRecordsButton = useMemo(
-    () => onSelectAllGlobalRecords !== undefined,
-    [onSelectAllGlobalRecords],
-  );
-
   const summary = useMemo(() => {
     if (total === undefined) return null;
     if (total === 0) return t("no_results");
@@ -84,7 +79,7 @@ const PaginationHeaderComponent = (props: PaginationHeaderProps) => {
   const selectAllRecordsProps: SelectAllRecordsRowProps = useMemo(
     () => ({
       currentPageSelectedCount,
-      currentPageTotalCount: pageSize,
+      currentPageSize: pageSize,
       totalRecordsCount: total,
       totalSelectedCount,
       onSelectAllRecords: onSelectAllGlobalRecords!,
@@ -98,20 +93,20 @@ const PaginationHeaderComponent = (props: PaginationHeaderProps) => {
     ],
   );
 
+  const hasSelectionFeature = onSelectAllGlobalRecords !== undefined;
+  const columnSpan = hasSelectionFeature ? 8 : 12;
+
   return (
     <Row align="bottom" className="pb-4" wrap={false}>
-      <Col span={mustShowSelectAllGlobalRecordsButton ? 8 : 12}>
+      <Col span={columnSpan}>
         <Pagination {...paginationProps} />
       </Col>
-      {mustShowSelectAllGlobalRecordsButton && (
+      {hasSelectionFeature && (
         <Col span={8} className="text-center">
           <SelectAllRecordsRow {...selectAllRecordsProps} />
         </Col>
       )}
-      <Col
-        span={mustShowSelectAllGlobalRecordsButton ? 8 : 12}
-        className="text-right"
-      >
+      <Col span={columnSpan} className="text-right">
         {summary}
       </Col>
     </Row>

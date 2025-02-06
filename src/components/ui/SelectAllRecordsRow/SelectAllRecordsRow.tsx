@@ -11,37 +11,15 @@ export const Container = styled.div`
   justify-content: center;
 `;
 
-const SelectAllRecordsRowComponent = (props: SelectAllRecordsRowProps) => {
-  const {
-    currentPageSelectedCount,
-    currentPageTotalCount,
-    totalRecordsCount,
-    totalSelectedCount,
-    onSelectAllRecords,
-  } = props;
-
+const SelectAllRecordsRowComponent = ({
+  currentPageSelectedCount,
+  currentPageSize,
+  totalRecordsCount,
+  totalSelectedCount,
+  onSelectAllRecords,
+}: SelectAllRecordsRowProps) => {
   const [loading, setLoading] = useState(false);
   const { t } = useLocale();
-
-  // Memoize translations to avoid recalculating on every render
-  const translations = useMemo(
-    () => ({
-      recordsSelected: t("recordsSelected"),
-      selectAllRecords: t("selectAllRecords"),
-      allRecordsSelected: t("allRecordsSelected"),
-    }),
-    [t],
-  );
-
-  // Don't show anything if the current page is not fully selected
-  if (currentPageSelectedCount < currentPageTotalCount) {
-    return null;
-  }
-
-  // Don't show anything if we don't have more records than the current page
-  if (totalRecordsCount <= currentPageTotalCount) {
-    return null;
-  }
 
   const handleClick = useCallback(
     async (event: React.MouseEvent) => {
@@ -57,12 +35,27 @@ const SelectAllRecordsRowComponent = (props: SelectAllRecordsRowProps) => {
     [onSelectAllRecords],
   );
 
-  // If all records across all pages are selected, show the total count
+  // Don't render anything if there are no records
+  if (totalRecordsCount === 0) {
+    return null;
+  }
+
+  // Don't render if current page is not fully selected
+  if (currentPageSelectedCount < currentPageSize) {
+    return null;
+  }
+
+  // Don't render if we don't have more records than current page
+  if (totalRecordsCount <= currentPageSize) {
+    return null;
+  }
+
+  // If all records are selected, show the total count message
   if (totalSelectedCount === totalRecordsCount) {
     return (
       <Container>
         <span style={{ fontWeight: 600 }}>
-          {translations.allRecordsSelected.replace(
+          {t("allRecordsSelected").replace(
             "{totalRecords}",
             totalSelectedCount.toString(),
           )}
@@ -71,11 +64,11 @@ const SelectAllRecordsRowComponent = (props: SelectAllRecordsRowProps) => {
     );
   }
 
-  // Show option to select all records when current page is selected but not all pages
+  // Show the select all option
   return (
     <Container>
       <span>
-        {translations.recordsSelected.replace(
+        {t("recordsSelected").replace(
           "{numberOfSelectedRows}",
           currentPageSelectedCount.toString(),
         ) + " "}
@@ -84,7 +77,7 @@ const SelectAllRecordsRowComponent = (props: SelectAllRecordsRowProps) => {
           <Spin />
         ) : (
           <Link onClick={handleClick} style={{ fontWeight: 600 }}>
-            {translations.selectAllRecords.replace(
+            {t("selectAllRecords").replace(
               "{totalRecords}",
               totalRecordsCount.toString(),
             )}
