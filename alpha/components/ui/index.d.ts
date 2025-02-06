@@ -4,4 +4,6 @@ export * from "./Separator";
 export * from "./FieldSet";
 export * from "./Dropdown";
 export * from "./FavouriteButton";
+export * from "./PaginationHeader";
+export * from "./SelectAllRecordsRow";
 //# sourceMappingURL=index.d.ts.map

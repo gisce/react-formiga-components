@@ -99,7 +99,11 @@ declare const _default: {
   "noMatches": "No hay coincidencias",
   "noExportFieldFound": "Campo no encontrado en el modelo. Puede haber sido migrado o eliminado?",
   "exportHasFieldsUnavailable": "La exportación tiene los siguientes campos no disponibles. Puede ser que se hayan migrado o eliminado.",
-  "continueAndIgnoreFieldsUnavailable": "Quieres continuar y ignorar los campos no disponibles?"
+  "continueAndIgnoreFieldsUnavailable": "Quieres continuar y ignorar los campos no disponibles?",
+  "recordsSelected": "Hay {numberOfSelectedRows} registros seleccionados en ésta página.",
+  "selectAllRecords": "Seleccionar todos los {totalRecords} registros.",
+  "allRecordsSelected": "Hay {totalRecords} registros seleccionados.",
+  "items_per_page": "/ pág."
 }
 ;
 
