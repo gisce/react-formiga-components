@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useCallback, memo, useMemo } from "react";
 import { Spin } from "antd";
 import Link from "antd/es/typography/Link";
 import { useLocale } from "@/context";
@@ -11,80 +11,88 @@ export const Container = styled.div`
   justify-content: center;
 `;
 
-export const SelectAllRecordsRow = (props: SelectAllRecordsRowProps) => {
+const SelectAllRecordsRowComponent = (props: SelectAllRecordsRowProps) => {
   const {
-    numberOfVisibleSelectedRows,
-    totalRecords,
-    numberOfTotalRows,
+    currentPageSelectedCount,
+    currentPageTotalCount,
+    totalRecordsCount,
+    totalSelectedCount,
     onSelectAllRecords,
-    numberOfRealSelectedRows,
   } = props;
+
   const [loading, setLoading] = useState(false);
   const { t } = useLocale();
 
-  const translations = {
-    recordsSelected: t("recordsSelected"),
-    selectAllRecords: t("selectAllRecords"),
-    allRecordsSelected: t("allRecordsSelected"),
-  };
+  // Memoize translations to avoid recalculating on every render
+  const translations = useMemo(
+    () => ({
+      recordsSelected: t("recordsSelected"),
+      selectAllRecords: t("selectAllRecords"),
+      allRecordsSelected: t("allRecordsSelected"),
+    }),
+    [t],
+  );
 
-  if (numberOfTotalRows === 0) {
+  // Don't show anything if the current page is not fully selected
+  if (currentPageSelectedCount < currentPageTotalCount) {
     return null;
   }
 
-  if (
-    numberOfVisibleSelectedRows < numberOfTotalRows &&
-    numberOfRealSelectedRows <= numberOfTotalRows
-  ) {
+  // Don't show anything if we don't have more records than the current page
+  if (totalRecordsCount <= currentPageTotalCount) {
     return null;
   }
 
-  if (totalRecords === numberOfVisibleSelectedRows) {
-    return null;
-  }
+  const handleClick = useCallback(
+    async (event: React.MouseEvent) => {
+      event.preventDefault();
+      event.stopPropagation();
+      setLoading(true);
+      try {
+        await onSelectAllRecords();
+      } finally {
+        setLoading(false);
+      }
+    },
+    [onSelectAllRecords],
+  );
 
-  const handleClick = async (event: any) => {
-    event.preventDefault(); // prevent the default action (navigation) from happening
-    event.stopPropagation();
-    setLoading(true);
-    await onSelectAllRecords();
-    setLoading(false);
-  };
-
-  const selectRowsComponent = (
-    <span>
-      {translations.recordsSelected.replace(
-        "{numberOfSelectedRows}",
-        numberOfVisibleSelectedRows.toString(),
-      ) + " "}
-
-      {loading ? (
-        <Spin />
-      ) : (
-        <Link onClick={handleClick} style={{ fontWeight: 600 }}>
-          {translations.selectAllRecords.replace(
+  // If all records across all pages are selected, show the total count
+  if (totalSelectedCount === totalRecordsCount) {
+    return (
+      <Container>
+        <span style={{ fontWeight: 600 }}>
+          {translations.allRecordsSelected.replace(
             "{totalRecords}",
-            totalRecords.toString(),
+            totalSelectedCount.toString(),
           )}
-        </Link>
-      )}
-    </span>
-  );
+        </span>
+      </Container>
+    );
+  }
 
-  const allRowsAreSelected = (
-    <span style={{ fontWeight: 600 }}>
-      {translations.allRecordsSelected.replace(
-        "{totalRecords}",
-        numberOfRealSelectedRows.toString(),
-      ) + " "}
-    </span>
-  );
-
+  // Show option to select all records when current page is selected but not all pages
   return (
     <Container>
-      {numberOfRealSelectedRows > numberOfTotalRows
-        ? allRowsAreSelected
-        : selectRowsComponent}
+      <span>
+        {translations.recordsSelected.replace(
+          "{numberOfSelectedRows}",
+          currentPageSelectedCount.toString(),
+        ) + " "}
+
+        {loading ? (
+          <Spin />
+        ) : (
+          <Link onClick={handleClick} style={{ fontWeight: 600 }}>
+            {translations.selectAllRecords.replace(
+              "{totalRecords}",
+              totalRecordsCount.toString(),
+            )}
+          </Link>
+        )}
+      </span>
     </Container>
   );
 };
+
+export const SelectAllRecordsRow = memo(SelectAllRecordsRowComponent);

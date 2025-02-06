@@ -102,5 +102,6 @@
   "continueAndIgnoreFieldsUnavailable": "Vols continuar i ignorar els camps no disponibles?",
   "recordsSelected": "Hi ha {numberOfSelectedRows} registres seleccionats en aquesta pàgina.",
   "selectAllRecords": "Seleccionar tots els {totalRecords} registres.",
-  "allRecordsSelected": "Hi ha {totalRecords} registres seleccionats."
+  "allRecordsSelected": "Hi ha {totalRecords} registres seleccionats.",
+  "items_per_page": "/ pàg."
 }

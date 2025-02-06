@@ -1,19 +1,21 @@
 import { useLocale } from "@/context";
 import { Col, Pagination, Row } from "antd";
-import { useMemo, useState } from "react";
+import type { PaginationProps } from "antd";
+import { useMemo, useState, useCallback, memo } from "react";
 import { SelectAllRecordsRow } from "../SelectAllRecordsRow/SelectAllRecordsRow";
 import type { PaginationHeaderProps } from "./PaginationHeader.types";
+import type { SelectAllRecordsRowProps } from "../SelectAllRecordsRow/SelectAllRecordsRow.types";
 
-const PaginationHeaderComp = (props: PaginationHeaderProps) => {
+const PaginationHeaderComponent = (props: PaginationHeaderProps) => {
   const {
     total,
     initialPage,
-    onRequestPageChange,
-    onSelectAllGlobalRecords,
     initialPageSize,
+    currentPageSelectedCount,
+    totalSelectedCount,
+    onRequestPageChange,
     onPageSizeChange,
-    realSelectedRowsLength,
-    visibleSelectedRowsLength,
+    onSelectAllGlobalRecords,
   } = props;
 
   const { t } = useLocale();
@@ -27,56 +29,83 @@ const PaginationHeaderComp = (props: PaginationHeaderProps) => {
     [page, pageSize, total],
   );
 
-  const handlePageChange = (newPage: number, newPageSize?: number) => {
-    setPage(newPage);
-    if (newPageSize !== undefined) {
+  const handlePageChange = useCallback(
+    (newPage: number, newPageSize?: number) => {
+      setPage(newPage);
+      if (newPageSize !== undefined) {
+        setPageSize(newPageSize);
+      }
+      onRequestPageChange(newPage, newPageSize);
+    },
+    [onRequestPageChange],
+  );
+
+  const handlePageSizeChange = useCallback(
+    (newPageSize: number, newPage: number) => {
       setPageSize(newPageSize);
-    }
-    onRequestPageChange(newPage, newPageSize);
-  };
+      setPage(newPage);
+      onPageSizeChange(newPageSize);
+      onRequestPageChange(newPage, newPageSize);
+    },
+    [onPageSizeChange, onRequestPageChange],
+  );
 
-  const handlePageSizeChange = (newPageSize: number, newPage: number) => {
-    setPageSize(newPageSize);
-    setPage(newPage);
-    onPageSizeChange(newPageSize);
-    onRequestPageChange(newPage, newPageSize);
-  };
-
-  const mustShowSelectAllGlobalRecordsButton =
-    onSelectAllGlobalRecords !== undefined;
+  const mustShowSelectAllGlobalRecordsButton = useMemo(
+    () => onSelectAllGlobalRecords !== undefined,
+    [onSelectAllGlobalRecords],
+  );
 
   const summary = useMemo(() => {
-    return total === undefined
-      ? null
-      : total === 0
-      ? t("no_results")
-      : t("summary")
-          .replace("{from}", from?.toString())
-          .replace("{to}", to?.toString())
-          .replace("{total}", total?.toString());
+    if (total === undefined) return null;
+    if (total === 0) return t("no_results");
+
+    return t("summary")
+      .replace("{from}", from?.toString())
+      .replace("{to}", to?.toString())
+      .replace("{total}", total?.toString());
   }, [total, from, to, t]);
 
+  const paginationProps: PaginationProps = useMemo(
+    () => ({
+      total,
+      pageSize,
+      current: page,
+      onChange: handlePageChange,
+      showSizeChanger: true,
+      onShowSizeChange: handlePageSizeChange,
+      showLessItems: true,
+      locale: {
+        items_per_page: t("items_per_page"),
+      },
+    }),
+    [total, pageSize, page, handlePageChange, handlePageSizeChange, t],
+  );
+
+  const selectAllRecordsProps: SelectAllRecordsRowProps = useMemo(
+    () => ({
+      currentPageSelectedCount,
+      currentPageTotalCount: pageSize,
+      totalRecordsCount: total,
+      totalSelectedCount,
+      onSelectAllRecords: onSelectAllGlobalRecords!,
+    }),
+    [
+      currentPageSelectedCount,
+      pageSize,
+      total,
+      totalSelectedCount,
+      onSelectAllGlobalRecords,
+    ],
+  );
+
   return (
-    <Row align="bottom" className="pb-4">
+    <Row align="bottom" className="pb-4" wrap={false}>
       <Col span={mustShowSelectAllGlobalRecordsButton ? 8 : 12}>
-        <Pagination
-          total={total}
-          pageSize={pageSize}
-          current={page}
-          onChange={handlePageChange}
-          showSizeChanger
-          onShowSizeChange={handlePageSizeChange}
-        />
+        <Pagination {...paginationProps} />
       </Col>
       {mustShowSelectAllGlobalRecordsButton && (
         <Col span={8} className="text-center">
-          <SelectAllRecordsRow
-            numberOfVisibleSelectedRows={visibleSelectedRowsLength}
-            numberOfRealSelectedRows={realSelectedRowsLength}
-            numberOfTotalRows={total}
-            totalRecords={total || 0}
-            onSelectAllRecords={onSelectAllGlobalRecords}
-          />
+          <SelectAllRecordsRow {...selectAllRecordsProps} />
         </Col>
       )}
       <Col
@@ -89,4 +118,4 @@ const PaginationHeaderComp = (props: PaginationHeaderProps) => {
   );
 };
 
-export const PaginationHeader = PaginationHeaderComp;
+export const PaginationHeader = memo(PaginationHeaderComponent);

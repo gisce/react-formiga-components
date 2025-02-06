@@ -1,3 +1,4 @@
+import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { PaginationHeader } from "./PaginationHeader";
 
@@ -37,8 +38,8 @@ NoResults.args = {
   initialPage: 1,
   initialPageSize: 10,
   total: 0,
-  realSelectedRowsLength: 0,
-  visibleSelectedRowsLength: 0,
+  currentPageSelectedCount: 0,
+  totalSelectedCount: 0,
   ...commonHandlers,
 };
 NoResults.parameters = {
@@ -54,8 +55,8 @@ SinglePage.args = {
   initialPage: 1,
   initialPageSize: 10,
   total: 5,
-  realSelectedRowsLength: 0,
-  visibleSelectedRowsLength: 0,
+  currentPageSelectedCount: 0,
+  totalSelectedCount: 0,
   ...commonHandlers,
 };
 SinglePage.parameters = {
@@ -71,8 +72,8 @@ MultiplePages.args = {
   initialPage: 2,
   initialPageSize: 10,
   total: 25,
-  realSelectedRowsLength: 0,
-  visibleSelectedRowsLength: 0,
+  currentPageSelectedCount: 0,
+  totalSelectedCount: 0,
   ...commonHandlers,
 };
 MultiplePages.parameters = {
@@ -88,8 +89,8 @@ LargeDataset.args = {
   initialPage: 5,
   initialPageSize: 20,
   total: 1000,
-  realSelectedRowsLength: 0,
-  visibleSelectedRowsLength: 0,
+  currentPageSelectedCount: 0,
+  totalSelectedCount: 0,
   ...commonHandlers,
 };
 LargeDataset.parameters = {
@@ -100,55 +101,37 @@ LargeDataset.parameters = {
   },
 };
 
-export const WithPartialSelection = Template.bind({});
-WithPartialSelection.args = {
+export const WithPartialPageSelected = Template.bind({});
+WithPartialPageSelected.args = {
   initialPage: 1,
   initialPageSize: 10,
   total: 100,
-  realSelectedRowsLength: 5,
-  visibleSelectedRowsLength: 5,
+  currentPageSelectedCount: 10,
+  totalSelectedCount: 10,
   ...commonHandlers,
 };
-WithPartialSelection.parameters = {
+WithPartialPageSelected.parameters = {
   docs: {
     description: {
       story:
-        "Shows pagination with some records selected, displaying the selection summary.",
+        "Shows when current page is fully selected but there are more records available to select globally.",
     },
   },
 };
 
-export const WithAllVisibleSelected = Template.bind({});
-WithAllVisibleSelected.args = {
+export const WithAllPagesSelected = Template.bind({});
+WithAllPagesSelected.args = {
   initialPage: 1,
   initialPageSize: 10,
   total: 100,
-  realSelectedRowsLength: 10,
-  visibleSelectedRowsLength: 10,
+  currentPageSelectedCount: 10,
+  totalSelectedCount: 100,
   ...commonHandlers,
 };
-WithAllVisibleSelected.parameters = {
+WithAllPagesSelected.parameters = {
   docs: {
     description: {
-      story:
-        "Shows pagination when all visible records on the current page are selected.",
-    },
-  },
-};
-
-export const WithAllRecordsSelected = Template.bind({});
-WithAllRecordsSelected.args = {
-  initialPage: 1,
-  initialPageSize: 10,
-  total: 100,
-  realSelectedRowsLength: 100,
-  visibleSelectedRowsLength: 10,
-  ...commonHandlers,
-};
-WithAllRecordsSelected.parameters = {
-  docs: {
-    description: {
-      story: "Shows pagination when all records across all pages are selected.",
+      story: "Shows when all records across all pages are selected.",
     },
   },
 };
@@ -158,8 +141,8 @@ CustomPageSize.args = {
   initialPage: 1,
   initialPageSize: 50,
   total: 200,
-  realSelectedRowsLength: 0,
-  visibleSelectedRowsLength: 0,
+  currentPageSelectedCount: 0,
+  totalSelectedCount: 0,
   ...commonHandlers,
 };
 CustomPageSize.parameters = {
@@ -175,8 +158,8 @@ LastPage.args = {
   initialPage: 10,
   initialPageSize: 10,
   total: 100,
-  realSelectedRowsLength: 0,
-  visibleSelectedRowsLength: 0,
+  currentPageSelectedCount: 0,
+  totalSelectedCount: 0,
   ...commonHandlers,
 };
 LastPage.parameters = {
@@ -192,8 +175,8 @@ WithoutSelectionControls.args = {
   initialPage: 1,
   initialPageSize: 10,
   total: 100,
-  realSelectedRowsLength: 0,
-  visibleSelectedRowsLength: 0,
+  currentPageSelectedCount: 0,
+  totalSelectedCount: 0,
   onRequestPageChange: commonHandlers.onRequestPageChange,
   onPageSizeChange: commonHandlers.onPageSizeChange,
   // Omitting onSelectAllGlobalRecords to hide selection controls

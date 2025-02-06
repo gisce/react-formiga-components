@@ -102,5 +102,6 @@
   "continueAndIgnoreFieldsUnavailable": "Do you want to continue and ignore the unavailable fields?",
   "recordsSelected": "There are {numberOfSelectedRows} records selected on this page.",
   "selectAllRecords": "Select all {totalRecords} records.",
-  "allRecordsSelected": "There are {totalRecords} records selected."
+  "allRecordsSelected": "There are {totalRecords} records selected.",
+  "items_per_page": "/ page"
 }
