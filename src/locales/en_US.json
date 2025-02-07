@@ -99,5 +99,9 @@
   "noMatches": "No matches found",
   "noExportFieldFound": "Field not found in the model. It may have been migrated or deleted?",
   "exportHasFieldsUnavailable": "The export has the following fields unavailable. It may have been migrated or deleted.",
-  "continueAndIgnoreFieldsUnavailable": "Do you want to continue and ignore the unavailable fields?"
+  "continueAndIgnoreFieldsUnavailable": "Do you want to continue and ignore the unavailable fields?",
+  "recordsSelected": "There are {numberOfSelectedRows} records selected on this page.",
+  "selectAllRecords": "Select all {totalRecords} records.",
+  "allRecordsSelected": "There are {totalRecords} records selected.",
+  "items_per_page": "/ page"
 }
