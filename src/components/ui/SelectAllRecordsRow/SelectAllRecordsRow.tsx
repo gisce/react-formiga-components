@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useCallback, memo, useMemo } from "react";
+import { useState, useCallback, memo } from "react";
 import { Spin } from "antd";
 import Link from "antd/es/typography/Link";
 import { useLocale } from "@/context";
@@ -11,15 +11,50 @@ export const Container = styled.div`
   justify-content: center;
 `;
 
-const SelectAllRecordsRowComponent = ({
+export const shouldShowSelectionRow = ({
   currentPageSelectedCount,
   currentPageSize,
   totalRecordsCount,
   totalSelectedCount,
-  onSelectAllRecords,
-}: SelectAllRecordsRowProps) => {
+  currentPage,
+}: {
+  currentPageSelectedCount: number;
+  currentPageSize: number;
+  totalRecordsCount: number;
+  totalSelectedCount: number;
+  currentPage: number;
+}) => {
+  // Don't show if there are no records
+  if (totalRecordsCount === 0) return false;
+
+  // Calculate the actual number of records on the current page
+  const totalPages = Math.ceil(totalRecordsCount / currentPageSize);
+  const isLastPage = currentPage === totalPages;
+  const currentPageRecords = isLastPage
+    ? totalRecordsCount - (totalPages - 1) * currentPageSize
+    : currentPageSize;
+
+  // Don't show if current page is not fully selected
+  if (currentPageSelectedCount < currentPageRecords) return false;
+
+  // Don't show if we don't have more records than current page
+  if (totalRecordsCount <= currentPageSize) return false;
+
+  // Show either the "select all" option or the "all selected" message
+  return true;
+};
+
+const SelectAllRecordsRowComponent = (props: SelectAllRecordsRowProps) => {
   const [loading, setLoading] = useState(false);
   const { t } = useLocale();
+
+  const {
+    shouldShow,
+    totalRecordsCount,
+    currentPageSelectedCount,
+    totalSelectedCount,
+    onSelectAllRecords,
+  } = props;
 
   const handleClick = useCallback(
     async (event: React.MouseEvent) => {
@@ -27,28 +62,13 @@ const SelectAllRecordsRowComponent = ({
       event.stopPropagation();
       setLoading(true);
       try {
-        await onSelectAllRecords();
+        await props.onSelectAllRecords();
       } finally {
         setLoading(false);
       }
     },
     [onSelectAllRecords],
   );
-
-  // Don't render anything if there are no records
-  if (totalRecordsCount === 0) {
-    return null;
-  }
-
-  // Don't render if current page is not fully selected
-  if (currentPageSelectedCount < currentPageSize) {
-    return null;
-  }
-
-  // Don't render if we don't have more records than current page
-  if (totalRecordsCount <= currentPageSize) {
-    return null;
-  }
 
   // If all records are selected, show the total count message
   if (totalSelectedCount === totalRecordsCount) {
@@ -64,7 +84,8 @@ const SelectAllRecordsRowComponent = ({
     );
   }
 
-  // Show the select all option
+  if (!shouldShow) return null;
+
   return (
     <Container>
       <span>

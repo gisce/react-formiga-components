@@ -11,8 +11,8 @@ export type PaginationHeaderProps = {
   totalSelectedCount: number;
   /** Callback when page or page size changes */
   onRequestPageChange: (page: number, pageSize?: number) => void;
-  /** Callback when page size changes */
-  onPageSizeChange: (pageSize: number) => void;
   /** Optional callback to select all records across all pages */
   onSelectAllGlobalRecords?: () => Promise<void>;
+  /** Whether the total number of rows is loading */
+  totalRowsLoading: boolean;
 };
