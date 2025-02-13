@@ -1,8 +1,11 @@
 import { useLocale } from "@/context";
-import { Col, Pagination, Row } from "antd";
+import { Col, Pagination, Row, Spin } from "antd";
 import type { PaginationProps } from "antd";
 import { useMemo, useState, useCallback, memo } from "react";
-import { SelectAllRecordsRow } from "../SelectAllRecordsRow/SelectAllRecordsRow";
+import {
+  SelectAllRecordsRow,
+  shouldShowSelectionRow,
+} from "../SelectAllRecordsRow/SelectAllRecordsRow";
 import type { PaginationHeaderProps } from "./PaginationHeader.types";
 import type { SelectAllRecordsRowProps } from "../SelectAllRecordsRow/SelectAllRecordsRow.types";
 
@@ -14,8 +17,8 @@ const PaginationHeaderComponent = (props: PaginationHeaderProps) => {
     currentPageSelectedCount,
     totalSelectedCount,
     onRequestPageChange,
-    onPageSizeChange,
     onSelectAllGlobalRecords,
+    totalRowsLoading,
   } = props;
 
   const { t } = useLocale();
@@ -40,16 +43,6 @@ const PaginationHeaderComponent = (props: PaginationHeaderProps) => {
     [onRequestPageChange],
   );
 
-  const handlePageSizeChange = useCallback(
-    (newPageSize: number, newPage: number) => {
-      setPageSize(newPageSize);
-      setPage(newPage);
-      onPageSizeChange(newPageSize);
-      onRequestPageChange(newPage, newPageSize);
-    },
-    [onPageSizeChange, onRequestPageChange],
-  );
-
   const summary = useMemo(() => {
     if (total === undefined) return null;
     if (total === 0) return t("no_results");
@@ -67,47 +60,63 @@ const PaginationHeaderComponent = (props: PaginationHeaderProps) => {
       current: page,
       onChange: handlePageChange,
       showSizeChanger: true,
-      onShowSizeChange: handlePageSizeChange,
       showLessItems: true,
       locale: {
         items_per_page: t("items_per_page"),
       },
     }),
-    [total, pageSize, page, handlePageChange, handlePageSizeChange, t],
+    [total, pageSize, page, handlePageChange, t],
   );
+
+  const shouldShowSelectAllRecordsRow = useMemo(() => {
+    if (!onSelectAllGlobalRecords) return false;
+    return shouldShowSelectionRow({
+      currentPageSelectedCount,
+      currentPageSize: pageSize,
+      totalRecordsCount: total,
+      totalSelectedCount,
+      currentPage: page,
+    });
+  }, [
+    onSelectAllGlobalRecords,
+    currentPageSelectedCount,
+    pageSize,
+    total,
+    totalSelectedCount,
+    page,
+  ]);
 
   const selectAllRecordsProps: SelectAllRecordsRowProps = useMemo(
     () => ({
+      shouldShow: shouldShowSelectAllRecordsRow,
       currentPageSelectedCount,
-      currentPageSize: pageSize,
       totalRecordsCount: total,
       totalSelectedCount,
       onSelectAllRecords: onSelectAllGlobalRecords!,
     }),
     [
+      shouldShowSelectAllRecordsRow,
       currentPageSelectedCount,
-      pageSize,
       total,
       totalSelectedCount,
       onSelectAllGlobalRecords,
     ],
   );
 
-  const hasSelectionFeature = onSelectAllGlobalRecords !== undefined;
-  const columnSpan = hasSelectionFeature ? 8 : 12;
+  const columnSpan = shouldShowSelectAllRecordsRow ? 8 : 12;
 
   return (
     <Row align="bottom" className="pb-4" wrap={false}>
       <Col span={columnSpan}>
         <Pagination {...paginationProps} />
       </Col>
-      {hasSelectionFeature && (
+      {shouldShowSelectAllRecordsRow && (
         <Col span={8} className="text-center">
           <SelectAllRecordsRow {...selectAllRecordsProps} />
         </Col>
       )}
       <Col span={columnSpan} className="text-right">
-        {summary}
+        {totalRowsLoading ? <Spin /> : summary}
       </Col>
     </Row>
   );
