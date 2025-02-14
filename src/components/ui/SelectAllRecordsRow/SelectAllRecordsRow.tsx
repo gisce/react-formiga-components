@@ -62,7 +62,7 @@ const SelectAllRecordsRowComponent = (props: SelectAllRecordsRowProps) => {
       event.stopPropagation();
       setLoading(true);
       try {
-        await props.onSelectAllRecords();
+        await onSelectAllRecords();
       } finally {
         setLoading(false);
       }
