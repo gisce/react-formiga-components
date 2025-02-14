@@ -1,7 +1,7 @@
 import { useLocale } from "@/context";
 import { Col, Pagination, Row, Spin } from "antd";
 import type { PaginationProps } from "antd";
-import { useMemo, useState, useCallback, memo } from "react";
+import { useMemo, useState, useCallback, memo, useEffect } from "react";
 import {
   SelectAllRecordsRow,
   shouldShowSelectionRow,
@@ -12,8 +12,8 @@ import type { SelectAllRecordsRowProps } from "../SelectAllRecordsRow/SelectAllR
 const PaginationHeaderComponent = (props: PaginationHeaderProps) => {
   const {
     total,
-    initialPage,
-    initialPageSize,
+    page: pageProps,
+    pageSize: pageSizeProps,
     currentPageSelectedCount,
     totalSelectedCount,
     onRequestPageChange,
@@ -23,8 +23,16 @@ const PaginationHeaderComponent = (props: PaginationHeaderProps) => {
 
   const { t } = useLocale();
 
-  const [page, setPage] = useState(initialPage);
-  const [pageSize, setPageSize] = useState(initialPageSize);
+  const [page, setPage] = useState(pageProps);
+  const [pageSize, setPageSize] = useState(pageSizeProps);
+
+  useEffect(() => {
+    setPage(pageProps);
+  }, [pageProps]);
+
+  useEffect(() => {
+    setPageSize(pageSizeProps);
+  }, [pageSizeProps]);
 
   const from = useMemo(() => (page - 1) * pageSize + 1, [page, pageSize]);
   const to = useMemo(
