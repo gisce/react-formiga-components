@@ -6,4 +6,5 @@ export * from "./Dropdown";
 export * from "./FavouriteButton";
 export * from "./PaginationHeader";
 export * from "./SelectAllRecordsRow";
+export * from "./SkeletonPill";
 //# sourceMappingURL=index.d.ts.map
