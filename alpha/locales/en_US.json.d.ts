@@ -9,6 +9,7 @@ declare const _default: {
   "first": "First",
   "no_results": "No results",
   "summary": "Showing registers from {from} to {to} of {total} registers",
+  "simpleSummary": "{total} results",
   "welcome": "Welcome",
   "attachments": "Attachments",
   "addNewAttachment": "Add new attachment",

@@ -1,3 +1,4 @@
+/// <reference types="react" />
 export type PaginationHeaderProps = {
     /** Total number of records across all pages */
     total: number;
@@ -15,5 +16,9 @@ export type PaginationHeaderProps = {
     onSelectAllGlobalRecords?: () => Promise<void>;
     /** Whether the total number of rows is loading */
     totalRowsLoading: boolean;
+    /** Optional custom component to display in the middle column */
+    customMiddleComponent?: React.ReactNode;
+    /** Whether to display a simple summary */
+    simpleSummary?: boolean;
 };
 //# sourceMappingURL=PaginationHeader.types.d.ts.map

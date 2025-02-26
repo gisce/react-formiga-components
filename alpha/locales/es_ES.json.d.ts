@@ -9,6 +9,7 @@ declare const _default: {
   "first": "Primero",
   "no_results": "No hay resultados",
   "summary": "Mostrando resultado desde {from} hasta {to} de un total de {total} registros",
+  "simpleSummary": "{total} resultados",
   "welcome": "Bienvenido",
   "attachments": "Adjuntos",
   "addNewAttachment": "Añadir nuevo adjunto",
