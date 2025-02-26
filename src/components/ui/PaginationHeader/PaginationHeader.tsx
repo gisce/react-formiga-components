@@ -1,5 +1,5 @@
 import { useLocale } from "@/context";
-import { Col, Pagination, Row, Spin } from "antd";
+import { Col, Pagination, Row, Spin, Typography } from "antd";
 import type { PaginationProps } from "antd";
 import { useMemo, useState, useCallback, memo, useEffect } from "react";
 import {
@@ -9,6 +9,7 @@ import {
 import type { PaginationHeaderProps } from "./PaginationHeader.types";
 import type { SelectAllRecordsRowProps } from "../SelectAllRecordsRow/SelectAllRecordsRow.types";
 
+const { Text } = Typography;
 const PaginationHeaderComponent = (props: PaginationHeaderProps) => {
   const {
     total,
@@ -19,6 +20,8 @@ const PaginationHeaderComponent = (props: PaginationHeaderProps) => {
     onRequestPageChange,
     onSelectAllGlobalRecords,
     totalRowsLoading,
+    customMiddleComponent,
+    simpleSummary,
   } = props;
 
   const { t } = useLocale();
@@ -55,11 +58,15 @@ const PaginationHeaderComponent = (props: PaginationHeaderProps) => {
     if (total === undefined) return null;
     if (total === 0) return t("no_results");
 
+    if (simpleSummary) {
+      return t("simpleSummary").replace("{total}", total?.toString());
+    }
+
     return t("summary")
       .replace("{from}", from?.toString())
       .replace("{to}", to?.toString())
       .replace("{total}", total?.toString());
-  }, [total, from, to, t]);
+  }, [total, t, simpleSummary, from, to]);
 
   const paginationProps: PaginationProps = useMemo(
     () => ({
@@ -111,19 +118,27 @@ const PaginationHeaderComponent = (props: PaginationHeaderProps) => {
     ],
   );
 
-  const columnSpan = shouldShowSelectAllRecordsRow ? 8 : 12;
+  // Standard paginated layout
+  const sideColumnSpan =
+    shouldShowSelectAllRecordsRow || customMiddleComponent ? 6 : 12;
+  const middleColumnSpan =
+    shouldShowSelectAllRecordsRow || customMiddleComponent ? 12 : 0;
 
   return (
     <Row align="bottom" className="pb-4" wrap={false}>
-      <Col span={columnSpan}>
+      <Col span={sideColumnSpan}>
         <Pagination {...paginationProps} />
       </Col>
-      {shouldShowSelectAllRecordsRow && (
-        <Col span={8} className="text-center">
-          <SelectAllRecordsRow {...selectAllRecordsProps} />
+      {(shouldShowSelectAllRecordsRow || customMiddleComponent) && (
+        <Col span={middleColumnSpan} className="text-center">
+          {shouldShowSelectAllRecordsRow ? (
+            <SelectAllRecordsRow {...selectAllRecordsProps} />
+          ) : (
+            customMiddleComponent
+          )}
         </Col>
       )}
-      <Col span={columnSpan} className="text-right">
+      <Col span={sideColumnSpan} className="text-right">
         {totalRowsLoading ? <Spin /> : summary}
       </Col>
     </Row>
