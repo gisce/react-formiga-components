@@ -9,6 +9,7 @@ declare const _default: {
   "first": "Primer",
   "no_results": "No hi ha resultats",
   "summary": "Mostrant resultats des de {from} fins {to} d'un total de {total} registres",
+  "simpleSummary": "{total} resultats",
   "welcome": "Benvingut",
   "attachments": "Adjunts",
   "addNewAttachment": "Afegir nou adjunt",
@@ -99,7 +100,11 @@ declare const _default: {
   "noMatches": "No s'han trobat coincidències",
   "noExportFieldFound": "No s'ha trobat el camp en el model. Pot ser que s'hagi migrat o eliminat?",
   "exportHasFieldsUnavailable": "L'exportació té els següents camps no disponibles. Pot ser que s'hagin migrat o eliminat.",
-  "continueAndIgnoreFieldsUnavailable": "Vols continuar i ignorar els camps no disponibles?"
+  "continueAndIgnoreFieldsUnavailable": "Vols continuar i ignorar els camps no disponibles?",
+  "recordsSelected": "Hi ha {numberOfSelectedRows} registres seleccionats en aquesta pàgina.",
+  "selectAllRecords": "Seleccionar tots els {totalRecords} registres.",
+  "allRecordsSelected": "Hi ha {totalRecords} registres seleccionats.",
+  "items_per_page": "/ pàg."
 }
 ;
 
