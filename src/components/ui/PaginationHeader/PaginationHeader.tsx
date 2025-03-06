@@ -79,6 +79,7 @@ const PaginationHeaderComponent = (props: PaginationHeaderProps) => {
       locale: {
         items_per_page: t("items_per_page"),
       },
+      pageSizeOptions: getPageSizeOptions(pageSize),
     }),
     [total, pageSize, page, handlePageChange, t],
   );
@@ -143,6 +144,22 @@ const PaginationHeaderComponent = (props: PaginationHeaderProps) => {
       </Col>
     </Row>
   );
+};
+
+const getPageSizeOptions = (max: number): number[] => {
+  const options: number[] = [10, 20, 50, 100].filter((step) => step <= max);
+
+  let last = options.length > 0 ? options[options.length - 1] : 10;
+  while (last * 2 <= max) {
+    last *= 2;
+    options.push(last);
+  }
+
+  if (options[options.length - 1] < max) {
+    options.push(max);
+  }
+
+  return options;
 };
 
 export const PaginationHeader = memo(PaginationHeaderComponent);
