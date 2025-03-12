@@ -3,8 +3,10 @@ export type PaginationHeaderProps = {
   total: number;
   /** Initial page number */
   page: number;
-  /** Initial number of items per page */
+  /** Current number of items per page */
   pageSize: number;
+  /** Maximum number of items per page */
+  maxPageSize: number;
   /** Number of selected records in the current page */
   currentPageSelectedCount: number;
   /** Total number of selected records across all pages */
