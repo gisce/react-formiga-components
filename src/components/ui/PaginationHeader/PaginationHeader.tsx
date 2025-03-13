@@ -1,5 +1,5 @@
 import { useLocale } from "@/context";
-import { Col, Pagination, Row, Spin, Typography } from "antd";
+import { Col, Pagination, Row, Spin } from "antd";
 import type { PaginationProps } from "antd";
 import { useMemo, useState, useCallback, memo, useEffect } from "react";
 import {
@@ -9,12 +9,12 @@ import {
 import type { PaginationHeaderProps } from "./PaginationHeader.types";
 import type { SelectAllRecordsRowProps } from "../SelectAllRecordsRow/SelectAllRecordsRow.types";
 
-const { Text } = Typography;
 const PaginationHeaderComponent = (props: PaginationHeaderProps) => {
   const {
     total,
     page: pageProps,
     pageSize: pageSizeProps,
+    maxPageSize,
     currentPageSelectedCount,
     totalSelectedCount,
     onRequestPageChange,
@@ -79,9 +79,9 @@ const PaginationHeaderComponent = (props: PaginationHeaderProps) => {
       locale: {
         items_per_page: t("items_per_page"),
       },
-      pageSizeOptions: getPageSizeOptions(pageSize),
+      pageSizeOptions: getPageSizeOptions(maxPageSize),
     }),
-    [total, pageSize, page, handlePageChange, t],
+    [total, pageSize, page, handlePageChange, t, maxPageSize],
   );
 
   const shouldShowSelectAllRecordsRow = useMemo(() => {
