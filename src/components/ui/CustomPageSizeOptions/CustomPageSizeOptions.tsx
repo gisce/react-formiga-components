@@ -30,20 +30,36 @@ export function CustomPageSizeOptions({
   style,
 }: CustomPageSizeOptionsProps) {
   const options = useMemo(() => {
-    const sizeOptions = getPageSizeOptions(maxPageSize).map((size) => ({
+    // Get standard options
+    let sizeOptions = getPageSizeOptions(maxPageSize);
+
+    // Add current pageSize if it's not in the list and it's not -1 (All)
+    if (
+      !sizeOptions.includes(pageSize) &&
+      pageSize !== -1 &&
+      pageSize <= maxPageSize
+    ) {
+      sizeOptions.push(pageSize);
+      // Sort numbers in ascending order
+      sizeOptions.sort((a, b) => a - b);
+    }
+
+    // Convert to Select options format
+    const selectOptions = sizeOptions.map((size) => ({
       value: size,
       label: `${size} ${itemsPerPageText}`,
     }));
 
+    // Add "All" option if enabled
     if (showAllOption) {
-      sizeOptions.push({
+      selectOptions.push({
         value: -1,
         label: allOptionText,
       });
     }
 
-    return sizeOptions;
-  }, [maxPageSize, itemsPerPageText, showAllOption, allOptionText]);
+    return selectOptions;
+  }, [maxPageSize, pageSize, itemsPerPageText, showAllOption, allOptionText]);
 
   return (
     <Select
@@ -54,6 +70,14 @@ export function CustomPageSizeOptions({
       className={className}
       style={{ minWidth: 90, ...style }}
       dropdownMatchSelectWidth={false}
+      showSearch
+      filterOption={(input, option) => {
+        // Allow filtering by the number or the full label
+        const label = option?.label?.toString().toLowerCase() || "";
+        const value = option?.value?.toString().toLowerCase() || "";
+        const searchText = input.toLowerCase();
+        return label.includes(searchText) || value.includes(searchText);
+      }}
     />
   );
 }
