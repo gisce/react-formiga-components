@@ -10,6 +10,7 @@ declare const _default: {
   "no_results": "No hay resultados",
   "summary": "Mostrando resultado desde {from} hasta {to} de un total de {total} registros",
   "simpleSummary": "{total} resultados",
+  "all": "Todos",
   "welcome": "Bienvenido",
   "attachments": "Adjuntos",
   "addNewAttachment": "Añadir nuevo adjunto",

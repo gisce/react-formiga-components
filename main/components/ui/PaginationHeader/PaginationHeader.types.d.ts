@@ -22,5 +22,7 @@ export type PaginationHeaderProps = {
     customMiddleComponent?: React.ReactNode;
     /** Whether to display a simple summary */
     simpleSummary?: boolean;
+    /** Whether to show the "All" option in the page size options */
+    showAllOptionInPageSizeOptions?: boolean;
 };
 //# sourceMappingURL=PaginationHeader.types.d.ts.map
