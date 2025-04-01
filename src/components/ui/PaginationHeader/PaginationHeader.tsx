@@ -8,6 +8,7 @@ import {
 } from "../SelectAllRecordsRow/SelectAllRecordsRow";
 import type { PaginationHeaderProps } from "./PaginationHeader.types";
 import type { SelectAllRecordsRowProps } from "../SelectAllRecordsRow/SelectAllRecordsRow.types";
+import { CustomPageSizeOptions } from "../CustomPageSizeOptions";
 
 const PaginationHeaderComponent = (props: PaginationHeaderProps) => {
   const {
@@ -22,6 +23,7 @@ const PaginationHeaderComponent = (props: PaginationHeaderProps) => {
     totalRowsLoading,
     customMiddleComponent,
     simpleSummary,
+    showAllOptionInPageSizeOptions = false,
   } = props;
 
   const { t } = useLocale();
@@ -44,12 +46,19 @@ const PaginationHeaderComponent = (props: PaginationHeaderProps) => {
   );
 
   const handlePageChange = useCallback(
-    (newPage: number, newPageSize?: number) => {
+    (newPage: number) => {
       setPage(newPage);
-      if (newPageSize !== undefined) {
-        setPageSize(newPageSize);
-      }
-      onRequestPageChange(newPage, newPageSize);
+      onRequestPageChange(newPage, pageSize);
+    },
+    [onRequestPageChange, pageSize],
+  );
+
+  const handlePageSizeChange = useCallback(
+    (newPageSize: number) => {
+      setPageSize(newPageSize);
+      // When changing page size, reset to first page
+      setPage(1);
+      onRequestPageChange(1, newPageSize);
     },
     [onRequestPageChange],
   );
@@ -74,14 +83,10 @@ const PaginationHeaderComponent = (props: PaginationHeaderProps) => {
       pageSize,
       current: page,
       onChange: handlePageChange,
-      showSizeChanger: true,
       showLessItems: true,
-      locale: {
-        items_per_page: t("items_per_page"),
-      },
-      pageSizeOptions: getPageSizeOptions(maxPageSize),
+      showSizeChanger: false, // We're using our custom component instead
     }),
-    [total, pageSize, page, handlePageChange, t, maxPageSize],
+    [total, pageSize, page, handlePageChange],
   );
 
   const shouldShowSelectAllRecordsRow = useMemo(() => {
@@ -127,8 +132,16 @@ const PaginationHeaderComponent = (props: PaginationHeaderProps) => {
 
   return (
     <Row align="bottom" className="pb-4" wrap={false}>
-      <Col span={sideColumnSpan}>
+      <Col span={sideColumnSpan} className="flex items-center gap-2">
         <Pagination {...paginationProps} />
+        <CustomPageSizeOptions
+          pageSize={pageSize}
+          maxPageSize={maxPageSize}
+          onChange={handlePageSizeChange}
+          itemsPerPageText={t("items_per_page")}
+          showAllOption={showAllOptionInPageSizeOptions}
+          allOptionText={t("all")}
+        />
       </Col>
       {(shouldShowSelectAllRecordsRow || customMiddleComponent) && (
         <Col span={middleColumnSpan} className="text-center">
@@ -144,22 +157,6 @@ const PaginationHeaderComponent = (props: PaginationHeaderProps) => {
       </Col>
     </Row>
   );
-};
-
-const getPageSizeOptions = (max: number): number[] => {
-  const options: number[] = [10, 20, 50, 100].filter((step) => step <= max);
-
-  let last = options.length > 0 ? options[options.length - 1] : 10;
-  while (last * 2 <= max) {
-    last *= 2;
-    options.push(last);
-  }
-
-  if (options[options.length - 1] < max) {
-    options.push(max);
-  }
-
-  return options;
 };
 
 export const PaginationHeader = memo(PaginationHeaderComponent);

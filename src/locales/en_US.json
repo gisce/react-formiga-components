@@ -10,6 +10,7 @@
   "no_results": "No results",
   "summary": "Showing registers from {from} to {to} of {total} registers",
   "simpleSummary": "{total} results",
+  "all": "All",
   "welcome": "Welcome",
   "attachments": "Attachments",
   "addNewAttachment": "Add new attachment",
