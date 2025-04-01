@@ -1,8 +1,18 @@
 import { ExportField } from "./ExportModal.types";
 
-export const filterOption = (inputValue: string, option: ExportField) =>
-  option.title.toLowerCase().indexOf(inputValue.toLowerCase()) > -1 ||
-  option.key.toLowerCase().indexOf(inputValue.toLowerCase()) > -1;
+export const filterOption = (inputValue: string, option: ExportField) => {
+  if (!option.title || !option.key) {
+    console.error(
+      "Export error: option.title or option.key is empty: ",
+      JSON.stringify(option),
+    );
+    return false;
+  }
+  return (
+    option.title?.toLowerCase().indexOf(inputValue.toLowerCase()) > -1 ||
+    option.key.toLowerCase().indexOf(inputValue.toLowerCase()) > -1
+  );
+};
 
 export const isChecked = (
   selectedKeys: Array<string | number>,
