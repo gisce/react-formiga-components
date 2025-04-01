@@ -46,6 +46,8 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.6.1",
+    "@tabler/icons-react": "^3.30.0",
     "antd": "5.13.1",
     "classnames": "^2.5.1",
     "dompurify": "^3.0.11",
