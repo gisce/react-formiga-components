@@ -1,1 +1,1 @@
-{"version":3,"file":"Label.styles.d.ts","sourceRoot":"","sources":["../../../../src/components/ui/Label/Label.styles.tsx"],"names":[],"mappings":";AAEA,OAAO,EAAE,mBAAmB,EAAE,MAAM,eAAe,CAAC;AAQpD,eAAO,MAAM,cAAc,qFAO1B,CAAC;AAEF,eAAO,MAAM,WAAW,6+LAMvB,CAAC;AAEF,eAAO,MAAM,IAAI,qEAGhB,CAAC"}
+{"version":3,"file":"Label.styles.d.ts","sourceRoot":"","sources":["../../../../src/components/ui/Label/Label.styles.tsx"],"names":[],"mappings":";AAEA,OAAO,EAAE,mBAAmB,EAAE,MAAM,eAAe,CAAC;AAQpD,eAAO,MAAM,cAAc,qFAO1B,CAAC;AAEF,eAAO,MAAM,WAAW,yOAMvB,CAAC;AAEF,eAAO,MAAM,IAAI,qEAGhB,CAAC"}

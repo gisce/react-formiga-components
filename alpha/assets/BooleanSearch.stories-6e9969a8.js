@@ -1,0 +1,10 @@
+import{j as l}from"./jsx-runtime-f6d73c06.js";import{r as p}from"./index-8ee6c85d.js";import{B as n}from"./BooleanSearch-01fef309.js";import{L as c}from"./BaseField.argTypes-d72d00ba.js";import"./_commonjsHelpers-de833af9.js";import"./SelectionInput-87427970.js";import"./styled-components.browser.esm-8d5db3cb.js";import"./index-7e3d7086.js";import"./index-f2765735.js";import"./assertThisInitialized-68330e5d.js";import"./extends-4c19d496.js";import"./index-8eb238e3.js";import"./index-ac1caf15.js";import"./isVisible-2ef80b15.js";import"./index-7fae86d9.js";import"./toArray-66e39049.js";import"./AntdIcon-f4df470f.js";import"./KeyCode-6413d982.js";import"./PurePanel-3a5c693e.js";import"./Overflow-ab5219ad.js";import"./omit-f8286760.js";import"./motion-343f592f.js";import"./useVariants-2f2c5e71.js";import"./context-29a3839d.js";import"./asyncToGenerator-aa14e566.js";import"./useLocale-8ec28e87.js";import"./Compact-1edd4e66.js";import"./compact-item-43eba85b.js";import"./slide-576a84f6.js";import"./CheckOutlined-c598d246.js";import"./CloseCircleFilled-53e5d3ad.js";import"./CloseOutlined-9873f370.js";import"./DownOutlined-94332e23.js";import"./LoadingOutlined-8eb7bab6.js";import"./SearchOutlined-061923d8.js";import"./SelectionValue-320cacef.js";import"./LocaleContext-1c35ce14.js";const Y={title:"Work in progress/Widgets/Boolean/BooleanSearch",component:n,argTypes:{...c}},v=o=>{const[u,t]=p.useState(o.value);return p.useEffect(()=>{t(o.value)},[o.value]),l.jsx(n,{...o,value:u,onChange:e=>{var a;t(e),(a=o.onChange)==null||a.call(o,e)}})},r=v.bind({});r.args={value:"true"};var m,i,s;r.parameters={...r.parameters,docs:{...(m=r.parameters)==null?void 0:m.docs,source:{originalSource:`args => {
+  const [value, setValue] = useState(args.value);
+  useEffect(() => {
+    setValue(args.value);
+  }, [args.value]);
+  return <BooleanSearch {...args} value={value} onChange={(value: string) => {
+    setValue(value);
+    args.onChange?.(value);
+  }} />;
+}`,...(s=(i=r.parameters)==null?void 0:i.docs)==null?void 0:s.source}}};const Z=["Basic"];export{r as Basic,Z as __namedExportsOrder,Y as default};
