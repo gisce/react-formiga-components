@@ -20,7 +20,7 @@
   "engines": {
     "node": "20.5.0"
   },
-  "version": "1.13.0",
+  "version": "1.14.0",
   "module": "./dist/react-formiga-components.es.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -57,7 +57,6 @@
     "react-dom": "18.2.0",
     "styled-components": "5.3.5",
     "use-deep-compare": "^1.2.1",
-    "use-deep-compare-effect": "^1.8.1",
     "validator": "^13.6.0"
   },
   "peerDependencies": {
