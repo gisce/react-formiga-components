@@ -4,7 +4,7 @@ export declare const StyledCol: import("styled-components").StyledComponent<impo
 export declare const LabelContainer: import("styled-components").StyledComponent<"div", any, {}, never>;
 export declare const FormItemStyled: import("styled-components").StyledComponent<(<Values = any>(props: import("antd").FormItemProps<Values>) => import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>>) & {
     useStatus: () => {
-        status?: "" | "error" | "warning" | "success" | "validating" | undefined;
+        status?: "" | "error" | "success" | "warning" | "validating" | undefined;
         errors: import("react").ReactNode[];
         warnings: import("react").ReactNode[];
     };

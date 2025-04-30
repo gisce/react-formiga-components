@@ -1,0 +1,10 @@
+import{j as l}from"./jsx-runtime-f6d73c06.js";import{r as i}from"./index-8ee6c85d.js";import{D as u}from"./DateTimeSearch-7eeeafe5.js";import"./_commonjsHelpers-de833af9.js";import"./DateSearch.types-d0dadd73.js";import"./index-6c96d8c1.js";import"./index-7e3d7086.js";import"./PurePanel-3a5c693e.js";import"./isVisible-2ef80b15.js";import"./index-f2765735.js";import"./assertThisInitialized-68330e5d.js";import"./extends-4c19d496.js";import"./index-8eb238e3.js";import"./SwapRightOutlined-51331692.js";import"./AntdIcon-f4df470f.js";import"./CloseCircleFilled-53e5d3ad.js";import"./KeyCode-6413d982.js";import"./index-7fae86d9.js";import"./toArray-66e39049.js";import"./useVariants-2f2c5e71.js";import"./context-29a3839d.js";import"./asyncToGenerator-aa14e566.js";import"./omit-f8286760.js";import"./Compact-1edd4e66.js";import"./index-7fe11ddc.js";import"./compact-item-43eba85b.js";import"./slide-576a84f6.js";import"./roundedArrow-c768ecf1.js";import"./button-2909d44f.js";import"./index-eab29bb3.js";import"./reactNode-c432c2b0.js";import"./LoadingOutlined-8eb7bab6.js";import"./useLocale-8ec28e87.js";import"./row-1c3eec31.js";const m="Date specific",Q={title:"Work in progress/Widgets/Date/DateTimeSearch",component:u,argTypes:{onChange:{action:"onChange",table:{category:m}},value:{table:{category:m}}}},g=t=>{const[c,r]=i.useState(t.value);return i.useEffect(()=>{r(t.value)},[t.value]),l.jsx(u,{...t,value:c,onChange:o=>{var a;r(o),(a=t.onChange)==null||a.call(t,o)}})},e=g.bind({});e.args={};var p,s,n;e.parameters={...e.parameters,docs:{...(p=e.parameters)==null?void 0:p.docs,source:{originalSource:`args => {
+  const [value, setValue] = useState(args.value);
+  useEffect(() => {
+    setValue(args.value);
+  }, [args.value]);
+  return <DateTimeSearch {...args} value={value} onChange={(value: [[string, string], [string, string]]) => {
+    setValue(value);
+    args.onChange?.(value);
+  }} />;
+}`,...(n=(s=e.parameters)==null?void 0:s.docs)==null?void 0:n.source}}};const U=["Basic"];export{e as Basic,U as __namedExportsOrder,Q as default};
