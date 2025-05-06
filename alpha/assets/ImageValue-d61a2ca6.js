@@ -1,0 +1,1 @@
+import{j as t}from"./jsx-runtime-ffb262ed.js";const a=e=>{const{value:r}=e;return t.jsx("img",{src:`data:image/*;base64,${r}`,style:{maxWidth:"100px"}})};try{a.displayName="ImageValue",a.__docgenInfo={description:"",displayName:"ImageValue",props:{value:{defaultValue:null,description:"",name:"value",required:!0,type:{name:"string"}}}}}catch{}export{a as I};

@@ -1,0 +1,5 @@
+import{j as u}from"./jsx-runtime-ffb262ed.js";import{M as m}from"./Many2OneValue-adce1f02.js";import"./index-76fb7be0.js";import"./_commonjsHelpers-de833af9.js";import"./index-489d3d00.js";import"./index-86654eeb.js";import"./index-95593828.js";import"./genStyleUtils-4eaa55a5.js";import"./assertThisInitialized-11245cea.js";import"./index-da03a860.js";import"./Compact-f37358d5.js";const W={title:"Work in progress/Widgets/Many2One/Many2OneValue",component:m},p=c=>u.jsx(m,{...c}),r=p.bind({});r.args={value:"Customer #23"};const e=p.bind({});e.args={value:"Customer #23"};var a,s,o;r.parameters={...r.parameters,docs:{...(a=r.parameters)==null?void 0:a.docs,source:{originalSource:`args => {
+  return <Many2OneValue {...args} />;
+}`,...(o=(s=r.parameters)==null?void 0:s.docs)==null?void 0:o.source}}};var t,n,i;e.parameters={...e.parameters,docs:{...(t=e.parameters)==null?void 0:t.docs,source:{originalSource:`args => {
+  return <Many2OneValue {...args} />;
+}`,...(i=(n=e.parameters)==null?void 0:n.docs)==null?void 0:i.source}}};const j=["Basic","BasicWithSuffix"];export{r as Basic,e as BasicWithSuffix,j as __namedExportsOrder,W as default};

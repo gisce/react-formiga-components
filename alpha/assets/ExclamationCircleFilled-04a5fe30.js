@@ -1,0 +1,1 @@
+import{_ as a}from"./assertThisInitialized-11245cea.js";import{r}from"./index-76fb7be0.js";import{E as i}from"./ExclamationCircleFilled-eba6e68e.js";import{A as t}from"./AntdIcon-24fbe913.js";var l=function(e,o){return r.createElement(t,a({},e,{ref:o,icon:i}))},c=r.forwardRef(l);const d=c;export{d as E};
