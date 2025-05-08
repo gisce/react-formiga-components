@@ -1,0 +1,1 @@
+import{R as n}from"./index-76fb7be0.js";import{S as t}from"./genStyleUtils-d6a45a29.js";const o=e=>{const r=n.useContext(t);return n.useMemo(()=>e?typeof e=="string"?e??r:typeof e=="function"?e(r):r:r,[e,r])},p=o;export{p as u};
