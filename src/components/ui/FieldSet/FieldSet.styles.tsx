@@ -1,11 +1,16 @@
 import styled from "styled-components";
 
-export const FieldSetElement = styled.fieldset<{ $borderRadius?: string }>`
+export const FieldSetElement = styled.fieldset<{
+  $borderRadius?: string;
+  $backgroundColor?: string;
+  $borderColor?: string;
+}>`
   padding: 0.5rem;
-  border-color: #d9d9d9;
+  border-color: ${(props) => props.$borderColor || "#d9d9d9"};
   border-width: 1px;
   border-style: solid;
   border-radius: ${(props) => props.$borderRadius || "5px"};
+  background-color: ${(props) => props.$backgroundColor || "transparent"};
   font-family:
     ui-sans-serif,
     system-ui,
