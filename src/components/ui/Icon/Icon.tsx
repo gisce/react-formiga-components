@@ -180,6 +180,10 @@ export const iconMapper = (
   return getIconForKey(key, props);
 };
 
+export const getTablerIcon = (icon: string) => {
+  return TablerIcons[icon as TablerKey];
+};
+
 export const Icon: React.FC<IconProps> = ({ icon, className, style = {} }) => {
   if (!icon) {
     return null;
