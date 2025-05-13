@@ -3,4 +3,6 @@ export type FieldSetProps = {
   children: any;
   icon?: React.ElementType | undefined;
   borderRadius?: string;
+  backgroundColor?: string;
+  borderColor?: string;
 };

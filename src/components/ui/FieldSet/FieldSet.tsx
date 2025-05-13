@@ -6,7 +6,14 @@ import { Space, theme } from "antd";
 const { useToken } = theme;
 
 export const FieldSet = (props: FieldSetProps): React.ReactElement => {
-  const { label, children, icon: Icon, borderRadius } = props;
+  const {
+    label,
+    children,
+    icon: Icon,
+    borderRadius,
+    backgroundColor,
+    borderColor,
+  } = props;
   const { token } = useToken();
   const labelComponent = (
     <Space>
@@ -16,7 +23,11 @@ export const FieldSet = (props: FieldSetProps): React.ReactElement => {
   );
 
   return (
-    <FieldSetElement $borderRadius={`${borderRadius || token.borderRadius}px`}>
+    <FieldSetElement
+      $borderRadius={`${borderRadius || token.borderRadius}px`}
+      $backgroundColor={backgroundColor}
+      $borderColor={borderColor}
+    >
       <Legend>{labelComponent}</Legend>
       {children}
     </FieldSetElement>
@@ -24,7 +35,7 @@ export const FieldSet = (props: FieldSetProps): React.ReactElement => {
 };
 
 export const ToggleFieldSet = (props: FieldSetProps): React.ReactElement => {
-  const { label, children, icon: Icon } = props;
+  const { label, children, icon: Icon, backgroundColor, borderColor } = props;
   const [isOpen, setIsOpen] = useState(true);
   const labelComponent = (
     <Space>
@@ -34,7 +45,10 @@ export const ToggleFieldSet = (props: FieldSetProps): React.ReactElement => {
   );
 
   return (
-    <FieldSetElement>
+    <FieldSetElement
+      $backgroundColor={backgroundColor}
+      $borderColor={borderColor}
+    >
       <Legend onClick={() => setIsOpen(!isOpen)}>
         {isOpen ? "▼" : "►"}
         {labelComponent}
