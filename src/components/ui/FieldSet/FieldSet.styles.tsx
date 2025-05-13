@@ -30,8 +30,8 @@ export const FieldSetElement = styled.fieldset<{
 
 export const Legend = styled.legend`
   all: initial;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
+  padding: 0.25rem 0.75rem;
+  margin: -0.5rem 0.75rem 0;
   font-family:
     system-ui,
     -apple-system,
@@ -43,4 +43,6 @@ export const Legend = styled.legend`
     "Apple Color Emoji",
     "Segoe UI Emoji";
   font-size: 0.85rem;
+  background-color: white;
+  border-radius: 4px;
 `;
