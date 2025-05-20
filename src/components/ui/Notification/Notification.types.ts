@@ -5,7 +5,7 @@ export type NotificationType = "success" | "error" | "info" | "warning";
 export interface NotificationButton {
   name: string;
   icon?: string;
-  payload?: any;
+  action?: any;
 }
 
 export interface NotificationProps {
