@@ -1,0 +1,5 @@
+import{j as l}from"./jsx-runtime-ffb262ed.js";import{S as m}from"./Separator-8de80b5a.js";import{B as u}from"./BaseField.argTypes-d72d00ba.js";import"./index-76fb7be0.js";import"./_commonjsHelpers-de833af9.js";import"./index-7676c0df.js";import"./index-86654eeb.js";import"./genStyleUtils-4c750380.js";import"./assertThisInitialized-11245cea.js";import"./useSize-df4503b4.js";const _={title:"Work in progress/UI/Separator",component:m,argTypes:{...u,locale:{table:{disable:!0}}}},c=n=>l.jsx(m,{...n}),r=c.bind({});r.args={label:"Separator label"};const a=c.bind({});a.args={};var e,o,t;r.parameters={...r.parameters,docs:{...(e=r.parameters)==null?void 0:e.docs,source:{originalSource:`args => {
+  return <Separator {...args} />;
+}`,...(t=(o=r.parameters)==null?void 0:o.docs)==null?void 0:t.source}}};var s,p,i;a.parameters={...a.parameters,docs:{...(s=a.parameters)==null?void 0:s.docs,source:{originalSource:`args => {
+  return <Separator {...args} />;
+}`,...(i=(p=a.parameters)==null?void 0:p.docs)==null?void 0:i.source}}};const h=["Basic","WithoutLabel"];export{r as Basic,a as WithoutLabel,h as __namedExportsOrder,_ as default};
