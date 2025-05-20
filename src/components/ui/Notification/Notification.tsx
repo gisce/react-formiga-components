@@ -28,12 +28,12 @@ export const useNotification = (): NotificationApi => {
         {buttons.map((button) => {
           return (
             <Button
-              key={button.label}
+              key={button.name}
               icon={<Icon icon={button.icon} />}
               size="small"
               onClick={onButtonClickHandler}
             >
-              {button.label}
+              {button.name}
             </Button>
           );
         })}
