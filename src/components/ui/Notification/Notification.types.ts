@@ -3,9 +3,9 @@ import { ReactNode } from "react";
 export type NotificationType = "success" | "error" | "info" | "warning";
 
 export interface NotificationButton {
-  label: string;
+  name: string;
   icon?: string;
-  payload?: any;
+  action?: any;
 }
 
 export interface NotificationProps {
