@@ -31,7 +31,9 @@ export const useNotification = (): NotificationApi => {
               key={button.name}
               icon={<Icon icon={button.icon} />}
               size="small"
-              onClick={onButtonClickHandler}
+              onClick={() => {
+                onButtonClickHandler(button.action);
+              }}
             >
               {button.name}
             </Button>
