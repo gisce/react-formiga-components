@@ -1,4 +1,4 @@
-export * from "./Notification";
+export * from "./NotificationProvider";
 export type {
   NotificationType,
   NotificationButton,
