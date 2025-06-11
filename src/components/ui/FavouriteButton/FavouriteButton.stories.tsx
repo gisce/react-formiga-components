@@ -4,7 +4,7 @@ import { FavouriteButtonProps } from "./FavouriteButton.types";
 import { Default as DefaultStory } from "../Dropdown/Dropdown.stories";
 
 export default {
-  title: "Components/FavouriteButton",
+  title: "Components/UI/FavouriteButton",
   component: FavouriteButton,
 };
 

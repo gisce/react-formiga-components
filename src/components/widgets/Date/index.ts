@@ -1,3 +1,3 @@
 export * from "./DateInput";
-export * from "./DateSearch";
-export * from "./DateTimeSearch";
+export * from "./DateValue";
+export * from "./DateTimeValue";
