@@ -1,4 +1,5 @@
 import React from "react";
-import { DatePickerInputProps } from "./DateInput.types";
-export declare const DateInput: React.FC<DatePickerInputProps>;
+import { DateInputProps } from "./DateInput.types";
+declare const MemoizedDateInput: React.NamedExoticComponent<DateInputProps>;
+export { MemoizedDateInput as DateInput };
 //# sourceMappingURL=DateInput.d.ts.map
