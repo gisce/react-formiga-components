@@ -47,6 +47,6 @@ export async function downloadFile(value: string, filename?: string) {
   const downloadLink = document.createElement("a");
 
   downloadLink.href = linkSource;
-  downloadLink.download = `download.${fileType?.ext}`;
+  downloadLink.download = filename ?? `download.${fileType?.ext}`;
   downloadLink.click();
 }
