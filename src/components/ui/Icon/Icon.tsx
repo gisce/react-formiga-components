@@ -100,6 +100,7 @@ const iconMapping: { [key: string]: string } = {
   STOCK_CLEAR: "CloseSquare",
   STOCK_UNINDENT: "AlignLeft",
   STOCK_PREFERENCES: "Setting",
+  STOCK_OPEN: "Folder",
 };
 
 function toCamelCase(key: string): string {
