@@ -68,7 +68,7 @@ export function CustomPageSizeOptions({
       options={options}
       disabled={disabled}
       className={className}
-      style={{ minWidth: 90, ...style }}
+      style={{ minWidth: 90, maxWidth: 100, ...style }}
       dropdownMatchSelectWidth={false}
       showSearch
       filterOption={(input, option) => {
