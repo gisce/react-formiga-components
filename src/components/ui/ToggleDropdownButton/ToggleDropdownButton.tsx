@@ -29,7 +29,6 @@ export const ToggleDropdownButtonComponent = forwardRef<
           width: 50,
           borderTopRightRadius: 0,
           borderBottomRightRadius: 0,
-          borderRight: 0,
           padding: 0,
         }}
         onClick={onToggle}
