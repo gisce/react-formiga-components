@@ -11,7 +11,8 @@ export const ToggleDropdownButtonComponent = forwardRef<
   ToggleDropdownButtonRef,
   ToggleDropdownButtonProps
 >((props: ToggleDropdownButtonProps, ref) => {
-  const { isActive, onToggle, activeIcon, inactiveIcon, ...rest } = props;
+  const { isActive, onToggle, activeIcon, inactiveIcon, disabled, ...rest } =
+    props;
 
   const dropdownRef = useRef<ToggleDropdownButtonRef>(null);
 
@@ -22,6 +23,7 @@ export const ToggleDropdownButtonComponent = forwardRef<
   return (
     <div style={{ display: "flex", gap: 0 }}>
       <Button
+        disabled={disabled}
         type={isActive ? "primary" : "default"}
         style={{
           width: 50,
@@ -42,8 +44,9 @@ export const ToggleDropdownButtonComponent = forwardRef<
           {isActive ? activeIcon : inactiveIcon}
         </div>
       </Button>
-      <Dropdown ref={dropdownRef} {...rest}>
+      <Dropdown ref={dropdownRef} {...rest} disabled={disabled}>
         <Button
+          disabled={disabled}
           style={{
             width: 25,
             borderTopLeftRadius: 0,
