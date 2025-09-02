@@ -3,7 +3,7 @@ import { FavouriteButtonRef } from "./FavouriteButton.types";
 export declare const FavouriteButtonComponent: import("react").ForwardRefExoticComponent<{
     isFavourite: boolean;
     onToggleFavourite: () => void;
-} & import('../../../components').BaseDropdownProps & {
+} & import("..").BaseDropdownProps & {
     trigger?: ("click" | "hover")[] | undefined;
     disabled?: boolean | undefined;
     children?: import("react").ReactNode;
@@ -13,7 +13,7 @@ export declare const FavouriteButtonComponent: import("react").ForwardRefExoticC
 export declare const FavouriteButton: import("react").MemoExoticComponent<import("react").ForwardRefExoticComponent<{
     isFavourite: boolean;
     onToggleFavourite: () => void;
-} & import('../../../components').BaseDropdownProps & {
+} & import("..").BaseDropdownProps & {
     trigger?: ("click" | "hover")[] | undefined;
     disabled?: boolean | undefined;
     children?: import("react").ReactNode;

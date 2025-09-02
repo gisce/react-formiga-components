@@ -1,0 +1,1 @@
+import{j as r}from"./jsx-runtime-ffb262ed.js";import{C as l}from"./index-1f86069e.js";const a=e=>{const{value:o}=e;return r.jsx(l,{defaultChecked:o,disabled:!0})};try{a.displayName="BooleanValue",a.__docgenInfo={description:"",displayName:"BooleanValue",props:{value:{defaultValue:null,description:"",name:"value",required:!1,type:{name:"boolean"}}}}}catch{}export{a as B};

@@ -4,5 +4,6 @@ export declare const RequiredMany2OneDummy: import("styled-components").StyledCo
     Search: import("react").ForwardRefExoticComponent<import("antd/es/input").SearchProps & import("react").RefAttributes<import("antd").InputRef>>;
     TextArea: import("react").ForwardRefExoticComponent<import("antd/es/input").TextAreaProps & import("react").RefAttributes<import("antd/es/input/TextArea").TextAreaRef>>;
     Password: import("react").ForwardRefExoticComponent<import("antd/es/input").PasswordProps & import("react").RefAttributes<import("antd").InputRef>>;
+    OTP: import("react").ForwardRefExoticComponent<import("antd/es/input/OTP").OTPProps & import("react").RefAttributes<import("antd/es/input/OTP").OTPRef>>;
 }, any, {}, never>;
 //# sourceMappingURL=Many2OneDummy.styles.d.ts.map
