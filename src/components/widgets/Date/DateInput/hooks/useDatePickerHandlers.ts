@@ -90,7 +90,7 @@ export const useDatePickerHandlers = ({
         return;
       }
 
-      if (e.key === "Enter") {
+      if (e.key === "Enter" || e.key === "Tab") {
         const input = e.target as HTMLInputElement;
         const currentValue = input.value;
 
@@ -99,6 +99,7 @@ export const useDatePickerHandlers = ({
         }
 
         e.preventDefault();
+        e.stopPropagation();
 
         updateDateTime({
           currentValue,

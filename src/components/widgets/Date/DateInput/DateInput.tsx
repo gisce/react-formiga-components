@@ -98,7 +98,7 @@ const DateInput: React.FC<DateInputProps> = memo((props: DateInputProps) => {
       color="#ff4d4f"
       placement="topLeft"
     >
-      <div onDoubleClick={handleDoubleClick}>
+      <div onDoubleClick={handleDoubleClick} onKeyDownCapture={handleKeyDown}>
         <AntDatePicker
           {...pickerConfig}
           id={id}
