@@ -71,11 +71,12 @@ const DateInput: React.FC<DateInputProps> = memo((props: DateInputProps) => {
     [onChange, timezone, internalFormat, mode],
   );
 
-  const { handleKeyDown, handleBlur } = useDatePickerHandlers({
-    mode,
-    showTime,
-    onChange,
-  });
+  const { handleKeyDown, handleBlur, handleDoubleClick } =
+    useDatePickerHandlers({
+      mode,
+      showTime,
+      onChange,
+    });
 
   const pickerConfig = useMemo(
     () => ({
@@ -97,22 +98,24 @@ const DateInput: React.FC<DateInputProps> = memo((props: DateInputProps) => {
       color="#ff4d4f"
       placement="topLeft"
     >
-      <AntDatePicker
-        {...pickerConfig}
-        id={id}
-        disabled={readOnly}
-        picker="date"
-        showTime={showTime}
-        value={dateValue}
-        defaultPickerValue={dateValue}
-        onChange={handleChange}
-        onBlur={(e) => handleBlur(e as any)}
-        onKeyDown={(e) => handleKeyDown(e as any)}
-        showNow={false}
-        showToday={false}
-        locale={datePickerLocale}
-        status={parseError ? "error" : undefined}
-      />
+      <div onDoubleClick={handleDoubleClick}>
+        <AntDatePicker
+          {...pickerConfig}
+          id={id}
+          disabled={readOnly}
+          picker="date"
+          showTime={showTime}
+          value={dateValue}
+          defaultPickerValue={dateValue}
+          onChange={handleChange}
+          onBlur={(e) => handleBlur(e as any)}
+          onKeyDown={(e) => handleKeyDown(e as any)}
+          showNow={false}
+          showToday={false}
+          locale={datePickerLocale}
+          status={parseError ? "error" : undefined}
+        />
+      </div>
     </Tooltip>
   );
 });

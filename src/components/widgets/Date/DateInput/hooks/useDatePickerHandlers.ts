@@ -34,6 +34,22 @@ export const useDatePickerHandlers = ({
     [mode, onChange],
   );
 
+  const handleDoubleClick = useCallback(
+    (e: React.MouseEvent<HTMLInputElement>) => {
+      const input = e.target as HTMLInputElement;
+      const currentValue = input.value;
+
+      updateDateTime({
+        currentValue,
+        now: dayjs(),
+        mode,
+        showTime,
+        onChange: (value) => onChange?.(value),
+      });
+    },
+    [mode, showTime, onChange],
+  );
+
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       // If the event was already handled by a parent component, don't handle it again
@@ -99,5 +115,6 @@ export const useDatePickerHandlers = ({
   return {
     handleKeyDown,
     handleBlur,
+    handleDoubleClick,
   };
 };
