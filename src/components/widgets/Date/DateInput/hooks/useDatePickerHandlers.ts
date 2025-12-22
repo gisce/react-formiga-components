@@ -23,15 +23,25 @@ export const useDatePickerHandlers = ({
   const handleBlur = useCallback(
     (e: React.FocusEvent<HTMLInputElement>) => {
       const input = e.target;
-      if (input.value) {
+      const currentValue = input.value;
+
+      if (shouldHandleEnter(currentValue, showTime)) {
+        updateDateTime({
+          currentValue,
+          now: dayjs(),
+          mode,
+          showTime,
+          onChange: (value) => onChange?.(value),
+        });
+      } else if (currentValue) {
         const dayJsDate = dayjs(
-          input.value,
+          currentValue,
           DatePickerConfig[mode].dateDisplayFormat,
         ).format(DatePickerConfig[mode].dateInternalFormat);
         onChange?.(dayJsDate);
       }
     },
-    [mode, onChange],
+    [mode, showTime, onChange],
   );
 
   const handleDoubleClick = useCallback(
@@ -54,6 +64,29 @@ export const useDatePickerHandlers = ({
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       // If the event was already handled by a parent component, don't handle it again
       if (e.defaultPrevented) {
+        return;
+      }
+
+      const allowedKeys = [
+        "Backspace",
+        "Delete",
+        "Tab",
+        "Escape",
+        "Enter",
+        "ArrowLeft",
+        "ArrowRight",
+        "ArrowUp",
+        "ArrowDown",
+        "Home",
+        "End",
+      ];
+
+      const isAllowedKey = allowedKeys.includes(e.key);
+      const isAllowedChar = /^[\d/:\s]$/.test(e.key);
+      const hasModifier = e.ctrlKey || e.metaKey;
+
+      if (!isAllowedKey && !isAllowedChar && !hasModifier) {
+        e.preventDefault();
         return;
       }
 
