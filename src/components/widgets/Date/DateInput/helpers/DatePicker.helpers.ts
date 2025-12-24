@@ -50,10 +50,6 @@ export const createDateTimePatterns = (): DateTimePatterns => ({
   withSeconds: createFormatRegex("DD/MM/YYYY HH:mm:ss"),
 });
 
-const normalizeInput = (value: string): string => {
-  return value.replace(/[\/:]+$/, "");
-};
-
 type UpdateDateTimeParams = {
   currentValue: string | undefined;
   now: Dayjs;
@@ -65,30 +61,29 @@ type UpdateDateTimeParams = {
 export const updateDateTime = (params: UpdateDateTimeParams) => {
   const { currentValue, now, mode, showTime, onChange } = params;
   const patterns = createDateTimePatterns();
-  const normalized = currentValue ? normalizeInput(currentValue) : "";
 
   // Handle undefined or empty value
-  if (!normalized || normalized.trim() === "") {
+  if (!currentValue || currentValue.trim() === "") {
     onChange(now.format(DatePickerConfig[mode].dateInternalFormat));
     return;
   }
 
   // Handle day only
-  if (patterns.day.test(normalized)) {
-    const newDate = now.date(parseInt(normalized));
+  if (patterns.day.test(currentValue)) {
+    const newDate = now.date(parseInt(currentValue));
     onChange(newDate.format(DatePickerConfig[mode].dateInternalFormat));
   }
 
   // Handle day and month
-  if (patterns.dayMonth.test(normalized)) {
-    const [day, month] = normalized.split("/").map((n) => parseInt(n));
+  if (patterns.dayMonth.test(currentValue)) {
+    const [day, month] = currentValue.split("/").map((n) => parseInt(n));
     const newDate = now.date(day).month(month - 1);
     onChange(newDate.format(DatePickerConfig[mode].dateInternalFormat));
   }
 
   // Handle full date
-  if (patterns.fullDate.test(normalized)) {
-    const [day, month, year] = normalized.split("/").map((n) => parseInt(n));
+  if (patterns.fullDate.test(currentValue)) {
+    const [day, month, year] = currentValue.split("/").map((n) => parseInt(n));
     const newDate = now
       .date(day)
       .month(month - 1)
@@ -103,20 +98,20 @@ export const updateDateTime = (params: UpdateDateTimeParams) => {
 
   // Handle time components
   if (showTime) {
-    const [datePart, timePart] = normalized.split(" ");
+    const [datePart, timePart] = currentValue.split(" ");
     const [day, month, year] = datePart.split("/").map((n) => parseInt(n));
     let newDate = now
       .date(day)
       .month(month - 1)
       .year(year);
 
-    if (patterns.withHours.test(normalized)) {
+    if (patterns.withHours.test(currentValue)) {
       const [hours] = timePart.split(":").map((n) => parseInt(n));
       newDate = newDate.hour(hours);
       onChange(newDate.format(DatePickerConfig.time.dateInternalFormat));
     }
 
-    if (patterns.withMinutes.test(normalized)) {
+    if (patterns.withMinutes.test(currentValue)) {
       const [hours, minutes] = timePart.split(":").map((n) => parseInt(n));
       newDate = newDate.hour(hours).minute(minutes);
       onChange(newDate.format(DatePickerConfig.time.dateInternalFormat));
@@ -130,16 +125,15 @@ export const shouldHandleEnter = (
 ): boolean => {
   if (!currentValue) return true;
 
-  const normalized = normalizeInput(currentValue);
   const patterns = createDateTimePatterns();
   return (
-    patterns.day.test(normalized) ||
-    patterns.dayMonth.test(normalized) ||
-    patterns.fullDate.test(normalized) ||
+    patterns.day.test(currentValue) ||
+    patterns.dayMonth.test(currentValue) ||
+    patterns.fullDate.test(currentValue) ||
     (showTime &&
-      (patterns.fullDate.test(normalized) ||
-        patterns.withHours.test(normalized) ||
-        patterns.withMinutes.test(normalized)))
+      (patterns.fullDate.test(currentValue) ||
+        patterns.withHours.test(currentValue) ||
+        patterns.withMinutes.test(currentValue)))
   );
 };
 
