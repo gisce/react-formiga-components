@@ -16,10 +16,6 @@
     "storybook",
     "library"
   ],
-  "packageManager": "npm@9.8.0",
-  "engines": {
-    "node": "20.5.0"
-  },
   "version": "1.18.0",
   "module": "./dist/react-formiga-components.es.js",
   "types": "./dist/index.d.ts",
