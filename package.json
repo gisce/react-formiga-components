@@ -16,11 +16,7 @@
     "storybook",
     "library"
   ],
-  "packageManager": "npm@9.8.0",
-  "engines": {
-    "node": "20.5.0"
-  },
-  "version": "1.18.0",
+  "version": "1.19.0",
   "module": "./dist/react-formiga-components.es.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -69,7 +65,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^18.4.3",
-    "@gisce/commitlint-rules": "1.0.5",
+    "@gisce/commitlint-rules": "1.1.0",
     "@semantic-release/exec": "6.0.3",
     "@semantic-release/git": "10.0.1",
     "@semantic-release/npm": "10.0.4",
