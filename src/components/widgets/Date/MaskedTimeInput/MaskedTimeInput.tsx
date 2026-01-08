@@ -1,6 +1,6 @@
 import { memo, useCallback, useMemo, useRef, useState } from "react";
 import { IMaskInput } from "react-imask";
-import { Button, TimePicker, Tooltip } from "antd";
+import { TimePicker, Tooltip } from "antd";
 import { ClockCircleOutlined } from "@ant-design/icons";
 import dayjs, { Dayjs } from "dayjs";
 import styled from "styled-components";
@@ -13,21 +13,22 @@ import {
 } from "../MaskedDateInput/helpers/MaskedDate.helpers";
 import { useRequiredStyle } from "@/hooks/useRequiredStyle";
 
-const InputWrapper = styled.div`
-  display: flex;
+const InputWrapper = styled.div<{ $hasSuffix?: boolean }>`
+  position: relative;
+  display: inline-flex;
   align-items: center;
   width: 100%;
-  gap: 4px;
 `;
 
 const StyledInput = styled(IMaskInput)<{
   $hasError?: boolean;
   $required?: React.CSSProperties;
+  $hasSuffix?: boolean;
 }>`
-  flex: 1;
   width: 100%;
   height: 32px;
   padding: 4px 11px;
+  padding-right: ${(props) => (props.$hasSuffix ? "30px" : "11px")};
   font-size: 14px;
   line-height: 1.5715;
   color: rgba(0, 0, 0, 0.88);
@@ -56,8 +57,20 @@ const StyledInput = styled(IMaskInput)<{
   }
 `;
 
-const ClockButton = styled(Button)`
-  flex-shrink: 0;
+const SuffixIcon = styled.span`
+  position: absolute;
+  right: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  transition: color 0.2s;
+
+  &:hover {
+    color: rgba(0, 0, 0, 0.45);
+  }
 `;
 
 const HiddenPicker = styled(TimePicker)`
@@ -110,8 +123,17 @@ const MaskedTimeInput: React.FC<MaskedTimeInputProps> = memo((props) => {
   }, []);
 
   const commitValue = useCallback(
-    (maskedValue: string) => {
+    (maskedValue: string, shouldAutocompleteEmpty = false) => {
       if (!maskedValue || !hasAnyDigits(maskedValue)) {
+        if (shouldAutocompleteEmpty) {
+          const autocompleted = autocompleteTime("", dayjs(), useZeros);
+          if (autocompleted) {
+            onChange?.(autocompleted.internalValue);
+            setInputValue("");
+            setParseError(null);
+            return;
+          }
+        }
         onChange?.(null);
         setInputValue("");
         setParseError(null);
@@ -142,12 +164,12 @@ const MaskedTimeInput: React.FC<MaskedTimeInputProps> = memo((props) => {
       if (e.key === "Enter") {
         e.preventDefault();
         const input = e.target as HTMLInputElement;
-        commitValue(input.value);
+        commitValue(input.value, true);
       } else if (e.key === "Escape") {
         e.preventDefault();
         const input = e.target as HTMLInputElement;
 
-        commitValue(input.value);
+        commitValue(input.value, true);
 
         setTimeout(() => {
           const focusableElements =
@@ -168,7 +190,7 @@ const MaskedTimeInput: React.FC<MaskedTimeInputProps> = memo((props) => {
   const handleDoubleClick = useCallback(
     (e: React.MouseEvent<HTMLInputElement>) => {
       const input = e.target as HTMLInputElement;
-      commitValue(input.value);
+      commitValue(input.value, true);
     },
     [commitValue],
   );
@@ -211,6 +233,8 @@ const MaskedTimeInput: React.FC<MaskedTimeInputProps> = memo((props) => {
     }
   }, [value]);
 
+  const showSuffix = showClockButton && !readOnly;
+
   return (
     <Tooltip
       title={parseError}
@@ -218,7 +242,7 @@ const MaskedTimeInput: React.FC<MaskedTimeInputProps> = memo((props) => {
       color="#ff4d4f"
       placement="topLeft"
     >
-      <InputWrapper>
+      <InputWrapper $hasSuffix={showSuffix}>
         <StyledInput
           inputRef={inputRef}
           id={id}
@@ -233,14 +257,13 @@ const MaskedTimeInput: React.FC<MaskedTimeInputProps> = memo((props) => {
           disabled={readOnly}
           $hasError={!!parseError}
           $required={requiredStyle}
+          $hasSuffix={showSuffix}
         />
-        {showClockButton && !readOnly && (
+        {showSuffix && (
           <>
-            <ClockButton
-              icon={<ClockCircleOutlined />}
-              onClick={handleClockClick}
-              size="middle"
-            />
+            <SuffixIcon onClick={handleClockClick}>
+              <ClockCircleOutlined />
+            </SuffixIcon>
             <HiddenPicker
               ref={pickerRef as any}
               open={pickerOpen}
