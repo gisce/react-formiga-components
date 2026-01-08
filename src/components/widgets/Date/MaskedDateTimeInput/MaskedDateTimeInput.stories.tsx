@@ -66,11 +66,6 @@ and the seconds will autocomplete from the current time.
       description: "Whether the field is read-only",
       defaultValue: false,
     },
-    showCalendarButton: {
-      control: "boolean",
-      description: "Whether to show the calendar button",
-      defaultValue: true,
-    },
   },
 } as Meta<typeof MaskedDateTimeInput>;
 
@@ -112,7 +107,6 @@ const Template: StoryFn<StoryArgs> = (args) => {
             required={args.required}
             readOnly={args.readOnly}
             timezone={args.timezone}
-            showCalendarButton={args.showCalendarButton}
           />
         </Form.Item>
         <div
@@ -125,10 +119,10 @@ const Template: StoryFn<StoryArgs> = (args) => {
         >
           <Text strong>Debug Information:</Text>
           <pre style={{ margin: "8px 0 0 0", fontSize: 12 }}>
-            Internal value: {currentValue || "(empty)"}
-            timezone: {args.timezone}
-            required: {args.required?.toString()}
-            readOnly: {args.readOnly?.toString()}
+            {`Internal value: ${currentValue || "(empty)"}
+timezone: ${args.timezone}
+required: ${args.required?.toString()}
+readOnly: ${args.readOnly?.toString()}`}
           </pre>
         </div>
       </Form>
@@ -280,7 +274,6 @@ Basic.args = {
   required: false,
   readOnly: false,
   timezone: "Europe/Madrid",
-  showCalendarButton: true,
 };
 
 // Empty state showing the mask placeholder
@@ -291,7 +284,6 @@ EmptyWithMask.args = {
   required: false,
   readOnly: false,
   timezone: "Europe/Madrid",
-  showCalendarButton: true,
 };
 EmptyWithMask.parameters = {
   docs: {
@@ -309,7 +301,6 @@ Required.args = {
   required: true,
   readOnly: false,
   timezone: "Europe/Madrid",
-  showCalendarButton: true,
 };
 
 // Read-only field
@@ -320,7 +311,6 @@ ReadOnly.args = {
   required: false,
   readOnly: true,
   timezone: "Europe/Madrid",
-  showCalendarButton: true,
 };
 
 // Without calendar button
@@ -331,7 +321,6 @@ WithoutCalendarButton.args = {
   required: false,
   readOnly: false,
   timezone: "Europe/Madrid",
-  showCalendarButton: false,
 };
 
 // Different timezone - UTC
@@ -342,7 +331,6 @@ TimezoneUTC.args = {
   required: false,
   readOnly: false,
   timezone: "UTC",
-  showCalendarButton: true,
 };
 
 // Different timezone - Tokyo
@@ -353,7 +341,6 @@ TimezoneTokyo.args = {
   required: false,
   readOnly: false,
   timezone: "Asia/Tokyo",
-  showCalendarButton: true,
 };
 
 // Midnight time
@@ -364,7 +351,6 @@ Midnight.args = {
   required: false,
   readOnly: false,
   timezone: "Europe/Madrid",
-  showCalendarButton: true,
 };
 
 // End of day
@@ -375,5 +361,4 @@ EndOfDay.args = {
   required: false,
   readOnly: false,
   timezone: "Europe/Madrid",
-  showCalendarButton: true,
 };

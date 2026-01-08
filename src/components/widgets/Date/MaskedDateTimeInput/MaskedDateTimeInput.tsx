@@ -1,8 +1,8 @@
 import { memo, useCallback, useMemo, useRef, useState } from "react";
 import { IMaskInput } from "react-imask";
-import { Button, DatePicker, Tooltip } from "antd";
-import { CalendarOutlined } from "@ant-design/icons";
-import dayjs, { Dayjs } from "dayjs";
+import { DatePicker, Tooltip } from "antd";
+import { CalendarOutlined, CloseCircleFilled } from "@ant-design/icons";
+import dayjs from "dayjs";
 import styled from "styled-components";
 import { MaskedDateTimeInputProps } from "./MaskedDateTimeInput.types";
 import {
@@ -21,11 +21,13 @@ const InputWrapper = styled.div`
   align-items: center;
   width: 100%;
   gap: 4px;
+  position: relative;
 `;
 
 const StyledInput = styled(IMaskInput)<{
   $hasError?: boolean;
   $required?: React.CSSProperties;
+  $isEmpty?: boolean;
 }>`
   flex: 1;
   width: 100%;
@@ -33,7 +35,8 @@ const StyledInput = styled(IMaskInput)<{
   padding: 4px 11px;
   font-size: 14px;
   line-height: 1.5715;
-  color: rgba(0, 0, 0, 0.88);
+  color: ${(props) =>
+    props.$isEmpty ? "rgba(0, 0, 0, 0.25)" : "rgba(0, 0, 0, 0.88)"};
   background-color: ${(props) => props.$required?.backgroundColor || "#fff"};
   border: 1px solid ${(props) => (props.$hasError ? "#ff4d4f" : "#d9d9d9")};
   border-radius: 6px;
@@ -59,20 +62,44 @@ const StyledInput = styled(IMaskInput)<{
   }
 `;
 
-const CalendarButton = styled(Button)`
-  flex-shrink: 0;
+const SuffixIcon = styled.span<{ $allowClear?: boolean }>`
+  position: absolute;
+  right: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(0, 0, 0, 0.25);
+  cursor: ${(props) => (props.$allowClear ? "pointer" : "default")};
+  transition: color 0.2s;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    color: ${(props) =>
+      props.$allowClear ? "rgba(0, 0, 0, 0.45)" : "rgba(0, 0, 0, 0.25)"};
+  }
 `;
 
-const HiddenPicker = styled(DatePicker)`
+const InputContainer = styled.div`
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+`;
+
+const HiddenPickerTrigger = styled(DatePicker)`
   position: absolute;
+  left: 0;
+  top: 100%;
   opacity: 0;
   pointer-events: none;
-  width: 0;
-  height: 0;
+  width: 1px;
+  height: 1px;
 `;
 
 const MaskedDateTimeInput: React.FC<MaskedDateTimeInputProps> = memo(
-  (props) => {
+  (props: MaskedDateTimeInputProps) => {
     const {
       value,
       onChange,
@@ -80,7 +107,6 @@ const MaskedDateTimeInput: React.FC<MaskedDateTimeInputProps> = memo(
       readOnly = false,
       required = false,
       timezone = "Europe/Madrid",
-      showCalendarButton = true,
       placeholder = MaskedDateTimeConfig.placeholder,
     } = props;
 
@@ -91,6 +117,7 @@ const MaskedDateTimeInput: React.FC<MaskedDateTimeInputProps> = memo(
     const [calendarOpen, setCalendarOpen] = useState(false);
     const [parseError, setParseError] = useState<string | null>(null);
     const [inputValue, setInputValue] = useState<string>("");
+    const [isHovered, setIsHovered] = useState(false);
 
     const datePickerLocale = useDatePickerLocale();
     const requiredStyle = useRequiredStyle(required, readOnly);
@@ -154,7 +181,20 @@ const MaskedDateTimeInput: React.FC<MaskedDateTimeInputProps> = memo(
         if (e.key === "Enter") {
           e.preventDefault();
           const input = e.target as HTMLInputElement;
-          commitValue(input.value);
+          const maskedValue = input.value;
+
+          // On Enter, if no digits entered, autocomplete to current datetime
+          if (!hasAnyDigits(maskedValue)) {
+            const autocompleted = autocompleteDateTime("");
+            if (autocompleted) {
+              onChange?.(autocompleted.internalValue);
+              setInputValue("");
+              setParseError(null);
+            }
+            return;
+          }
+
+          commitValue(maskedValue);
         } else if (e.key === "Escape") {
           e.preventDefault();
           const input = e.target as HTMLInputElement;
@@ -174,7 +214,7 @@ const MaskedDateTimeInput: React.FC<MaskedDateTimeInputProps> = memo(
           }, 50);
         }
       },
-      [commitValue],
+      [commitValue, onChange],
     );
 
     const handleDoubleClick = useCallback(
@@ -187,10 +227,11 @@ const MaskedDateTimeInput: React.FC<MaskedDateTimeInputProps> = memo(
 
     const handleBlur = useCallback(
       (e: React.FocusEvent<HTMLInputElement>) => {
-        if (calendarOpen) return;
+        // Close calendar and commit value
+        setCalendarOpen(false);
         commitValue(e.target.value);
       },
-      [commitValue, calendarOpen],
+      [commitValue],
     );
 
     const handleCalendarChange = useCallback(
@@ -211,9 +252,22 @@ const MaskedDateTimeInput: React.FC<MaskedDateTimeInputProps> = memo(
       [onChange],
     );
 
-    const handleCalendarClick = useCallback(() => {
-      setCalendarOpen(true);
-    }, []);
+    const handleFocus = useCallback(() => {
+      if (!readOnly) {
+        setCalendarOpen(true);
+      }
+    }, [readOnly]);
+
+    const handleClear = useCallback(
+      (e: React.MouseEvent) => {
+        e.stopPropagation();
+        onChange?.(null);
+        setInputValue("");
+        setParseError(null);
+        inputRef.current?.focus();
+      },
+      [onChange],
+    );
 
     const pickerValue = useMemo(() => {
       if (!value) return undefined;
@@ -234,42 +288,56 @@ const MaskedDateTimeInput: React.FC<MaskedDateTimeInputProps> = memo(
         color="#ff4d4f"
         placement="topLeft"
       >
-        <InputWrapper>
-          <StyledInput
-            inputRef={inputRef}
-            id={id}
-            mask={MaskedDateTimeConfig.mask}
-            lazy={false}
-            placeholderChar="_"
-            value={currentInputValue}
-            onAccept={handleAccept}
-            onKeyDown={handleKeyDown}
-            onBlur={handleBlur}
-            onDoubleClick={handleDoubleClick}
-            disabled={readOnly}
-            $hasError={!!parseError}
-            $required={requiredStyle}
-          />
-          {showCalendarButton && !readOnly && (
-            <>
-              <CalendarButton
-                icon={<CalendarOutlined />}
-                onClick={handleCalendarClick}
-                size="middle"
-              />
-              <HiddenPicker
-                ref={pickerRef as any}
-                open={calendarOpen}
-                onOpenChange={setCalendarOpen}
-                value={pickerValue}
-                onChange={handleCalendarChange}
-                showTime
-                showNow={false}
-                showToday={false}
-                locale={datePickerLocale}
-              />
-            </>
-          )}
+        <InputWrapper
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <InputContainer>
+            <StyledInput
+              inputRef={inputRef}
+              id={id}
+              mask={MaskedDateTimeConfig.mask}
+              lazy={true}
+              placeholderChar="_"
+              value={currentInputValue}
+              onAccept={handleAccept}
+              onKeyDown={handleKeyDown}
+              onBlur={handleBlur}
+              onFocus={handleFocus}
+              onDoubleClick={handleDoubleClick}
+              disabled={readOnly}
+              $hasError={!!parseError}
+              $required={requiredStyle}
+              $isEmpty={!value && !hasAnyDigits(inputValue)}
+              placeholder={MaskedDateTimeConfig.placeholder}
+              style={{ paddingRight: 30 }}
+            />
+            {!readOnly && (
+              <SuffixIcon
+                $allowClear={!!value && isHovered}
+                onClick={value && isHovered ? handleClear : undefined}
+              >
+                {value && isHovered ? (
+                  <CloseCircleFilled style={{ fontSize: 12 }} />
+                ) : (
+                  <CalendarOutlined style={{ fontSize: 14 }} />
+                )}
+              </SuffixIcon>
+            )}
+            <HiddenPickerTrigger
+              ref={pickerRef as any}
+              open={calendarOpen}
+              onOpenChange={setCalendarOpen}
+              value={pickerValue}
+              onChange={handleCalendarChange}
+              showTime
+              showNow={false}
+              showToday={false}
+              locale={datePickerLocale}
+              placement="bottomLeft"
+              tabIndex={-1}
+            />
+          </InputContainer>
         </InputWrapper>
       </Tooltip>
     );

@@ -4,7 +4,6 @@ export type MaskedTimeInputProps = {
   id?: string;
   readOnly?: boolean;
   required?: boolean;
-  showClockButton?: boolean;
   placeholder?: string;
   useZeros?: boolean;
 };

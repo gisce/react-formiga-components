@@ -5,6 +5,5 @@ export type MaskedDateTimeInputProps = {
   readOnly?: boolean;
   required?: boolean;
   timezone?: string;
-  showCalendarButton?: boolean;
   placeholder?: string;
 };

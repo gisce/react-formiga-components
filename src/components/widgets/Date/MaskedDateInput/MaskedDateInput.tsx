@@ -1,8 +1,8 @@
 import { memo, useCallback, useMemo, useRef, useState } from "react";
 import { IMaskInput } from "react-imask";
-import { Button, DatePicker, Tooltip } from "antd";
-import { CalendarOutlined } from "@ant-design/icons";
-import dayjs, { Dayjs } from "dayjs";
+import { DatePicker, Tooltip } from "antd";
+import { CalendarOutlined, CloseCircleFilled } from "@ant-design/icons";
+import dayjs from "dayjs";
 import styled from "styled-components";
 import { MaskedDateInputProps } from "./MaskedDateInput.types";
 import {
@@ -21,11 +21,13 @@ const InputWrapper = styled.div`
   align-items: center;
   width: 100%;
   gap: 4px;
+  position: relative;
 `;
 
 const StyledInput = styled(IMaskInput)<{
   $hasError?: boolean;
   $required?: React.CSSProperties;
+  $isEmpty?: boolean;
 }>`
   flex: 1;
   width: 100%;
@@ -33,7 +35,8 @@ const StyledInput = styled(IMaskInput)<{
   padding: 4px 11px;
   font-size: 14px;
   line-height: 1.5715;
-  color: rgba(0, 0, 0, 0.88);
+  color: ${(props) =>
+    props.$isEmpty ? "rgba(0, 0, 0, 0.25)" : "rgba(0, 0, 0, 0.88)"};
   background-color: ${(props) => props.$required?.backgroundColor || "#fff"};
   border: 1px solid ${(props) => (props.$hasError ? "#ff4d4f" : "#d9d9d9")};
   border-radius: 6px;
@@ -59,202 +62,267 @@ const StyledInput = styled(IMaskInput)<{
   }
 `;
 
-const CalendarButton = styled(Button)`
-  flex-shrink: 0;
+const SuffixIcon = styled.span<{ $allowClear?: boolean }>`
+  position: absolute;
+  right: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(0, 0, 0, 0.25);
+  cursor: ${(props) => (props.$allowClear ? "pointer" : "default")};
+  transition: color 0.2s;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    color: ${(props) =>
+      props.$allowClear ? "rgba(0, 0, 0, 0.45)" : "rgba(0, 0, 0, 0.25)"};
+  }
 `;
 
-const HiddenPicker = styled(DatePicker)`
+const InputContainer = styled.div`
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+`;
+
+const HiddenPickerTrigger = styled(DatePicker)`
   position: absolute;
+  left: 0;
+  top: 100%;
   opacity: 0;
   pointer-events: none;
-  width: 0;
-  height: 0;
+  width: 1px;
+  height: 1px;
 `;
 
-const MaskedDateInput: React.FC<MaskedDateInputProps> = memo((props) => {
-  const {
-    value,
-    onChange,
-    id,
-    readOnly = false,
-    required = false,
-    timezone = "Europe/Madrid",
-    showCalendarButton = true,
-    placeholder = MaskedDateConfig.placeholder,
-  } = props;
-
-  const inputRef = useRef<HTMLInputElement>(null);
-  const pickerRef = useRef<{ blur: () => void; focus: () => void } | null>(
-    null,
-  );
-  const [calendarOpen, setCalendarOpen] = useState(false);
-  const [parseError, setParseError] = useState<string | null>(null);
-  const [inputValue, setInputValue] = useState<string>("");
-
-  const datePickerLocale = useDatePickerLocale();
-  const requiredStyle = useRequiredStyle(required, readOnly);
-
-  const displayValue = useMemo(() => {
-    if (!value) return "";
-    return parseInternalToDisplay(
+const MaskedDateInput: React.FC<MaskedDateInputProps> = memo(
+  (props: MaskedDateInputProps) => {
+    const {
       value,
-      MaskedDateConfig.internalFormat,
-      MaskedDateConfig.displayFormat,
-      timezone,
+      onChange,
+      id,
+      readOnly = false,
+      required = false,
+      timezone = "Europe/Madrid",
+      placeholder = MaskedDateConfig.placeholder,
+    } = props;
+
+    const inputRef = useRef<HTMLInputElement>(null);
+    const pickerRef = useRef<{ blur: () => void; focus: () => void } | null>(
+      null,
     );
-  }, [value, timezone]);
+    const [calendarOpen, setCalendarOpen] = useState(false);
+    const [parseError, setParseError] = useState<string | null>(null);
+    const [inputValue, setInputValue] = useState<string>("");
+    const [isHovered, setIsHovered] = useState(false);
 
-  const currentInputValue = inputValue || displayValue;
+    const datePickerLocale = useDatePickerLocale();
+    const requiredStyle = useRequiredStyle(required, readOnly);
 
-  const handleAccept = useCallback((maskedValue: string) => {
-    setInputValue(maskedValue);
-    setParseError(null);
-  }, []);
+    const displayValue = useMemo(() => {
+      if (!value) return "";
+      return parseInternalToDisplay(
+        value,
+        MaskedDateConfig.internalFormat,
+        MaskedDateConfig.displayFormat,
+        timezone,
+      );
+    }, [value, timezone]);
 
-  const commitValue = useCallback(
-    (maskedValue: string) => {
-      if (!maskedValue || !hasAnyDigits(maskedValue)) {
-        onChange?.(null);
-        setInputValue("");
-        setParseError(null);
-        return;
-      }
+    const currentInputValue = inputValue || displayValue;
 
-      if (isCompleteValue(maskedValue, placeholder)) {
-        const internalValue = parseDisplayToInternal(
-          maskedValue,
-          MaskedDateConfig.displayFormat,
-          MaskedDateConfig.internalFormat,
-        );
-        if (internalValue) {
-          onChange?.(internalValue);
+    const handleAccept = useCallback((maskedValue: string) => {
+      setInputValue(maskedValue);
+      setParseError(null);
+    }, []);
+
+    const commitValue = useCallback(
+      (maskedValue: string) => {
+        if (!maskedValue || !hasAnyDigits(maskedValue)) {
+          onChange?.(null);
+          setInputValue("");
+          setParseError(null);
+          return;
+        }
+
+        if (isCompleteValue(maskedValue, placeholder)) {
+          const internalValue = parseDisplayToInternal(
+            maskedValue,
+            MaskedDateConfig.displayFormat,
+            MaskedDateConfig.internalFormat,
+          );
+          if (internalValue) {
+            onChange?.(internalValue);
+            setInputValue("");
+            setParseError(null);
+          } else {
+            setParseError("Invalid date");
+          }
+          return;
+        }
+
+        const autocompleted = autocompleteDate(maskedValue);
+        if (autocompleted) {
+          onChange?.(autocompleted.internalValue);
           setInputValue("");
           setParseError(null);
         } else {
-          setParseError("Invalid date");
+          setParseError("Invalid date format");
         }
-        return;
-      }
+      },
+      [onChange, placeholder],
+    );
 
-      const autocompleted = autocompleteDate(maskedValue);
-      if (autocompleted) {
-        onChange?.(autocompleted.internalValue);
-        setInputValue("");
-        setParseError(null);
-      } else {
-        setParseError("Invalid date format");
-      }
-    },
-    [onChange, placeholder],
-  );
+    const handleKeyDown = useCallback(
+      (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          const input = e.target as HTMLInputElement;
+          const maskedValue = input.value;
 
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        const input = e.target as HTMLInputElement;
-        commitValue(input.value);
-      } else if (e.key === "Escape") {
-        e.preventDefault();
-        const input = e.target as HTMLInputElement;
-
-        commitValue(input.value);
-
-        setTimeout(() => {
-          const focusableElements =
-            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-          const elements = Array.from(
-            document.querySelectorAll(focusableElements),
-          ) as HTMLElement[];
-          const index = elements.indexOf(input);
-          if (index > -1 && index < elements.length - 1) {
-            elements[index + 1].focus();
+          // On Enter, if no digits entered, autocomplete to current date
+          if (!hasAnyDigits(maskedValue)) {
+            const autocompleted = autocompleteDate("");
+            if (autocompleted) {
+              onChange?.(autocompleted.internalValue);
+              setInputValue("");
+              setParseError(null);
+            }
+            return;
           }
+
+          commitValue(maskedValue);
+        } else if (e.key === "Escape") {
+          e.preventDefault();
+          const input = e.target as HTMLInputElement;
+
+          commitValue(input.value);
+
+          setTimeout(() => {
+            const focusableElements =
+              'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+            const elements = Array.from(
+              document.querySelectorAll(focusableElements),
+            ) as HTMLElement[];
+            const index = elements.indexOf(input);
+            if (index > -1 && index < elements.length - 1) {
+              elements[index + 1].focus();
+            }
+          }, 50);
+        }
+      },
+      [commitValue, onChange],
+    );
+
+    const handleDoubleClick = useCallback(
+      (e: React.MouseEvent<HTMLInputElement>) => {
+        const input = e.target as HTMLInputElement;
+        commitValue(input.value);
+      },
+      [commitValue],
+    );
+
+    const handleBlur = useCallback(
+      (e: React.FocusEvent<HTMLInputElement>) => {
+        // Close calendar and commit value
+        setCalendarOpen(false);
+        commitValue(e.target.value);
+      },
+      [commitValue],
+    );
+
+    const handleCalendarChange = useCallback(
+      (date: unknown, dateString: string | string[]) => {
+        setCalendarOpen(false);
+        if (date && dayjs.isDayjs(date)) {
+          const internalValue = date.format(MaskedDateConfig.internalFormat);
+          onChange?.(internalValue);
+          setInputValue("");
+          setParseError(null);
+        }
+        setTimeout(() => {
+          inputRef.current?.focus();
         }, 50);
+      },
+      [onChange],
+    );
+
+    const handleFocus = useCallback(() => {
+      if (!readOnly) {
+        setCalendarOpen(true);
       }
-    },
-    [commitValue],
-  );
+    }, [readOnly]);
 
-  const handleDoubleClick = useCallback(
-    (e: React.MouseEvent<HTMLInputElement>) => {
-      const input = e.target as HTMLInputElement;
-      commitValue(input.value);
-    },
-    [commitValue],
-  );
-
-  const handleBlur = useCallback(
-    (e: React.FocusEvent<HTMLInputElement>) => {
-      if (calendarOpen) return;
-      commitValue(e.target.value);
-    },
-    [commitValue, calendarOpen],
-  );
-
-  const handleCalendarChange = useCallback(
-    (date: unknown, dateString: string | string[]) => {
-      setCalendarOpen(false);
-      if (date && dayjs.isDayjs(date)) {
-        const internalValue = date.format(MaskedDateConfig.internalFormat);
-        onChange?.(internalValue);
+    const handleClear = useCallback(
+      (e: React.MouseEvent) => {
+        e.stopPropagation();
+        onChange?.(null);
         setInputValue("");
         setParseError(null);
-      }
-      setTimeout(() => {
         inputRef.current?.focus();
-      }, 50);
-    },
-    [onChange],
-  );
+      },
+      [onChange],
+    );
 
-  const handleCalendarClick = useCallback(() => {
-    setCalendarOpen(true);
-  }, []);
+    const pickerValue = useMemo(() => {
+      if (!value) return undefined;
+      try {
+        const parsed = timezone
+          ? dayjs.tz(value, MaskedDateConfig.internalFormat, timezone)
+          : dayjs(value, MaskedDateConfig.internalFormat);
+        return parsed.isValid() ? parsed : undefined;
+      } catch {
+        return undefined;
+      }
+    }, [value, timezone]);
 
-  const pickerValue = useMemo(() => {
-    if (!value) return undefined;
-    try {
-      const parsed = timezone
-        ? dayjs.tz(value, MaskedDateConfig.internalFormat, timezone)
-        : dayjs(value, MaskedDateConfig.internalFormat);
-      return parsed.isValid() ? parsed : undefined;
-    } catch {
-      return undefined;
-    }
-  }, [value, timezone]);
-
-  return (
-    <Tooltip
-      title={parseError}
-      open={!!parseError}
-      color="#ff4d4f"
-      placement="topLeft"
-    >
-      <InputWrapper>
-        <StyledInput
-          inputRef={inputRef}
-          id={id}
-          mask={MaskedDateConfig.mask}
-          lazy={false}
-          placeholderChar="_"
-          value={currentInputValue}
-          onAccept={handleAccept}
-          onKeyDown={handleKeyDown}
-          onBlur={handleBlur}
-          onDoubleClick={handleDoubleClick}
-          disabled={readOnly}
-          $hasError={!!parseError}
-          $required={requiredStyle}
-        />
-        {showCalendarButton && !readOnly && (
-          <>
-            <CalendarButton
-              icon={<CalendarOutlined />}
-              onClick={handleCalendarClick}
-              size="middle"
+    return (
+      <Tooltip
+        title={parseError}
+        open={!!parseError}
+        color="#ff4d4f"
+        placement="topLeft"
+      >
+        <InputWrapper
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <InputContainer>
+            <StyledInput
+              inputRef={inputRef}
+              id={id}
+              mask={MaskedDateConfig.mask}
+              lazy={true}
+              placeholderChar="_"
+              value={currentInputValue}
+              onAccept={handleAccept}
+              onKeyDown={handleKeyDown}
+              onBlur={handleBlur}
+              onFocus={handleFocus}
+              onDoubleClick={handleDoubleClick}
+              disabled={readOnly}
+              $hasError={!!parseError}
+              $required={requiredStyle}
+              $isEmpty={!value && !hasAnyDigits(inputValue)}
+              placeholder={MaskedDateConfig.placeholder}
+              style={{ paddingRight: 30 }}
             />
-            <HiddenPicker
+            {!readOnly && (
+              <SuffixIcon
+                $allowClear={!!value && isHovered}
+                onClick={value && isHovered ? handleClear : undefined}
+              >
+                {value && isHovered ? (
+                  <CloseCircleFilled style={{ fontSize: 12 }} />
+                ) : (
+                  <CalendarOutlined style={{ fontSize: 14 }} />
+                )}
+              </SuffixIcon>
+            )}
+            <HiddenPickerTrigger
               ref={pickerRef as any}
               open={calendarOpen}
               onOpenChange={setCalendarOpen}
@@ -263,13 +331,15 @@ const MaskedDateInput: React.FC<MaskedDateInputProps> = memo((props) => {
               showNow={false}
               showToday={false}
               locale={datePickerLocale}
+              placement="bottomLeft"
+              tabIndex={-1}
             />
-          </>
-        )}
-      </InputWrapper>
-    </Tooltip>
-  );
-});
+          </InputContainer>
+        </InputWrapper>
+      </Tooltip>
+    );
+  },
+);
 
 MaskedDateInput.displayName = "MaskedDateInput";
 

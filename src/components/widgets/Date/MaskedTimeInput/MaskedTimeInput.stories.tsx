@@ -50,11 +50,6 @@ For example, to change only the minutes, they type hour:minutes and seconds auto
       description: "Whether the field is read-only",
       defaultValue: false,
     },
-    showClockButton: {
-      control: "boolean",
-      description: "Whether to show the clock button",
-      defaultValue: true,
-    },
     useZeros: {
       control: "boolean",
       description:
@@ -101,7 +96,6 @@ const Template: StoryFn<StoryArgs> = (args) => {
             onChange={handleChange}
             required={args.required}
             readOnly={args.readOnly}
-            showClockButton={args.showClockButton}
             useZeros={args.useZeros}
           />
         </Form.Item>
@@ -115,10 +109,10 @@ const Template: StoryFn<StoryArgs> = (args) => {
         >
           <Text strong>Debug Information:</Text>
           <pre style={{ margin: "8px 0 0 0", fontSize: 12 }}>
-            Internal value: {currentValue || "(empty)"}
-            required: {args.required?.toString()}
-            readOnly: {args.readOnly?.toString()}
-            useZeros: {args.useZeros?.toString()}
+            {`Internal value: ${currentValue || "(empty)"}
+required: ${args.required?.toString()}
+readOnly: ${args.readOnly?.toString()}
+useZeros: ${args.useZeros?.toString()}`}
           </pre>
         </div>
       </Form>
@@ -263,7 +257,6 @@ Basic.args = {
   value: "14:30:00",
   required: false,
   readOnly: false,
-  showClockButton: true,
   useZeros: false,
 };
 
@@ -274,7 +267,6 @@ EmptyWithMask.args = {
   value: undefined,
   required: false,
   readOnly: false,
-  showClockButton: true,
   useZeros: false,
 };
 EmptyWithMask.parameters = {
@@ -292,7 +284,6 @@ Required.args = {
   value: "14:30:00",
   required: true,
   readOnly: false,
-  showClockButton: true,
   useZeros: false,
 };
 
@@ -303,7 +294,6 @@ ReadOnly.args = {
   value: "14:30:00",
   required: false,
   readOnly: true,
-  showClockButton: true,
   useZeros: false,
 };
 
@@ -314,7 +304,6 @@ WithoutClockButton.args = {
   value: "14:30:00",
   required: false,
   readOnly: false,
-  showClockButton: false,
   useZeros: false,
 };
 
@@ -325,7 +314,6 @@ WithUseZeros.args = {
   value: undefined,
   required: false,
   readOnly: false,
-  showClockButton: true,
   useZeros: true,
 };
 WithUseZeros.parameters = {
@@ -344,7 +332,6 @@ Midnight.args = {
   value: "00:00:00",
   required: false,
   readOnly: false,
-  showClockButton: true,
   useZeros: false,
 };
 
@@ -355,6 +342,5 @@ EndOfDay.args = {
   value: "23:59:59",
   required: false,
   readOnly: false,
-  showClockButton: true,
   useZeros: false,
 };
