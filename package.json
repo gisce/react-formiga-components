@@ -43,6 +43,8 @@
   },
   "dependencies": {
     "@ant-design/icons": "^6.0.0",
+    "imask": "^7.6.0",
+    "react-imask": "^7.6.0",
     "@tabler/icons-react": "^3.31.0",
     "antd": "5.25.1",
     "classnames": "^2.5.1",
