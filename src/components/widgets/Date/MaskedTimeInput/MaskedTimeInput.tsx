@@ -165,6 +165,14 @@ const MaskedTimeInput: React.FC<MaskedTimeInputProps> = memo((props) => {
     [commitValue],
   );
 
+  const handleDoubleClick = useCallback(
+    (e: React.MouseEvent<HTMLInputElement>) => {
+      const input = e.target as HTMLInputElement;
+      commitValue(input.value);
+    },
+    [commitValue],
+  );
+
   const handleBlur = useCallback(
     (e: React.FocusEvent<HTMLInputElement>) => {
       if (pickerOpen) return;
@@ -221,6 +229,7 @@ const MaskedTimeInput: React.FC<MaskedTimeInputProps> = memo((props) => {
           onAccept={handleAccept}
           onKeyDown={handleKeyDown}
           onBlur={handleBlur}
+          onDoubleClick={handleDoubleClick}
           disabled={readOnly}
           $hasError={!!parseError}
           $required={requiredStyle}

@@ -29,10 +29,19 @@ A date input with DD/MM/YYYY mask that supports **partial entry with autocomplet
 3. **Smart Autocomplete**:
    - Type "15" → autocompletes to "15/[current month]/[current year]"
    - Type "15/06" → autocompletes to "15/06/[current year]"
-   - Press Enter or blur to trigger autocomplete
+   - Triggers: Enter key, blur, or double-click
 4. **Calendar Picker**: Click the calendar button for visual date selection
 5. **Validation**: Invalid dates show error tooltip
-6. **Keyboard Support**: Enter commits value, Escape commits and moves focus to next element
+
+### Keyboard & Mouse Behaviors:
+
+| Action | Behavior |
+|--------|----------|
+| **Enter** | Autocompletes partial value and commits |
+| **Escape** | Commits current value and moves focus to next element |
+| **Blur** | Autocompletes partial value and commits |
+| **Double-click** | Autocompletes partial value and commits (same as Enter) |
+| **Delete all + blur** | Clears the value (sets to null) |
         `,
       },
     },
@@ -348,4 +357,194 @@ TimezoneTokyo.args = {
   readOnly: false,
   timezone: "Asia/Tokyo",
   showCalendarButton: true,
+};
+
+// Comprehensive keyboard behavior demo
+const KeyboardBehaviorDemo: StoryFn<StoryArgs> = () => {
+  const [values, setValues] = useState<{
+    enter: string | undefined;
+    escape: string | undefined;
+    blur: string | undefined;
+    doubleClick: string | undefined;
+    clear: string | undefined;
+  }>({
+    enter: undefined,
+    escape: undefined,
+    blur: undefined,
+    doubleClick: undefined,
+    clear: "2024-06-15",
+  });
+
+  const [logs, setLogs] = useState<string[]>([]);
+
+  const addLog = (message: string) => {
+    setLogs((prev) => [
+      ...prev.slice(-9),
+      `${new Date().toLocaleTimeString()}: ${message}`,
+    ]);
+  };
+
+  return (
+    <div style={{ width: 550 }}>
+      <Paragraph>
+        <Text strong style={{ fontSize: 16 }}>
+          Keyboard & Mouse Behavior Testing
+        </Text>
+      </Paragraph>
+      <Paragraph type="secondary">
+        Test each input to verify the behavior described. Watch the event log
+        below.
+      </Paragraph>
+
+      <Form layout="vertical">
+        <Form.Item
+          label={
+            <>
+              <Text strong>1. Enter Key</Text>
+              <Text type="secondary"> - Type "23" then press Enter</Text>
+            </>
+          }
+        >
+          <MaskedDateInput
+            id="test-enter"
+            value={values.enter}
+            onChange={(v) => {
+              setValues((prev) => ({ ...prev, enter: v || undefined }));
+              addLog(`Enter field: value set to "${v}"`);
+            }}
+            timezone="Europe/Madrid"
+          />
+          {values.enter && <Text type="success"> → {values.enter}</Text>}
+        </Form.Item>
+
+        <Form.Item
+          label={
+            <>
+              <Text strong>2. Escape Key</Text>
+              <Text type="secondary">
+                {" "}
+                - Type "15/06" then press Escape (focus moves to next input)
+              </Text>
+            </>
+          }
+        >
+          <MaskedDateInput
+            id="test-escape"
+            value={values.escape}
+            onChange={(v) => {
+              setValues((prev) => ({ ...prev, escape: v || undefined }));
+              addLog(`Escape field: value set to "${v}"`);
+            }}
+            timezone="Europe/Madrid"
+          />
+          {values.escape && <Text type="success"> → {values.escape}</Text>}
+        </Form.Item>
+
+        <Form.Item
+          label={
+            <>
+              <Text strong>3. Blur (click outside)</Text>
+              <Text type="secondary"> - Type "10" then click outside</Text>
+            </>
+          }
+        >
+          <MaskedDateInput
+            id="test-blur"
+            value={values.blur}
+            onChange={(v) => {
+              setValues((prev) => ({ ...prev, blur: v || undefined }));
+              addLog(`Blur field: value set to "${v}"`);
+            }}
+            timezone="Europe/Madrid"
+          />
+          {values.blur && <Text type="success"> → {values.blur}</Text>}
+        </Form.Item>
+
+        <Form.Item
+          label={
+            <>
+              <Text strong>4. Double-click</Text>
+              <Text type="secondary"> - Type "25/12" then double-click</Text>
+            </>
+          }
+        >
+          <MaskedDateInput
+            id="test-doubleclick"
+            value={values.doubleClick}
+            onChange={(v) => {
+              setValues((prev) => ({ ...prev, doubleClick: v || undefined }));
+              addLog(`Double-click field: value set to "${v}"`);
+            }}
+            timezone="Europe/Madrid"
+          />
+          {values.doubleClick && (
+            <Text type="success"> → {values.doubleClick}</Text>
+          )}
+        </Form.Item>
+
+        <Form.Item
+          label={
+            <>
+              <Text strong>5. Clear value</Text>
+              <Text type="secondary">
+                {" "}
+                - Delete all content and click outside (should become null)
+              </Text>
+            </>
+          }
+        >
+          <MaskedDateInput
+            id="test-clear"
+            value={values.clear}
+            onChange={(v) => {
+              setValues((prev) => ({ ...prev, clear: v || undefined }));
+              addLog(`Clear field: value set to "${v ?? "null"}"`);
+            }}
+            timezone="Europe/Madrid"
+          />
+          <Text type={values.clear ? "success" : "warning"}>
+            {" "}
+            → {values.clear || "(empty/null)"}
+          </Text>
+        </Form.Item>
+      </Form>
+
+      <div
+        style={{
+          marginTop: 16,
+          padding: 12,
+          background: "#f0f0f0",
+          borderRadius: 6,
+          fontFamily: "monospace",
+          fontSize: 12,
+          maxHeight: 150,
+          overflowY: "auto",
+        }}
+      >
+        <Text strong>Event Log:</Text>
+        {logs.length === 0 ? (
+          <div style={{ color: "#888" }}>No events yet...</div>
+        ) : (
+          logs.map((log, i) => <div key={i}>{log}</div>)
+        )}
+      </div>
+    </div>
+  );
+};
+
+export const KeyboardBehaviors = KeyboardBehaviorDemo.bind({});
+KeyboardBehaviors.parameters = {
+  docs: {
+    description: {
+      story: `
+Interactive demo to test all keyboard and mouse behaviors:
+
+1. **Enter**: Autocompletes partial date and commits
+2. **Escape**: Commits and moves focus to next focusable element
+3. **Blur**: Autocompletes partial date and commits
+4. **Double-click**: Same as Enter - autocompletes and commits
+5. **Clear**: Delete all content and blur to clear the value
+      `,
+    },
+  },
 };

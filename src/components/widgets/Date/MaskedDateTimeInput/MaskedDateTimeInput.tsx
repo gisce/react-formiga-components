@@ -177,6 +177,14 @@ const MaskedDateTimeInput: React.FC<MaskedDateTimeInputProps> = memo(
       [commitValue],
     );
 
+    const handleDoubleClick = useCallback(
+      (e: React.MouseEvent<HTMLInputElement>) => {
+        const input = e.target as HTMLInputElement;
+        commitValue(input.value);
+      },
+      [commitValue],
+    );
+
     const handleBlur = useCallback(
       (e: React.FocusEvent<HTMLInputElement>) => {
         if (calendarOpen) return;
@@ -237,6 +245,7 @@ const MaskedDateTimeInput: React.FC<MaskedDateTimeInputProps> = memo(
             onAccept={handleAccept}
             onKeyDown={handleKeyDown}
             onBlur={handleBlur}
+            onDoubleClick={handleDoubleClick}
             disabled={readOnly}
             $hasError={!!parseError}
             $required={requiredStyle}
