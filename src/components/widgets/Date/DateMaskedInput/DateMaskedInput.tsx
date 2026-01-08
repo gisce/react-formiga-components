@@ -393,35 +393,50 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
           }
         }, 50);
       } else if (e.key === "Tab") {
-        // Close picker before Tab navigates away
         e.preventDefault();
         const input = e.target as HTMLInputElement;
+        const shiftKey = e.shiftKey;
         setPickerOpen(false);
         commitValue(input.value);
 
-        // Manually move focus to next/previous element based on Shift key
-        setTimeout(() => {
-          const focusableElements =
-            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-          const elements = Array.from(
-            document.querySelectorAll(focusableElements),
+        // Blur current input and move focus to next/previous focusable element
+        input.blur();
+
+        // Use requestAnimationFrame to ensure DOM has updated
+        requestAnimationFrame(() => {
+          const focusableSelector =
+            'input:not([disabled]):not([tabindex="-1"]), ' +
+            'button:not([disabled]):not([tabindex="-1"]), ' +
+            'select:not([disabled]):not([tabindex="-1"]), ' +
+            'textarea:not([disabled]):not([tabindex="-1"]), ' +
+            '[tabindex]:not([tabindex="-1"]):not([disabled])';
+
+          const allFocusable = Array.from(
+            document.querySelectorAll(focusableSelector),
           ).filter((el) => {
-            // Exclude elements inside picker dropdown
-            return !el.closest(".ant-picker-dropdown");
+            const htmlEl = el as HTMLElement;
+            // Must be visible and not inside picker dropdown
+            return (
+              htmlEl.offsetParent !== null &&
+              !el.closest(".ant-picker-dropdown") &&
+              getComputedStyle(htmlEl).visibility !== "hidden"
+            );
           }) as HTMLElement[];
-          const index = elements.indexOf(input);
-          if (e.shiftKey) {
-            // Shift+Tab: move to previous element
-            if (index > 0) {
-              elements[index - 1].focus();
-            }
-          } else {
-            // Tab: move to next element
-            if (index > -1 && index < elements.length - 1) {
-              elements[index + 1].focus();
+
+          const currentIndex = allFocusable.findIndex(
+            (el) => el === inputRef.current,
+          );
+
+          if (currentIndex !== -1) {
+            const nextIndex = shiftKey
+              ? Math.max(0, currentIndex - 1)
+              : Math.min(allFocusable.length - 1, currentIndex + 1);
+
+            if (nextIndex !== currentIndex) {
+              allFocusable[nextIndex].focus();
             }
           }
-        }, 0);
+        });
       }
     },
     [commitValue, onChange, autocompleteFn],

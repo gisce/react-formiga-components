@@ -758,6 +758,33 @@ test.describe("DateMaskedInput Component", () => {
       expect(inputValue).toBe("");
     });
 
+    test("Tab commits value, closes picker, and moves to next input", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--keyboard-behavior");
+
+      // Focus the first input
+      const input1 = page.locator("#test-enter");
+      await input1.click();
+      await page.waitForTimeout(200);
+
+      // Type partial date
+      await input1.fill("");
+      await input1.type("15");
+      await page.waitForTimeout(100);
+
+      // Press Tab
+      await input1.press("Tab");
+      await page.waitForTimeout(300);
+
+      // Value should be committed (autocompleted)
+      const inputValue = await input1.inputValue();
+      expect(inputValue).toMatch(/^15\/\d{2}\/\d{4}$/);
+
+      // Focus should have moved to next input (test-blur)
+      // Note: The second input's picker will open because it received focus
+      const input2 = page.locator("#test-blur");
+      await expect(input2).toBeFocused({ timeout: 3000 });
+    });
+
     test("Escape commits value and closes picker", async ({ page }) => {
       await goToStory(page, "components-widgets-date-datemaskedinput--keyboard-behavior");
 
