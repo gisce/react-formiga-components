@@ -37,10 +37,10 @@ A date input with DD/MM/YYYY mask that supports **partial entry with autocomplet
 
 | Action | Behavior |
 |--------|----------|
-| **Enter** | Autocompletes partial value and commits |
-| **Escape** | Commits current value and moves focus to next element |
-| **Blur** | Autocompletes partial value and commits |
-| **Double-click** | Autocompletes partial value and commits (same as Enter) |
+| **Enter** | Autocompletes partial value and commits. On empty input, fills current date. |
+| **Escape** | Commits current value and moves focus to next element. On empty input, fills current date. |
+| **Blur** | Commits current value (no autocomplete on empty - use Enter/Escape for that) |
+| **Double-click** | Autocompletes partial value and commits. On empty input, fills current date. |
 | **Delete all + blur** | Clears the value (sets to null) |
         `,
       },
@@ -349,12 +349,14 @@ TimezoneTokyo.args = {
 // Comprehensive keyboard behavior demo
 const KeyboardBehaviorDemo: StoryFn<StoryArgs> = () => {
   const [values, setValues] = useState<{
+    enterEmpty: string | undefined;
     enter: string | undefined;
     escape: string | undefined;
     blur: string | undefined;
     doubleClick: string | undefined;
     clear: string | undefined;
   }>({
+    enterEmpty: undefined,
     enter: undefined,
     escape: undefined,
     blur: undefined,
@@ -387,7 +389,32 @@ const KeyboardBehaviorDemo: StoryFn<StoryArgs> = () => {
         <Form.Item
           label={
             <>
-              <Text strong>1. Enter Key</Text>
+              <Text strong>1. Enter on Empty</Text>
+              <Text type="secondary">
+                {" "}
+                - Focus and press Enter (should fill current date)
+              </Text>
+            </>
+          }
+        >
+          <MaskedDateInput
+            id="test-enter-empty"
+            value={values.enterEmpty}
+            onChange={(v) => {
+              setValues((prev) => ({ ...prev, enterEmpty: v || undefined }));
+              addLog(`Enter empty field: value set to "${v}"`);
+            }}
+            timezone="Europe/Madrid"
+          />
+          {values.enterEmpty && (
+            <Text type="success"> → {values.enterEmpty}</Text>
+          )}
+        </Form.Item>
+
+        <Form.Item
+          label={
+            <>
+              <Text strong>2. Enter Key (partial)</Text>
               <Text type="secondary"> - Type "23" then press Enter</Text>
             </>
           }
@@ -407,7 +434,7 @@ const KeyboardBehaviorDemo: StoryFn<StoryArgs> = () => {
         <Form.Item
           label={
             <>
-              <Text strong>2. Escape Key</Text>
+              <Text strong>3. Escape Key</Text>
               <Text type="secondary">
                 {" "}
                 - Type "15/06" then press Escape (focus moves to next input)
@@ -430,7 +457,7 @@ const KeyboardBehaviorDemo: StoryFn<StoryArgs> = () => {
         <Form.Item
           label={
             <>
-              <Text strong>3. Blur (click outside)</Text>
+              <Text strong>4. Blur (click outside)</Text>
               <Text type="secondary"> - Type "10" then click outside</Text>
             </>
           }
@@ -450,7 +477,7 @@ const KeyboardBehaviorDemo: StoryFn<StoryArgs> = () => {
         <Form.Item
           label={
             <>
-              <Text strong>4. Double-click</Text>
+              <Text strong>5. Double-click</Text>
               <Text type="secondary"> - Type "25/12" then double-click</Text>
             </>
           }
@@ -472,7 +499,7 @@ const KeyboardBehaviorDemo: StoryFn<StoryArgs> = () => {
         <Form.Item
           label={
             <>
-              <Text strong>5. Clear value</Text>
+              <Text strong>6. Clear value</Text>
               <Text type="secondary">
                 {" "}
                 - Delete all content and click outside (should become null)
@@ -526,11 +553,12 @@ KeyboardBehaviors.parameters = {
       story: `
 Interactive demo to test all keyboard and mouse behaviors:
 
-1. **Enter**: Autocompletes partial date and commits
-2. **Escape**: Commits and moves focus to next focusable element
-3. **Blur**: Autocompletes partial date and commits
-4. **Double-click**: Same as Enter - autocompletes and commits
-5. **Clear**: Delete all content and blur to clear the value
+1. **Enter on Empty**: Focus empty input and press Enter - fills current date
+2. **Enter (partial)**: Autocompletes partial date and commits
+3. **Escape**: Commits and moves focus to next focusable element
+4. **Blur**: Commits partial date (blur on empty clears value)
+5. **Double-click**: Same as Enter - autocompletes and commits
+6. **Clear**: Delete all content and blur to clear the value
       `,
     },
   },
