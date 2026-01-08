@@ -628,4 +628,259 @@ test.describe("DateMaskedInput Component", () => {
       expect(debugValue).toBe("2023-03-26 00:00:00");
     });
   });
+
+  test.describe("Keyboard Behavior", () => {
+    test("Enter key with partial date autocompletes to full date", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--keyboard-behavior");
+
+      // Find the "Enter Key" input (id="test-enter")
+      const input = page.locator("#test-enter");
+      await input.click();
+      await page.waitForTimeout(200);
+
+      // Type partial date "23"
+      await input.fill("");
+      await input.type("23");
+      await page.waitForTimeout(100);
+
+      // Press Enter to autocomplete
+      await input.press("Enter");
+      await page.waitForTimeout(300);
+
+      // Should have autocompleted to a full date with day 23
+      const inputValue = await input.inputValue();
+      expect(inputValue).toMatch(/^23\/\d{2}\/\d{4}$/);
+    });
+
+    test("Enter key with empty input autocompletes to current date", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--keyboard-behavior");
+
+      const input = page.locator("#test-enter");
+      await input.click();
+      await page.waitForTimeout(200);
+
+      // Clear and press Enter on empty input
+      await input.fill("");
+      await page.waitForTimeout(100);
+      await input.press("Enter");
+      await page.waitForTimeout(300);
+
+      // Should have autocompleted to current date
+      const inputValue = await input.inputValue();
+      expect(inputValue).toMatch(/^\d{2}\/\d{2}\/\d{4}$/);
+    });
+
+    test("Blur with partial date autocompletes", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--keyboard-behavior");
+
+      // Find the "Blur" input (id="test-blur")
+      const input = page.locator("#test-blur");
+      await input.click();
+      await page.waitForTimeout(200);
+
+      // Type partial date "10"
+      await input.fill("");
+      await input.type("10");
+      await page.waitForTimeout(100);
+
+      // Click outside to blur
+      await page.locator("body").click({ position: { x: 10, y: 10 } });
+      await page.waitForTimeout(300);
+
+      // Should have autocompleted to a full date with day 10
+      const inputValue = await input.inputValue();
+      expect(inputValue).toMatch(/^10\/\d{2}\/\d{4}$/);
+    });
+
+    test("Double-click with partial date autocompletes", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--keyboard-behavior");
+
+      // Find the "Double-click" input (id="test-dblclick")
+      const input = page.locator("#test-dblclick");
+      await input.click();
+      await page.waitForTimeout(200);
+
+      // Type partial date "25/12"
+      await input.fill("");
+      await input.type("25/12");
+      await page.waitForTimeout(100);
+
+      // Double-click to autocomplete
+      await input.dblclick();
+      await page.waitForTimeout(300);
+
+      // Should have autocompleted to a full date with day 25, month 12
+      const inputValue = await input.inputValue();
+      expect(inputValue).toMatch(/^25\/12\/\d{4}$/);
+    });
+
+    test("Double-click with empty input autocompletes to current date", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--keyboard-behavior");
+
+      // Find the "Double-click" input
+      const input = page.locator("#test-dblclick");
+      await input.click();
+      await page.waitForTimeout(200);
+
+      // Clear the input
+      await input.fill("");
+      await page.waitForTimeout(100);
+
+      // Double-click on empty input
+      await input.dblclick();
+      await page.waitForTimeout(300);
+
+      // Should have autocompleted to current date
+      const inputValue = await input.inputValue();
+      expect(inputValue).toMatch(/^\d{2}\/\d{2}\/\d{4}$/);
+    });
+
+    test("Backspace can clear entire value", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--keyboard-behavior");
+
+      // Use the "Clear value" input which has a pre-set value
+      const input = page.locator("#test-clear");
+      await input.click();
+      await page.waitForTimeout(200);
+
+      // Select all with Cmd+A and press Backspace
+      await input.press("Meta+a");
+      await page.waitForTimeout(100);
+      await input.press("Backspace");
+      await page.waitForTimeout(100);
+
+      // Click outside to blur and trigger commit
+      await page.locator("body").click({ position: { x: 10, y: 10 } });
+      await page.waitForTimeout(300);
+
+      // Value should be cleared, not autocompleted
+      const inputValue = await input.inputValue();
+      expect(inputValue).toBe("");
+    });
+
+    test("Escape commits value and closes picker", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--keyboard-behavior");
+
+      const input = page.locator("#test-enter");
+      await input.click();
+      await page.waitForTimeout(200);
+
+      // Verify picker is open
+      const dropdown = page.locator(".ant-picker-dropdown");
+      await expect(dropdown).toBeVisible({ timeout: 3000 });
+
+      // Type partial date
+      await input.fill("");
+      await input.type("15");
+      await page.waitForTimeout(100);
+
+      // Press Escape
+      await input.press("Escape");
+      await page.waitForTimeout(300);
+
+      // Should have committed the value
+      const inputValue = await input.inputValue();
+      expect(inputValue).toMatch(/^15\/\d{2}\/\d{4}$/);
+
+      // Picker should be closed
+      await expect(dropdown).toBeHidden({ timeout: 3000 });
+    });
+  });
+
+  test.describe("Autocomplete Scenarios", () => {
+    test("date: partial day autocompletes with current month/year", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--autocomplete");
+
+      // Find first date input
+      const input = page.locator("#auto-date-1");
+      await input.click();
+      await page.waitForTimeout(200);
+
+      // Type just day "15"
+      await input.fill("");
+      await input.type("15");
+      await input.press("Enter");
+      await page.waitForTimeout(300);
+
+      // Should show full date with current month/year
+      const inputValue = await input.inputValue();
+      expect(inputValue).toMatch(/^15\/\d{2}\/\d{4}$/);
+    });
+
+    test("date: partial day/month autocompletes with current year", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--autocomplete");
+
+      // Find second date input
+      const input = page.locator("#auto-date-2");
+      await input.click();
+      await page.waitForTimeout(200);
+
+      // Type day/month "15/06"
+      await input.fill("");
+      await input.type("15/06");
+      await input.press("Enter");
+      await page.waitForTimeout(300);
+
+      // Should show full date with current year
+      const inputValue = await input.inputValue();
+      expect(inputValue).toMatch(/^15\/06\/\d{4}$/);
+    });
+
+    test("datetime: partial date+hour autocompletes with current min:sec", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--autocomplete");
+
+      // Find datetime input
+      const input = page.locator("#auto-datetime-1");
+      await input.click();
+      await page.waitForTimeout(200);
+
+      // Type date + hour "15/06/2024 14"
+      await input.fill("");
+      await input.type("15/06/2024 14");
+      await input.press("Enter");
+      await page.waitForTimeout(300);
+
+      // Should show full datetime
+      const inputValue = await input.inputValue();
+      expect(inputValue).toMatch(/^15\/06\/2024 14:\d{2}:\d{2}$/);
+    });
+
+    test("time: partial hour autocompletes with zeros", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--autocomplete");
+
+      // Find first time input
+      const input = page.locator("#auto-time-1");
+      await input.click();
+      await page.waitForTimeout(200);
+
+      // Type just hour "14"
+      await input.fill("");
+      await input.type("14");
+      await input.press("Enter");
+      await page.waitForTimeout(300);
+
+      // Should show full time
+      const inputValue = await input.inputValue();
+      expect(inputValue).toMatch(/^14:\d{2}:\d{2}$/);
+    });
+
+    test("time: partial hour:minute autocompletes seconds", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--autocomplete");
+
+      // Find second time input
+      const input = page.locator("#auto-time-2");
+      await input.click();
+      await page.waitForTimeout(200);
+
+      // Type hour:minute "14:30"
+      await input.fill("");
+      await input.type("14:30");
+      await input.press("Enter");
+      await page.waitForTimeout(300);
+
+      // Should show full time with seconds
+      const inputValue = await input.inputValue();
+      expect(inputValue).toMatch(/^14:30:\d{2}$/);
+    });
+  });
 });

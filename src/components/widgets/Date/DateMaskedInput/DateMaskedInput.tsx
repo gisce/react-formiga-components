@@ -200,9 +200,12 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
   const inputRef = useRef<HTMLInputElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const skipNextFocusRef = useRef(false);
+  // Track if click originated from our input area to prevent picker close/reopen flicker
+  const clickedInsideRef = useRef(false);
   const [pickerOpen, setPickerOpen] = useState(false);
   const [parseError, setParseError] = useState<string | null>(null);
-  const [inputValue, setInputValue] = useState<string>("");
+  // Use undefined to mean "show displayValue", empty string means "user cleared"
+  const [inputValue, setInputValue] = useState<string | undefined>(undefined);
 
   const datePickerLocale = useDatePickerLocale();
   const requiredStyle = useRequiredStyle(required, readOnly);
@@ -262,7 +265,8 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
     );
   }, [value, timezone, type, config]);
 
-  const currentInputValue = inputValue || displayValue;
+  // Use nullish coalescing: undefined = show displayValue, "" = show empty (user cleared)
+  const currentInputValue = inputValue ?? displayValue;
 
   // Convert value to picker format
   const pickerValue = useMemo(() => {
@@ -311,7 +315,7 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
 
       if (isEmpty) {
         onChange?.(null);
-        setInputValue("");
+        setInputValue(undefined);
         setParseError(null);
         return;
       }
@@ -320,7 +324,7 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
         if (type === "time") {
           // Time values are stored as-is (HH:mm:ss)
           onChange?.(maskedValue);
-          setInputValue("");
+          setInputValue(undefined);
           setParseError(null);
         } else {
           const internalValue = parseDisplayToInternal(
@@ -330,7 +334,7 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
           );
           if (internalValue) {
             onChange?.(internalValue);
-            setInputValue("");
+            setInputValue(undefined);
             setParseError(null);
           } else {
             setParseError(`Invalid ${type}`);
@@ -342,7 +346,7 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
       const autocompleted = autocompleteFn(maskedValue);
       if (autocompleted) {
         onChange?.(autocompleted.internalValue);
-        setInputValue("");
+        setInputValue(undefined);
         setParseError(null);
       } else {
         setParseError(`Invalid ${type} format`);
@@ -363,7 +367,7 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
           const autocompleted = autocompleteFn("");
           if (autocompleted) {
             onChange?.(autocompleted.internalValue);
-            setInputValue("");
+            setInputValue(undefined);
             setParseError(null);
           }
           return;
@@ -426,9 +430,23 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
   const handleDoubleClick = useCallback(
     (e: React.MouseEvent<HTMLInputElement>) => {
       const input = e.target as HTMLInputElement;
-      commitValue(input.value);
+      const maskedValue = input.value;
+
+      // On double-click, if no digits entered, autocomplete to current date/time
+      // (same behavior as Enter key)
+      if (!hasAnyDigits(maskedValue)) {
+        const autocompleted = autocompleteFn("");
+        if (autocompleted) {
+          onChange?.(autocompleted.internalValue);
+          setInputValue(undefined);
+          setParseError(null);
+        }
+        return;
+      }
+
+      commitValue(maskedValue);
     },
-    [commitValue],
+    [commitValue, autocompleteFn, onChange],
   );
 
   const handleBlur = useCallback(
@@ -459,7 +477,7 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
     e.stopPropagation();
     e.preventDefault();
     setPickerOpen(false);
-    setInputValue("");
+    setInputValue(undefined);
     setParseError(null);
     if (onChange) {
       onChange(null);
@@ -471,7 +489,7 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
     (date: Dayjs | null) => {
       if (!date) {
         onChange?.(null);
-        setInputValue("");
+        setInputValue(undefined);
         return;
       }
 
@@ -480,7 +498,7 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
       } else {
         onChange?.(date.format(config.internalFormat));
       }
-      setInputValue("");
+      setInputValue(undefined);
       setParseError(null);
 
       // For date-only mode, close picker after selection
@@ -503,7 +521,7 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
       } else {
         onChange?.(date.format(config.internalFormat));
       }
-      setInputValue("");
+      setInputValue(undefined);
       setParseError(null);
       setPickerOpen(false);
       skipNextFocusRef.current = true;
@@ -517,12 +535,25 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
   // Determine which icon to show
   const Icon = type === "time" ? ClockCircleOutlined : CalendarOutlined;
 
+  // Handle mousedown on our input area - prevents picker close/reopen flicker
+  const handleWrapperMouseDown = useCallback(() => {
+    clickedInsideRef.current = true;
+    // Reset after a short delay (after onOpenChange would have been called)
+    setTimeout(() => {
+      clickedInsideRef.current = false;
+    }, 100);
+  }, []);
+
   // Render the appropriate picker based on type
   const renderPicker = () => {
     const commonProps = {
       open: pickerOpen,
       onOpenChange: (open: boolean) => {
         if (!open) {
+          // Don't close if the click was on our input area
+          if (clickedInsideRef.current) {
+            return;
+          }
           setPickerOpen(false);
         }
       },
@@ -562,6 +593,7 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
           $required={requiredStyle}
           $disabled={readOnly}
           $hasError={!!parseError}
+          onMouseDown={handleWrapperMouseDown}
           onClick={() => {
             if (!readOnly) {
               setPickerOpen(true);
