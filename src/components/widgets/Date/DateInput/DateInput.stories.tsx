@@ -4,6 +4,7 @@ import { DateInput } from "./DateInput";
 import { Form } from "antd";
 import dayjs from "@/helpers/dayjs";
 import { DateInputProps } from "./DateInput.types";
+import { LocaleContextProvider, Locale } from "@/context/LocaleContext";
 
 // Extended props for Storybook args
 type StoryArgs = DateInputProps & {
@@ -333,3 +334,106 @@ UTCLastSecond.args = {
   readOnly: false,
   timezone: "UTC",
 };
+
+// ============================================
+// LOCALE STORIES
+// ============================================
+
+// Extended args type for locale stories
+type LocaleStoryArgs = StoryArgs & {
+  locale: Locale;
+};
+
+const LocaleTemplate: StoryFn<LocaleStoryArgs> = (args) => {
+  const [form] = Form.useForm();
+  const fieldName = args.id || "dateField";
+  const [currentValue, setCurrentValue] = useState<string | undefined>(
+    args.value,
+  );
+
+  useEffect(() => {
+    if (args.value) {
+      form.setFieldsValue({ [fieldName]: args.value });
+      setCurrentValue(args.value);
+    }
+  }, [args.value, form, fieldName]);
+
+  const handleChange = (value: string | null | undefined) => {
+    form.setFieldValue(fieldName, value);
+    setCurrentValue(value || undefined);
+    args.onChange?.(value);
+  };
+
+  return (
+    <LocaleContextProvider locale={args.locale}>
+      <div style={{ width: 300 }}>
+        <Form
+          form={form}
+          initialValues={{ [fieldName]: args.value }}
+          onFieldsChange={() => {
+            const newValue = form.getFieldValue(fieldName);
+            setCurrentValue(newValue);
+          }}
+        >
+          <Form.Item name={fieldName} label="Date">
+            <DateInput
+              id={fieldName}
+              value={form.getFieldValue(fieldName)}
+              onChange={handleChange}
+              showTime={args.showTime}
+              required={args.required}
+              readOnly={args.readOnly}
+              timezone={args.timezone}
+            />
+          </Form.Item>
+          <div style={{ marginTop: 20 }}>
+            <strong>Debug Information:</strong>
+            <pre>String value: {currentValue}</pre>
+            <pre>locale: {args.locale}</pre>
+            <pre>timezone: {args.timezone}</pre>
+            <pre>showTime: {args.showTime?.toString()}</pre>
+          </div>
+        </Form>
+      </div>
+    </LocaleContextProvider>
+  );
+};
+
+// Spanish locale
+export const LocaleSpanish = LocaleTemplate.bind({});
+LocaleSpanish.args = {
+  id: "locale-spanish",
+  value: "2024-03-10 14:30:00",
+  showTime: true,
+  required: false,
+  readOnly: false,
+  timezone: "Europe/Madrid",
+  locale: "es_ES",
+};
+LocaleSpanish.storyName = "Locale: Spanish (es_ES)";
+
+// Catalan locale
+export const LocaleCatalan = LocaleTemplate.bind({});
+LocaleCatalan.args = {
+  id: "locale-catalan",
+  value: "2024-03-10 14:30:00",
+  showTime: true,
+  required: false,
+  readOnly: false,
+  timezone: "Europe/Madrid",
+  locale: "ca_ES",
+};
+LocaleCatalan.storyName = "Locale: Catalan (ca_ES)";
+
+// English locale (for comparison)
+export const LocaleEnglish = LocaleTemplate.bind({});
+LocaleEnglish.args = {
+  id: "locale-english",
+  value: "2024-03-10 14:30:00",
+  showTime: true,
+  required: false,
+  readOnly: false,
+  timezone: "Europe/Madrid",
+  locale: "en_US",
+};
+LocaleEnglish.storyName = "Locale: English (en_US)";
