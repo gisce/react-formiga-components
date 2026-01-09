@@ -214,11 +214,15 @@ export const parseDisplayToInternal = (
   value: string,
   displayFormat: string,
   internalFormat: string,
+  timezone?: string,
 ): string | null => {
   if (!value || value.includes("_")) return null;
 
   try {
-    const parsed = dayjs(value, displayFormat);
+    // Parse in the context of the specified timezone for consistency
+    const parsed = timezone
+      ? dayjs.tz(value, displayFormat, timezone)
+      : dayjs(value, displayFormat);
 
     if (!parsed.isValid()) return null;
 

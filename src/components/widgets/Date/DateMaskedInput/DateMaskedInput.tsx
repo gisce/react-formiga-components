@@ -48,6 +48,7 @@ const InputWrapper = styled.div.attrs<{
   $required?: React.CSSProperties;
   $disabled?: boolean;
   $hasError?: boolean;
+  $colorBgContainer?: string;
 }>((props) => ({
   className: `ant-picker ant-picker-outlined${
     props.$disabled ? " ant-picker-disabled" : ""
@@ -56,12 +57,14 @@ const InputWrapper = styled.div.attrs<{
   $required?: React.CSSProperties;
   $disabled?: boolean;
   $hasError?: boolean;
+  $colorBgContainer?: string;
 }>`
   display: flex;
   align-items: center;
   width: 100%;
   position: relative;
-  background-color: ${(props) => props.$required?.backgroundColor || "#fff"};
+  background-color: ${(props) =>
+    props.$required?.backgroundColor || props.$colorBgContainer};
   border-radius: 6px;
 `;
 
@@ -71,6 +74,13 @@ const StyledInput = styled(IMaskInput)<{
   $isEmpty?: boolean;
   $placeholderColor?: string;
   $textColor?: string;
+  $colorError?: string;
+  $colorBorder?: string;
+  $colorPrimary?: string;
+  $colorErrorBg?: string;
+  $colorPrimaryBg?: string;
+  $colorTextDisabled?: string;
+  $colorBgContainerDisabled?: string;
 }>`
   flex: 1;
   width: 100%;
@@ -81,36 +91,43 @@ const StyledInput = styled(IMaskInput)<{
   color: ${(props) =>
     props.$isEmpty ? props.$placeholderColor : props.$textColor};
   background-color: transparent;
-  border: 1px solid ${(props) => (props.$hasError ? "#ff4d4f" : "#d9d9d9")};
+  border: 1px solid
+    ${(props) => (props.$hasError ? props.$colorError : props.$colorBorder)};
   border-radius: 6px;
   transition: all 0.2s;
   font-family: inherit;
 
   &:focus {
-    border-color: ${(props) => (props.$hasError ? "#ff4d4f" : "#4096ff")};
+    border-color: ${(props) =>
+      props.$hasError ? props.$colorError : props.$colorPrimary};
     box-shadow: 0 0 0 2px
       ${(props) =>
-        props.$hasError ? "rgba(255, 77, 79, 0.1)" : "rgba(5, 145, 255, 0.1)"};
+        props.$hasError ? props.$colorErrorBg : props.$colorPrimaryBg};
     outline: none;
   }
 
   &:hover {
-    border-color: ${(props) => (props.$hasError ? "#ff4d4f" : "#4096ff")};
+    border-color: ${(props) =>
+      props.$hasError ? props.$colorError : props.$colorPrimary};
   }
 
   &:disabled {
-    color: rgba(0, 0, 0, 0.25);
-    background-color: rgba(0, 0, 0, 0.04);
+    color: ${(props) => props.$colorTextDisabled};
+    background-color: ${(props) => props.$colorBgContainerDisabled};
     cursor: not-allowed;
   }
 `;
 
-const SuffixIcon = styled.span<{ $allowClear?: boolean }>`
+const SuffixIcon = styled.span<{
+  $allowClear?: boolean;
+  $colorTextQuaternary?: string;
+  $colorTextSecondary?: string;
+}>`
   position: absolute;
   right: 11px;
   top: 50%;
   transform: translateY(-50%);
-  color: rgba(0, 0, 0, 0.25);
+  color: ${(props) => props.$colorTextQuaternary};
   cursor: ${(props) => (props.$allowClear ? "pointer" : "default")};
   transition:
     color 0.2s,
@@ -122,7 +139,9 @@ const SuffixIcon = styled.span<{ $allowClear?: boolean }>`
 
   &:hover {
     color: ${(props) =>
-      props.$allowClear ? "rgba(0, 0, 0, 0.45)" : "rgba(0, 0, 0, 0.25)"};
+      props.$allowClear
+        ? props.$colorTextSecondary
+        : props.$colorTextQuaternary};
   }
 `;
 
@@ -331,13 +350,14 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
             maskedValue,
             config.displayFormat,
             config.internalFormat,
+            timezone,
           );
           if (internalValue) {
             onChange?.(internalValue);
             setInputValue(undefined);
             setParseError(null);
           } else {
-            setParseError(`Invalid ${type}`);
+            setParseError(`Invalid ${type} format`);
           }
         }
         return;
@@ -488,16 +508,17 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
     }
   }, [readOnly]);
 
-  const handleClear = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    e.preventDefault();
-    setPickerOpen(false);
-    setInputValue(undefined);
-    setParseError(null);
-    if (onChange) {
-      onChange(null);
-    }
-  };
+  const handleClear = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      e.preventDefault();
+      setPickerOpen(false);
+      setInputValue(undefined);
+      setParseError(null);
+      onChange?.(null);
+    },
+    [onChange],
+  );
 
   // Handle picker change (when user selects from dropdown)
   const handlePickerChange = useCallback(
@@ -600,7 +621,7 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
     <Tooltip
       title={parseError}
       open={!!parseError}
-      color="#ff4d4f"
+      color={token.colorError}
       placement="topLeft"
     >
       <div style={{ position: "relative" }} ref={wrapperRef}>
@@ -608,6 +629,7 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
           $required={requiredStyle}
           $disabled={readOnly}
           $hasError={!!parseError}
+          $colorBgContainer={token.colorBgContainer}
           onMouseDown={handleWrapperMouseDown}
           onClick={() => {
             if (!readOnly) {
@@ -635,6 +657,13 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
               $isEmpty={!value && !hasAnyDigits(currentInputValue)}
               $placeholderColor={token.colorTextPlaceholder}
               $textColor={token.colorText}
+              $colorError={token.colorError}
+              $colorBorder={token.colorBorder}
+              $colorPrimary={token.colorPrimary}
+              $colorErrorBg={token.colorErrorBg}
+              $colorPrimaryBg={token.colorPrimaryBg}
+              $colorTextDisabled={token.colorTextDisabled}
+              $colorBgContainerDisabled={token.colorBgContainerDisabled}
               placeholder={effectivePlaceholder}
               style={{ paddingRight: 30 }}
             />
@@ -642,6 +671,8 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
               <CalendarIcon
                 className="ant-picker-suffix"
                 $allowClear={false}
+                $colorTextQuaternary={token.colorTextQuaternary}
+                $colorTextSecondary={token.colorTextSecondary}
                 onClick={() => {
                   setPickerOpen(true);
                   inputRef.current?.focus();
@@ -655,6 +686,8 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
               <ClearIcon
                 className="ant-picker-clear"
                 $allowClear={true}
+                $colorTextQuaternary={token.colorTextQuaternary}
+                $colorTextSecondary={token.colorTextSecondary}
                 data-testid="clear-button"
                 onClick={handleClear}
                 onMouseDown={(e) => {

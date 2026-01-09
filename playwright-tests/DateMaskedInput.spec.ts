@@ -25,8 +25,11 @@ async function goToStory(page: Page, storyId: string) {
     state: "visible",
     timeout: 10000,
   });
-  // Wait for antd components to fully render
-  await page.waitForTimeout(500);
+  // Wait for antd picker input to be fully rendered
+  await page.waitForSelector(".ant-picker-input input", {
+    state: "visible",
+    timeout: 5000,
+  });
 }
 
 // Helper to get the input element - throws if not found
@@ -90,11 +93,9 @@ test.describe("DateMaskedInput Component", () => {
       const clearBtn = page.locator(".ant-picker-clear").first();
       await expect(clearBtn).toBeVisible({ timeout: 3000 });
       await clearBtn.click();
-      await page.waitForTimeout(300);
 
-      // Verify the input is now empty
-      const inputValue = await input.inputValue();
-      expect(inputValue).toBe("");
+      // Wait for input to be cleared (auto-waits)
+      await expect(input).toHaveValue("");
 
       // Debug should show empty value (either "String value: " or "String value: undefined")
       const debugElement = page.locator("pre").filter({ hasText: "String value:" });

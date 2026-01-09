@@ -25,8 +25,11 @@ async function goToStory(page: Page, storyId: string) {
     state: "visible",
     timeout: 10000,
   });
-  // Wait for antd components to fully render
-  await page.waitForTimeout(500);
+  // Wait for antd picker input to be fully rendered
+  await page.waitForSelector(".ant-picker-input input", {
+    state: "visible",
+    timeout: 5000,
+  });
 }
 
 // Helper to get the input element - throws if not found
@@ -89,11 +92,9 @@ test.describe("DateInput Component", () => {
       const clearBtn = page.locator(".ant-picker-clear");
       await expect(clearBtn).toBeVisible({ timeout: 3000 });
       await clearBtn.click();
-      await page.waitForTimeout(300);
 
-      // Verify the input is now empty
-      const inputValue = await input.inputValue();
-      expect(inputValue).toBe("");
+      // Wait for input to be cleared (auto-waits)
+      await expect(input).toHaveValue("");
 
       // Debug should show empty value (either "String value: " or "String value: undefined")
       const debugElement = page.locator("pre").filter({ hasText: "String value:" });
@@ -160,9 +161,8 @@ test.describe("DateInput Component", () => {
       const picker = page.locator(".ant-picker").first();
       await expect(picker).toBeVisible();
       await picker.click();
-      await page.waitForTimeout(300);
 
-      // Verify dropdown does NOT appear
+      // Verify dropdown does NOT appear (toBeHidden auto-waits)
       const dropdown = page.locator(".ant-picker-dropdown");
       await expect(dropdown).toBeHidden();
     });
@@ -171,11 +171,10 @@ test.describe("DateInput Component", () => {
   test.describe("Invalid Date Handling", () => {
     test("shows error state for invalid date value", async ({ page }) => {
       await goToStory(page, "components-widgets-date-dateinput--invalid-date");
-      await page.waitForTimeout(500);
 
-      // Check for error styling (red border)
-      const picker = page.locator(".ant-picker").first();
-      await expect(picker).toBeVisible();
+      // Wait for error state to be applied
+      const picker = page.locator(".ant-picker.ant-picker-status-error").first();
+      await expect(picker).toBeVisible({ timeout: 5000 });
 
       const hasError = await picker.evaluate((el) =>
         el.classList.contains("ant-picker-status-error")
@@ -185,11 +184,10 @@ test.describe("DateInput Component", () => {
 
     test("displays error tooltip for invalid date", async ({ page }) => {
       await goToStory(page, "components-widgets-date-dateinput--invalid-date");
-      await page.waitForTimeout(500);
 
-      // Error tooltip should be visible
+      // Error tooltip should be visible (auto-waits)
       const tooltip = page.locator(".ant-tooltip-inner");
-      await expect(tooltip).toBeVisible({ timeout: 3000 });
+      await expect(tooltip).toBeVisible({ timeout: 5000 });
 
       const tooltipText = await tooltip.textContent();
       expect(tooltipText).not.toBeNull();
@@ -432,19 +430,16 @@ test.describe("DateInput Component", () => {
       // Open calendar
       const picker = page.locator(".ant-picker").first();
       await picker.click();
-      await page.waitForTimeout(300);
 
       // Click on day 15 in the calendar
       const day15 = page.locator(".ant-picker-cell-inner").filter({ hasText: /^15$/ }).first();
       await expect(day15).toBeVisible({ timeout: 3000 });
       await day15.click();
-      await page.waitForTimeout(300);
 
       // With showTime=true, antd requires clicking OK button to confirm
       const okButton = page.locator(".ant-picker-ok button");
       await expect(okButton).toBeVisible({ timeout: 3000 });
       await okButton.click();
-      await page.waitForTimeout(300);
 
       // Value should have changed to the 15th (keeping time)
       const newDisplayValue = await input.inputValue();
@@ -468,11 +463,9 @@ test.describe("DateInput Component", () => {
       const clearBtn = page.locator(".ant-picker-clear");
       await expect(clearBtn).toBeVisible({ timeout: 3000 });
       await clearBtn.click();
-      await page.waitForTimeout(300);
 
-      // Verify input is now empty
-      const inputValue = await input.inputValue();
-      expect(inputValue).toBe("");
+      // Wait for input to be cleared
+      await expect(input).toHaveValue("");
 
       // Verify debug shows empty value
       const debugElement = page.locator("pre").filter({ hasText: "String value:" });
@@ -508,7 +501,6 @@ test.describe("DateInput Component", () => {
       // Focus the input which opens the picker
       const input = await getInput(page);
       await input.click();
-      await page.waitForTimeout(300);
 
       // Verify picker dropdown is open
       const dropdown = page.locator(".ant-picker-dropdown");
@@ -516,9 +508,8 @@ test.describe("DateInput Component", () => {
 
       // Press Tab - should close picker and move focus out
       await page.keyboard.press("Tab");
-      await page.waitForTimeout(300);
 
-      // Picker should be closed
+      // Picker should be closed (auto-waits)
       await expect(dropdown).toBeHidden({ timeout: 3000 });
 
       // Focus should NOT be on the picker panel (should have moved past the component)
@@ -535,7 +526,6 @@ test.describe("DateInput Component", () => {
       // Click to open picker
       const picker = page.locator(".ant-picker").first();
       await picker.click();
-      await page.waitForTimeout(300);
 
       // Verify picker dropdown is open
       const dropdown = page.locator(".ant-picker-dropdown");
@@ -544,7 +534,6 @@ test.describe("DateInput Component", () => {
       // Click on day 15
       const day15 = page.locator(".ant-picker-cell-inner").filter({ hasText: /^15$/ }).first();
       await day15.click();
-      await page.waitForTimeout(300);
 
       // Picker should be closed after selecting day (date-only mode)
       await expect(dropdown).toBeHidden({ timeout: 3000 });
