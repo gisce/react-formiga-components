@@ -91,45 +91,6 @@ export const useDatePickerHandlers = ({
             elements[index + 1].focus();
           }
         }, 100);
-      } else if (e.key === "Tab") {
-        // Close picker before Tab navigates away
-        e.preventDefault();
-
-        const input = e.currentTarget;
-        if (input.value !== "") {
-          const dayJsDate = dayjs(
-            input.value,
-            DatePickerConfig[mode].dateDisplayFormat,
-          ).format(DatePickerConfig[mode].dateInternalFormat);
-          onChange?.(dayJsDate);
-        }
-
-        // Blur input to close the picker
-        input.blur();
-
-        // Manually move focus to next/previous element based on Shift key
-        setTimeout(() => {
-          const focusableElements =
-            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-          const elements = Array.from(
-            document.querySelectorAll(focusableElements),
-          ).filter((el) => {
-            // Exclude elements inside picker dropdown
-            return !el.closest(".ant-picker-dropdown");
-          }) as HTMLElement[];
-          const index = elements.indexOf(input);
-          if (e.shiftKey) {
-            // Shift+Tab: move to previous element
-            if (index > 0) {
-              elements[index - 1].focus();
-            }
-          } else {
-            // Tab: move to next element
-            if (index > -1 && index < elements.length - 1) {
-              elements[index + 1].focus();
-            }
-          }
-        }, 0);
       }
     },
     [showTime, mode, onChange],

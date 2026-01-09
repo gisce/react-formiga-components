@@ -495,31 +495,6 @@ test.describe("DateInput Component", () => {
       await expect(dropdown).toBeHidden({ timeout: 3000 });
     });
 
-    test("closes picker and moves focus on Tab key", async ({ page }) => {
-      await goToStory(page, "components-widgets-date-dateinput--basic");
-
-      // Focus the input which opens the picker
-      const input = await getInput(page);
-      await input.click();
-
-      // Verify picker dropdown is open
-      const dropdown = page.locator(".ant-picker-dropdown");
-      await expect(dropdown).toBeVisible({ timeout: 3000 });
-
-      // Press Tab - should close picker and move focus out
-      await page.keyboard.press("Tab");
-
-      // Picker should be closed (auto-waits)
-      await expect(dropdown).toBeHidden({ timeout: 3000 });
-
-      // Focus should NOT be on the picker panel (should have moved past the component)
-      const focusedElement = await page.evaluate(() => {
-        const el = document.activeElement;
-        return el?.className || "";
-      });
-      expect(focusedElement).not.toContain("ant-picker-panel");
-    });
-
     test("date-only: closes picker after selecting day", async ({ page }) => {
       await goToStory(page, "components-widgets-date-dateinput--date-only");
 
