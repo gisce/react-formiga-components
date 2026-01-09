@@ -910,4 +910,57 @@ test.describe("DateMaskedInput Component", () => {
       expect(inputValue).toMatch(/^14:30:\d{2}$/);
     });
   });
+
+  test.describe("Separator Characters", () => {
+    test("typing / character moves to next date section", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--keyboard-behavior");
+
+      const input = page.locator("#test-enter");
+      await input.click();
+      await page.waitForTimeout(200);
+
+      // Clear and type date with explicit / separators
+      await input.fill("");
+      await input.type("10/03/2024");
+      await page.waitForTimeout(100);
+
+      // Should have the full date
+      const inputValue = await input.inputValue();
+      expect(inputValue).toBe("10/03/2024");
+    });
+
+    test("typing - character moves to next date section (like /)", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--keyboard-behavior");
+
+      const input = page.locator("#test-enter");
+      await input.click();
+      await page.waitForTimeout(200);
+
+      // Clear and type date using - as separator
+      await input.fill("");
+      await input.type("10-03-2024");
+      await page.waitForTimeout(100);
+
+      // Should have the full date (converted to / format)
+      const inputValue = await input.inputValue();
+      expect(inputValue).toBe("10/03/2024");
+    });
+
+    test("typing - character moves to next time section (like :)", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--autocomplete");
+
+      const input = page.locator("#auto-time-1");
+      await input.click();
+      await page.waitForTimeout(200);
+
+      // Clear and type time using - as separator
+      await input.fill("");
+      await input.type("14-30-00");
+      await page.waitForTimeout(100);
+
+      // Should have the full time (converted to : format)
+      const inputValue = await input.inputValue();
+      expect(inputValue).toBe("14:30:00");
+    });
+  });
 });
