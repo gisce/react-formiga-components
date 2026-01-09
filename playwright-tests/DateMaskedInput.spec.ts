@@ -1060,4 +1060,25 @@ test.describe("DateMaskedInput Component", () => {
       expect(dayString).toMatch(/dl|dt|dc|dj|dv/);
     });
   });
+
+  test.describe("Picker Footer Visibility", () => {
+    test("picker dropdown uses custom popup class to allow CSS overrides", async ({ page }) => {
+      // This test verifies that DateMaskedInput uses a custom popupClassName
+      // that allows overriding global CSS rules (e.g., webclient hiding .ant-picker-footer)
+      await goToStory(page, "components-widgets-date-datemaskedinput--basic");
+
+      const input = await getInput(page);
+      await input.click();
+
+      // DateMaskedInput uses "date-masked-input-picker-dropdown" popupClassName
+      const dropdown = page.locator(".date-masked-input-picker-dropdown");
+      await expect(dropdown).toBeVisible({ timeout: 3000 });
+
+      // The footer should be visible with display: block (via createGlobalStyle override)
+      // This ensures the OK button is accessible even if external CSS tries to hide it
+      const footer = page.locator(".date-masked-input-picker-dropdown .ant-picker-footer");
+      await expect(footer).toBeVisible();
+      await expect(footer).toHaveCSS("display", "block");
+    });
+  });
 });
