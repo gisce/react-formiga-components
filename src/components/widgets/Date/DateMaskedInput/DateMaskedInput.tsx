@@ -12,7 +12,14 @@ import {
   CloseCircleFilled,
 } from "@ant-design/icons";
 import dayjs, { Dayjs } from "dayjs";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
+
+// Force show the picker footer for DateMaskedInput, overriding any global CSS
+const DateMaskedInputPickerStyles = createGlobalStyle`
+  .date-masked-input-picker-dropdown .ant-picker-footer {
+    display: block !important;
+  }
+`;
 import {
   DateMaskedInputProps,
   DateMaskedInputType,
@@ -605,7 +612,13 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
     };
 
     if (type === "time") {
-      return <AntTimePicker {...commonProps} onOk={handleOk} />;
+      return (
+        <AntTimePicker
+          {...commonProps}
+          onOk={handleOk}
+          popupClassName="date-masked-input-picker-dropdown"
+        />
+      );
     }
 
     return (
@@ -613,98 +626,102 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
         {...commonProps}
         showTime={type === "datetime"}
         onOk={type === "datetime" ? handleOk : undefined}
+        popupClassName="date-masked-input-picker-dropdown"
       />
     );
   };
 
   return (
-    <Tooltip
-      title={parseError}
-      open={!!parseError}
-      color={token.colorError}
-      placement="topLeft"
-    >
-      <div style={{ position: "relative" }} ref={wrapperRef}>
-        <InputWrapper
-          $required={requiredStyle}
-          $disabled={readOnly}
-          $hasError={!!parseError}
-          $colorBgContainer={token.colorBgContainer}
-          onMouseDown={handleWrapperMouseDown}
-          onClick={() => {
-            if (!readOnly) {
-              setPickerOpen(true);
-              inputRef.current?.focus();
-            }
-          }}
-        >
-          <InputContainer>
-            <StyledInput
-              inputRef={inputRef}
-              id={id}
-              mask={config.mask}
-              lazy={true}
-              placeholderChar="_"
-              value={currentInputValue}
-              onAccept={handleAccept}
-              onKeyDown={handleKeyDown}
-              onBlur={handleBlur}
-              onFocus={handleFocus}
-              onDoubleClick={handleDoubleClick}
-              disabled={readOnly}
-              $hasError={!!parseError}
-              $required={requiredStyle}
-              $isEmpty={!value && !hasAnyDigits(currentInputValue)}
-              $placeholderColor={token.colorTextPlaceholder}
-              $textColor={token.colorText}
-              $colorError={token.colorError}
-              $colorBorder={token.colorBorder}
-              $colorPrimary={token.colorPrimary}
-              $colorErrorBg={token.colorErrorBg}
-              $colorPrimaryBg={token.colorPrimaryBg}
-              $colorTextDisabled={token.colorTextDisabled}
-              $colorBgContainerDisabled={token.colorBgContainerDisabled}
-              placeholder={effectivePlaceholder}
-              style={{ paddingRight: 30 }}
-            />
-            {!readOnly && (
-              <CalendarIcon
-                className="ant-picker-suffix"
-                $allowClear={false}
-                $colorTextQuaternary={token.colorTextQuaternary}
-                $colorTextSecondary={token.colorTextSecondary}
-                onClick={() => {
-                  setPickerOpen(true);
-                  inputRef.current?.focus();
-                }}
-                style={value ? undefined : { opacity: 1 }}
-              >
-                <Icon style={{ fontSize: 14 }} />
-              </CalendarIcon>
-            )}
-            {!readOnly && value && (
-              <ClearIcon
-                className="ant-picker-clear"
-                $allowClear={true}
-                $colorTextQuaternary={token.colorTextQuaternary}
-                $colorTextSecondary={token.colorTextSecondary}
-                data-testid="clear-button"
-                onClick={handleClear}
-                onMouseDown={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                }}
-              >
-                <CloseCircleFilled style={{ fontSize: 12 }} />
-              </ClearIcon>
-            )}
-          </InputContainer>
-        </InputWrapper>
+    <>
+      <DateMaskedInputPickerStyles />
+      <Tooltip
+        title={parseError}
+        open={!!parseError}
+        color={token.colorError}
+        placement="topLeft"
+      >
+        <div style={{ position: "relative" }} ref={wrapperRef}>
+          <InputWrapper
+            $required={requiredStyle}
+            $disabled={readOnly}
+            $hasError={!!parseError}
+            $colorBgContainer={token.colorBgContainer}
+            onMouseDown={handleWrapperMouseDown}
+            onClick={() => {
+              if (!readOnly) {
+                setPickerOpen(true);
+                inputRef.current?.focus();
+              }
+            }}
+          >
+            <InputContainer>
+              <StyledInput
+                inputRef={inputRef}
+                id={id}
+                mask={config.mask}
+                lazy={true}
+                placeholderChar="_"
+                value={currentInputValue}
+                onAccept={handleAccept}
+                onKeyDown={handleKeyDown}
+                onBlur={handleBlur}
+                onFocus={handleFocus}
+                onDoubleClick={handleDoubleClick}
+                disabled={readOnly}
+                $hasError={!!parseError}
+                $required={requiredStyle}
+                $isEmpty={!value && !hasAnyDigits(currentInputValue)}
+                $placeholderColor={token.colorTextPlaceholder}
+                $textColor={token.colorText}
+                $colorError={token.colorError}
+                $colorBorder={token.colorBorder}
+                $colorPrimary={token.colorPrimary}
+                $colorErrorBg={token.colorErrorBg}
+                $colorPrimaryBg={token.colorPrimaryBg}
+                $colorTextDisabled={token.colorTextDisabled}
+                $colorBgContainerDisabled={token.colorBgContainerDisabled}
+                placeholder={effectivePlaceholder}
+                style={{ paddingRight: 30 }}
+              />
+              {!readOnly && (
+                <CalendarIcon
+                  className="ant-picker-suffix"
+                  $allowClear={false}
+                  $colorTextQuaternary={token.colorTextQuaternary}
+                  $colorTextSecondary={token.colorTextSecondary}
+                  onClick={() => {
+                    setPickerOpen(true);
+                    inputRef.current?.focus();
+                  }}
+                  style={value ? undefined : { opacity: 1 }}
+                >
+                  <Icon style={{ fontSize: 14 }} />
+                </CalendarIcon>
+              )}
+              {!readOnly && value && (
+                <ClearIcon
+                  className="ant-picker-clear"
+                  $allowClear={true}
+                  $colorTextQuaternary={token.colorTextQuaternary}
+                  $colorTextSecondary={token.colorTextSecondary}
+                  data-testid="clear-button"
+                  onClick={handleClear}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }}
+                >
+                  <CloseCircleFilled style={{ fontSize: 12 }} />
+                </ClearIcon>
+              )}
+            </InputContainer>
+          </InputWrapper>
 
-        {/* Hidden picker - only used for its dropdown */}
-        <HiddenPickerWrapper>{renderPicker()}</HiddenPickerWrapper>
-      </div>
-    </Tooltip>
+          {/* Hidden picker - only used for its dropdown */}
+          <HiddenPickerWrapper>{renderPicker()}</HiddenPickerWrapper>
+        </div>
+      </Tooltip>
+    </>
   );
 };
 

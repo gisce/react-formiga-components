@@ -420,12 +420,13 @@ test.describe("DateInput Component", () => {
     });
 
     test("selects date from calendar", async ({ page }) => {
-      await goToStory(page, "components-widgets-date-dateinput--basic");
+      // Use date-only story since DateInput hides the OK button footer
+      await goToStory(page, "components-widgets-date-dateinput--date-only");
 
       // Store initial value
       const input = await getInput(page);
       const initialValue = await input.inputValue();
-      expect(initialValue).toBe("10/03/2024 14:30:00");
+      expect(initialValue).toBe("10/03/2024");
 
       // Open calendar
       const picker = page.locator(".ant-picker").first();
@@ -436,12 +437,11 @@ test.describe("DateInput Component", () => {
       await expect(day15).toBeVisible({ timeout: 3000 });
       await day15.click();
 
-      // With showTime=true, antd requires clicking OK button to confirm
-      const okButton = page.locator(".ant-picker-ok button");
-      await expect(okButton).toBeVisible({ timeout: 3000 });
-      await okButton.click();
+      // Date-only mode auto-confirms on selection (no OK button needed)
+      // Wait for picker to close
+      await page.waitForTimeout(500);
 
-      // Value should have changed to the 15th (keeping time)
+      // Value should have changed to the 15th
       const newDisplayValue = await input.inputValue();
       expect(newDisplayValue).toContain("15/03/2024");
 
@@ -684,6 +684,24 @@ test.describe("DateInput Component", () => {
 
       // Catalan uses "dl" for Monday (dilluns)
       expect(dayString).toMatch(/dl|dt|dc|dj|dv/);
+    });
+  });
+
+  test.describe("Picker Footer Visibility", () => {
+    test("picker dropdown hides OK button footer via custom popup class", async ({ page }) => {
+      // DateInput hides the picker footer (OK button) for cleaner UX
+      await goToStory(page, "components-widgets-date-dateinput--basic");
+
+      const picker = page.locator(".ant-picker").first();
+      await picker.click();
+
+      // DateInput uses "date-input-picker-dropdown" popupClassName
+      const dropdown = page.locator(".date-input-picker-dropdown");
+      await expect(dropdown).toBeVisible({ timeout: 3000 });
+
+      // The footer should be hidden (display: none via createGlobalStyle)
+      const footer = page.locator(".date-input-picker-dropdown .ant-picker-footer");
+      await expect(footer).toHaveCSS("display", "none");
     });
   });
 });
