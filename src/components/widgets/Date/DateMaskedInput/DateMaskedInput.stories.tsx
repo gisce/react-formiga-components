@@ -3,6 +3,7 @@ import { Meta, StoryFn } from "@storybook/react";
 import { DateMaskedInput } from "./DateMaskedInput";
 import { Form, Typography, Divider, Space } from "antd";
 import { DateMaskedInputProps } from "./DateMaskedInput.types";
+import { LocaleContextProvider, Locale } from "@/context/LocaleContext";
 
 const { Text, Title, Paragraph } = Typography;
 
@@ -545,3 +546,80 @@ Test keyboard and mouse behaviors:
     },
   },
 };
+
+// ============================================
+// LOCALE STORIES
+// ============================================
+
+type LocaleStoryArgs = DateMaskedInputProps & {
+  locale: Locale;
+};
+
+const LocaleTemplate: StoryFn<LocaleStoryArgs> = (args) => {
+  const [value, setValue] = useState<string | undefined>(args.value);
+  const { onChange: _onChange, ...restArgs } = args as LocaleStoryArgs & {
+    onChange?: unknown;
+  };
+
+  return (
+    <LocaleContextProvider locale={args.locale}>
+      <div style={{ width: 300 }}>
+        <Form layout="vertical">
+          <Form.Item label="Date">
+            <DateMaskedInput
+              {...restArgs}
+              value={value}
+              onChange={(v) => setValue(v || undefined)}
+            />
+          </Form.Item>
+          <div style={{ marginTop: 20 }}>
+            <strong>Debug Information:</strong>
+            <pre>String value: {value}</pre>
+            <pre>locale: {args.locale}</pre>
+            <pre>timezone: {args.timezone}</pre>
+            <pre>type: {args.type}</pre>
+          </div>
+        </Form>
+      </div>
+    </LocaleContextProvider>
+  );
+};
+
+// Spanish locale
+export const LocaleSpanish = LocaleTemplate.bind({});
+LocaleSpanish.args = {
+  type: "datetime",
+  id: "locale-spanish",
+  value: "2024-03-10 14:30:00",
+  required: false,
+  readOnly: false,
+  timezone: "Europe/Madrid",
+  locale: "es_ES",
+};
+LocaleSpanish.storyName = "Locale: Spanish (es_ES)";
+
+// Catalan locale
+export const LocaleCatalan = LocaleTemplate.bind({});
+LocaleCatalan.args = {
+  type: "datetime",
+  id: "locale-catalan",
+  value: "2024-03-10 14:30:00",
+  required: false,
+  readOnly: false,
+  timezone: "Europe/Madrid",
+  locale: "ca_ES",
+};
+LocaleCatalan.storyName = "Locale: Catalan (ca_ES)";
+
+// English locale (for comparison)
+export const LocaleEnglish = LocaleTemplate.bind({});
+LocaleEnglish.args = {
+  type: "datetime",
+  id: "locale-english",
+  value: "2024-03-10 14:30:00",
+  required: false,
+  readOnly: false,
+  timezone: "Europe/Madrid",
+  locale: "en_US",
+};
+LocaleEnglish.storyName = "Locale: English (en_US)";

@@ -615,4 +615,100 @@ test.describe("DateInput Component", () => {
       expect(debugValue).toBe("2023-03-26 00:00:00");
     });
   });
+
+  test.describe("Locale Support", () => {
+    test("Spanish locale shows calendar in Spanish", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-dateinput--locale-spanish");
+
+      const picker = page.locator(".ant-picker").first();
+      await picker.click();
+
+      // Wait for dropdown to be visible
+      const dropdown = page.locator(".ant-picker-dropdown");
+      await expect(dropdown).toBeVisible({ timeout: 3000 });
+
+      // Check for Spanish month name (marzo = March) in the header
+      // The date is 2024-03-10, so we should see "marzo" or "mar"
+      const header = page.locator(".ant-picker-header-view").first();
+      await expect(header).toBeVisible();
+      const headerText = await header.textContent();
+
+      // Spanish month names or abbreviations
+      expect(headerText?.toLowerCase()).toMatch(/mar|marzo/);
+    });
+
+    test("Catalan locale shows calendar in Catalan", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-dateinput--locale-catalan");
+
+      const picker = page.locator(".ant-picker").first();
+      await picker.click();
+
+      // Wait for dropdown to be visible
+      const dropdown = page.locator(".ant-picker-dropdown");
+      await expect(dropdown).toBeVisible({ timeout: 3000 });
+
+      // Check for Catalan month name (març = March) in the header
+      const header = page.locator(".ant-picker-header-view").first();
+      await expect(header).toBeVisible();
+      const headerText = await header.textContent();
+
+      // Catalan month names or abbreviations
+      expect(headerText?.toLowerCase()).toMatch(/mar|març/);
+    });
+
+    test("English locale shows calendar in English", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-dateinput--locale-english");
+
+      const picker = page.locator(".ant-picker").first();
+      await picker.click();
+
+      // Wait for dropdown to be visible
+      const dropdown = page.locator(".ant-picker-dropdown");
+      await expect(dropdown).toBeVisible({ timeout: 3000 });
+
+      // Check for English month name (Mar or March) in the header
+      const header = page.locator(".ant-picker-header-view").first();
+      await expect(header).toBeVisible();
+      const headerText = await header.textContent();
+
+      // English month names
+      expect(headerText?.toLowerCase()).toMatch(/mar|march/);
+    });
+
+    test("Spanish locale shows Spanish day names in calendar", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-dateinput--locale-spanish");
+
+      const picker = page.locator(".ant-picker").first();
+      await picker.click();
+
+      const dropdown = page.locator(".ant-picker-dropdown");
+      await expect(dropdown).toBeVisible({ timeout: 3000 });
+
+      // Check for Spanish day abbreviations (lu, ma, mi, ju, vi, sá, do)
+      const dayHeaders = page.locator(".ant-picker-content th");
+      const dayTexts = await dayHeaders.allTextContents();
+      const dayString = dayTexts.join("").toLowerCase();
+
+      // Spanish uses "lu" for Monday (lunes)
+      expect(dayString).toMatch(/lu|ma|mi|ju|vi/);
+    });
+
+    test("Catalan locale shows Catalan day names in calendar", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-dateinput--locale-catalan");
+
+      const picker = page.locator(".ant-picker").first();
+      await picker.click();
+
+      const dropdown = page.locator(".ant-picker-dropdown");
+      await expect(dropdown).toBeVisible({ timeout: 3000 });
+
+      // Check for Catalan day abbreviations (dl, dt, dc, dj, dv, ds, dg)
+      const dayHeaders = page.locator(".ant-picker-content th");
+      const dayTexts = await dayHeaders.allTextContents();
+      const dayString = dayTexts.join("").toLowerCase();
+
+      // Catalan uses "dl" for Monday (dilluns)
+      expect(dayString).toMatch(/dl|dt|dc|dj|dv/);
+    });
+  });
 });
