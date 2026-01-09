@@ -603,7 +603,7 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
       value: pickerValue,
       onChange: handlePickerChange,
       locale: datePickerLocale,
-      getPopupContainer: () => wrapperRef.current || document.body,
+      getPopupContainer: () => document.body,
       showNow: false,
       showToday: false,
       allowClear: false,
