@@ -744,8 +744,9 @@ test.describe("DateMaskedInput Component", () => {
       await input.click();
       await page.waitForTimeout(200);
 
-      // Select all with Cmd+A and press Backspace
-      await input.press("Meta+a");
+      // Select all (cross-platform: Control+a on Linux/Windows, Meta+a on Mac)
+      // Use triple-click to select all text as a reliable cross-platform method
+      await input.click({ clickCount: 3 });
       await page.waitForTimeout(100);
       await input.press("Backspace");
       await page.waitForTimeout(100);
