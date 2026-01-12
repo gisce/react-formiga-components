@@ -437,7 +437,7 @@ test.describe("DateMaskedInput Component", () => {
       await page.waitForTimeout(300);
 
       // Click on day 15 in the calendar
-      const day15 = page.locator(".ant-picker-cell-inner").filter({ hasText: /^15$/ }).first();
+      const day15 = page.locator(".ant-picker-cell-in-view .ant-picker-cell-inner").filter({ hasText: /^15$/ });
       await expect(day15).toBeVisible({ timeout: 3000 });
       await day15.click();
       await page.waitForTimeout(300);
@@ -545,7 +545,7 @@ test.describe("DateMaskedInput Component", () => {
       await expect(dropdown).toBeVisible({ timeout: 3000 });
 
       // Click on day 15
-      const day15 = page.locator(".ant-picker-cell-inner").filter({ hasText: /^15$/ }).first();
+      const day15 = page.locator(".ant-picker-cell-in-view .ant-picker-cell-inner").filter({ hasText: /^15$/ });
       await day15.click();
       await page.waitForTimeout(300);
 
@@ -1079,6 +1079,343 @@ test.describe("DateMaskedInput Component", () => {
       const footer = page.locator(".date-masked-input-picker-dropdown .ant-picker-footer");
       await expect(footer).toBeVisible();
       await expect(footer).toHaveCSS("display", "block");
+    });
+  });
+
+  test.describe("Two-Way Sync - Datetime", () => {
+    test("clicking date cell updates input immediately", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--basic");
+
+      const input = await getInput(page);
+      await expect(input).toHaveValue("10/03/2024 14:30:00");
+
+      const dropdown = page.locator(".ant-picker-dropdown");
+      await input.click();
+      await expect(dropdown).toBeVisible();
+
+      const day20 = page.locator(".ant-picker-cell-in-view .ant-picker-cell-inner").filter({ hasText: /^20$/ });
+      await day20.click();
+
+      await expect(input).toHaveValue("20/03/2024 14:30:00");
+      await expect(dropdown).toBeVisible();
+    });
+
+    test("clicking hour in time panel updates input immediately", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--basic");
+
+      const input = await getInput(page);
+      await expect(input).toHaveValue("10/03/2024 14:30:00");
+
+      const dropdown = page.locator(".ant-picker-dropdown");
+      await input.click();
+      await expect(dropdown).toBeVisible();
+
+      const hour16 = page.locator(".ant-picker-time-panel-column").first().locator("li").filter({ hasText: /^16$/ });
+      await hour16.click();
+
+      await expect(input).toHaveValue("10/03/2024 16:30:00");
+    });
+
+    test("clicking minute in time panel updates input immediately", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--basic");
+
+      const input = await getInput(page);
+      await expect(input).toHaveValue("10/03/2024 14:30:00");
+
+      const dropdown = page.locator(".ant-picker-dropdown");
+      await input.click();
+      await expect(dropdown).toBeVisible();
+
+      const minute45 = page.locator(".ant-picker-time-panel-column").nth(1).locator("li").filter({ hasText: /^45$/ });
+      await minute45.click();
+
+      // Input should update immediately
+      await expect(input).toHaveValue("10/03/2024 14:45:00");
+    });
+
+    test("clicking second in time panel updates input immediately", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--basic");
+
+      const input = await getInput(page);
+      await expect(input).toHaveValue("10/03/2024 14:30:00");
+
+      const dropdown = page.locator(".ant-picker-dropdown");
+      await input.click();
+      await expect(dropdown).toBeVisible();
+
+      const second15 = page.locator(".ant-picker-time-panel-column").nth(2).locator("li").filter({ hasText: /^15$/ });
+      await second15.click();
+
+      await expect(input).toHaveValue("10/03/2024 14:30:15");
+    });
+
+    test("clicking year updates input and navigates to month view", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--basic");
+
+      const input = await getInput(page);
+      await expect(input).toHaveValue("10/03/2024 14:30:00");
+
+      const dropdown = page.locator(".ant-picker-dropdown");
+      await input.click();
+      await expect(dropdown).toBeVisible();
+
+      const yearHeader = page.locator(".ant-picker-year-btn");
+      await yearHeader.click();
+
+      const yearPanel = page.locator(".ant-picker-year-panel");
+      await expect(yearPanel).toBeVisible();
+
+      const year2025 = page.locator(".ant-picker-cell-inner").filter({ hasText: /^2025$/ });
+      await year2025.click();
+
+      await expect(input).toHaveValue("10/03/2025 14:30:00");
+      await expect(dropdown).toBeVisible();
+
+      const monthPanel = page.locator(".ant-picker-month-panel");
+      await expect(monthPanel).toBeVisible();
+    });
+
+    test("clicking month updates input and navigates to date view", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--basic");
+
+      const input = await getInput(page);
+      await expect(input).toHaveValue("10/03/2024 14:30:00");
+
+      const dropdown = page.locator(".ant-picker-dropdown");
+      await input.click();
+      await expect(dropdown).toBeVisible();
+
+      const monthHeader = page.locator(".ant-picker-month-btn");
+      await monthHeader.click();
+
+      const monthPanel = page.locator(".ant-picker-month-panel");
+      await expect(monthPanel).toBeVisible();
+
+      const july = page.locator(".ant-picker-cell-inner").filter({ hasText: /^Jul$/ });
+      await july.click();
+
+      await expect(input).toHaveValue("10/07/2024 14:30:00");
+      await expect(dropdown).toBeVisible();
+
+      const datePanel = page.locator(".ant-picker-date-panel");
+      await expect(datePanel).toBeVisible();
+    });
+
+    test("OK button from year panel commits value", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--basic");
+
+      const input = await getInput(page);
+      const dropdown = page.locator(".ant-picker-dropdown");
+
+      await input.click();
+      await expect(dropdown).toBeVisible();
+
+      const yearHeader = page.locator(".ant-picker-year-btn");
+      await yearHeader.click();
+
+      const yearPanel = page.locator(".ant-picker-year-panel");
+      await expect(yearPanel).toBeVisible();
+
+      // Click on year 2026
+      const year2026 = page.locator(".ant-picker-cell-inner").filter({ hasText: /^2026$/ });
+      await year2026.click();
+
+      const monthPanel = page.locator(".ant-picker-month-panel");
+      await expect(monthPanel).toBeVisible();
+
+      const okButton = page.locator(".ant-picker-ok button");
+      await okButton.click();
+
+      const debugValue = await getDebugValue(page);
+      expect(debugValue).toBe("2026-03-10 14:30:00");
+      await expect(dropdown).not.toBeVisible();
+    });
+
+    test("OK button from month panel commits value", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--basic");
+
+      const input = await getInput(page);
+      const dropdown = page.locator(".ant-picker-dropdown");
+
+      await input.click();
+      await expect(dropdown).toBeVisible();
+
+      const monthHeader = page.locator(".ant-picker-month-btn");
+      await monthHeader.click();
+
+      const monthPanel = page.locator(".ant-picker-month-panel");
+      await expect(monthPanel).toBeVisible();
+
+      const december = page.locator(".ant-picker-cell-inner").filter({ hasText: /^Dec$/ });
+      await december.click();
+
+      const datePanel = page.locator(".ant-picker-date-panel");
+      await expect(datePanel).toBeVisible();
+
+      const okButton = page.locator(".ant-picker-ok button");
+      await okButton.click();
+
+      const debugValue = await getDebugValue(page);
+      expect(debugValue).toBe("2024-12-10 14:30:00");
+      await expect(dropdown).not.toBeVisible();
+    });
+
+    test("typing updates picker selection", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--basic");
+
+      const input = await getInput(page);
+      const dropdown = page.locator(".ant-picker-dropdown");
+
+      await input.click();
+      await expect(dropdown).toBeVisible();
+
+      await input.fill("");
+      await input.pressSequentially("25/06/2025 10:15:30");
+
+      const selectedDay = page.locator(".ant-picker-cell-selected .ant-picker-cell-inner");
+      await expect(selectedDay).toHaveText("25");
+
+      const monthBtn = page.locator(".ant-picker-month-btn");
+      await expect(monthBtn).toHaveText("Jun");
+      const yearBtn = page.locator(".ant-picker-year-btn");
+      await expect(yearBtn).toHaveText("2025");
+    });
+  });
+
+  test.describe("Two-Way Sync - Time Only", () => {
+    test("clicking hour updates input immediately", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--autocomplete");
+
+      const timeInput = page.locator('[id="auto-time-1"]');
+      const dropdown = page.locator(".ant-picker-dropdown");
+
+      await timeInput.click();
+      await timeInput.fill("");
+      await timeInput.pressSequentially("14:30:00");
+      await page.keyboard.press("Enter");
+
+      await expect(timeInput).toHaveValue("14:30:00");
+
+      await timeInput.click();
+      await expect(dropdown).toBeVisible();
+
+      const hour09 = page.locator(".ant-picker-time-panel-column").first().locator("li").filter({ hasText: /^09$/ });
+      await hour09.click();
+      await expect(timeInput).toHaveValue("09:30:00");
+    });
+
+    test("clicking minute updates input immediately", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--autocomplete");
+
+      const timeInput = page.locator('[id="auto-time-1"]');
+      const dropdown = page.locator(".ant-picker-dropdown");
+
+      await timeInput.click();
+      await timeInput.fill("");
+      await timeInput.pressSequentially("14:30:00");
+      await page.keyboard.press("Enter");
+
+      await expect(timeInput).toHaveValue("14:30:00");
+
+      await timeInput.click();
+      await expect(dropdown).toBeVisible();
+
+      const minute45 = page.locator(".ant-picker-time-panel-column").nth(1).locator("li").filter({ hasText: /^45$/ });
+      await minute45.click();
+
+      await expect(timeInput).toHaveValue("14:45:00");
+    });
+
+    test("OK button commits time value", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--autocomplete");
+
+      const timeInput = page.locator('[id="auto-time-1"]');
+      const dropdown = page.locator(".ant-picker-dropdown");
+
+      await timeInput.click();
+      await timeInput.fill("");
+      await timeInput.pressSequentially("14:30:00");
+      await page.keyboard.press("Enter");
+
+      await expect(timeInput).toHaveValue("14:30:00");
+
+      await timeInput.click();
+      await expect(dropdown).toBeVisible();
+
+      const hour18 = page.locator(".ant-picker-time-panel-column").first().locator("li").filter({ hasText: /^18$/ });
+      await hour18.click();
+
+      await expect(timeInput).toHaveValue("18:30:00");
+
+      const okButton = page.locator(".ant-picker-ok button");
+      await okButton.click();
+
+      await expect(dropdown).not.toBeVisible();
+      await expect(timeInput).toHaveValue("18:30:00");
+    });
+  });
+
+  test.describe("Two-Way Sync - Date Only", () => {
+    test("clicking date commits immediately (no OK needed)", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--date-only");
+
+      const input = await getInput(page);
+      await expect(input).toHaveValue("10/03/2024");
+
+      const dropdown = page.locator(".ant-picker-dropdown");
+      await input.click();
+      await expect(dropdown).toBeVisible();
+
+      const day25 = page.locator(".ant-picker-cell-in-view .ant-picker-cell-inner").filter({ hasText: /^25$/ });
+      await day25.click();
+
+      const debugValue = await getDebugValue(page);
+      expect(debugValue).toBe("2024-03-25");
+      await expect(dropdown).not.toBeVisible();
+    });
+
+    test("clicking year updates input and stays in picker", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--date-only");
+
+      const input = await getInput(page);
+      const dropdown = page.locator(".ant-picker-dropdown");
+
+      await input.click();
+      await expect(dropdown).toBeVisible();
+
+      const yearHeader = page.locator(".ant-picker-year-btn");
+      await yearHeader.click();
+
+      const yearPanel = page.locator(".ant-picker-year-panel");
+      await expect(yearPanel).toBeVisible();
+
+      const year2023 = page.locator(".ant-picker-cell-inner").filter({ hasText: /^2023$/ });
+      await year2023.click();
+
+      await expect(input).toHaveValue("10/03/2023");
+      await expect(dropdown).toBeVisible();
+    });
+
+    test("clicking month updates input and stays in picker", async ({ page }) => {
+      await goToStory(page, "components-widgets-date-datemaskedinput--date-only");
+
+      const input = await getInput(page);
+      const dropdown = page.locator(".ant-picker-dropdown");
+
+      await input.click();
+      await expect(dropdown).toBeVisible();
+
+      const monthHeader = page.locator(".ant-picker-month-btn");
+      await monthHeader.click();
+
+      const monthPanel = page.locator(".ant-picker-month-panel");
+      await expect(monthPanel).toBeVisible();
+
+      const august = page.locator(".ant-picker-cell-inner").filter({ hasText: /^Aug$/ });
+      await august.click();
+
+      await expect(input).toHaveValue("10/08/2024");
+      await expect(dropdown).toBeVisible();
     });
   });
 });
