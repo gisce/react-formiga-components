@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { IMaskInput } from "react-imask";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   DatePicker as AntDatePicker,
   TimePicker as AntTimePicker,
@@ -12,14 +11,6 @@ import {
   CloseCircleFilled,
 } from "@ant-design/icons";
 import dayjs, { Dayjs } from "dayjs";
-import styled, { createGlobalStyle } from "styled-components";
-
-// Force show the picker footer for DateMaskedInput, overriding any global CSS
-const DateMaskedInputPickerStyles = createGlobalStyle`
-  .date-masked-input-picker-dropdown .ant-picker-footer {
-    display: block !important;
-  }
-`;
 import {
   DateMaskedInputProps,
   DateMaskedInputType,
@@ -38,9 +29,17 @@ import {
 } from "./MaskedDate.helpers";
 import { useRequiredStyle } from "@/hooks/useRequiredStyle";
 import { useDatePickerLocale } from "../DateInput/hooks/useDatePickerLocale";
+import {
+  DateMaskedInputPickerStyles,
+  InputWrapper,
+  StyledInput,
+  ClearIcon,
+  CalendarIcon,
+  InputContainer,
+  HiddenPickerWrapper,
+} from "./DateMaskedInput.styles";
 
-// Get config based on type
-const getConfig = (type: DateMaskedInputType) => {
+function getConfig(type: DateMaskedInputType) {
   switch (type) {
     case "date":
       return MaskedDateConfig;
@@ -49,166 +48,11 @@ const getConfig = (type: DateMaskedInputType) => {
     case "time":
       return MaskedTimeConfig;
   }
-};
+}
 
-const InputWrapper = styled.div.attrs<{
-  $required?: React.CSSProperties;
-  $disabled?: boolean;
-  $hasError?: boolean;
-  $colorBgContainer?: string;
-}>((props) => ({
-  className: `ant-picker ant-picker-outlined${
-    props.$disabled ? " ant-picker-disabled" : ""
-  }${props.$hasError ? " ant-picker-status-error" : ""}`,
-}))<{
-  $required?: React.CSSProperties;
-  $disabled?: boolean;
-  $hasError?: boolean;
-  $colorBgContainer?: string;
-}>`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  position: relative;
-  background-color: ${(props) =>
-    props.$required?.backgroundColor || props.$colorBgContainer};
-  border-radius: 6px;
-`;
-
-const StyledInput = styled(IMaskInput)<{
-  $hasError?: boolean;
-  $required?: React.CSSProperties;
-  $isEmpty?: boolean;
-  $placeholderColor?: string;
-  $textColor?: string;
-  $colorError?: string;
-  $colorBorder?: string;
-  $colorPrimary?: string;
-  $colorErrorBg?: string;
-  $colorPrimaryBg?: string;
-  $colorTextDisabled?: string;
-  $colorBgContainerDisabled?: string;
-}>`
-  flex: 1;
-  width: 100%;
-  height: 32px;
-  padding: 4px 11px;
-  font-size: 14px;
-  line-height: 1.5715;
-  color: ${(props) =>
-    props.$isEmpty ? props.$placeholderColor : props.$textColor};
-  background-color: transparent;
-  border: 1px solid
-    ${(props) => (props.$hasError ? props.$colorError : props.$colorBorder)};
-  border-radius: 6px;
-  transition: all 0.2s;
-  font-family: inherit;
-
-  &:focus {
-    border-color: ${(props) =>
-      props.$hasError ? props.$colorError : props.$colorPrimary};
-    box-shadow: 0 0 0 2px
-      ${(props) =>
-        props.$hasError ? props.$colorErrorBg : props.$colorPrimaryBg};
-    outline: none;
-  }
-
-  &:hover {
-    border-color: ${(props) =>
-      props.$hasError ? props.$colorError : props.$colorPrimary};
-  }
-
-  &:disabled {
-    color: ${(props) => props.$colorTextDisabled};
-    background-color: ${(props) => props.$colorBgContainerDisabled};
-    cursor: not-allowed;
-  }
-`;
-
-const SuffixIcon = styled.span<{
-  $allowClear?: boolean;
-  $colorTextQuaternary?: string;
-  $colorTextSecondary?: string;
-}>`
-  position: absolute;
-  right: 11px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: ${(props) => props.$colorTextQuaternary};
-  cursor: ${(props) => (props.$allowClear ? "pointer" : "default")};
-  transition:
-    color 0.2s,
-    opacity 0.2s;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &:hover {
-    color: ${(props) =>
-      props.$allowClear
-        ? props.$colorTextSecondary
-        : props.$colorTextQuaternary};
-  }
-`;
-
-const ClearIcon = styled(SuffixIcon)`
-  opacity: 0;
-`;
-
-const CalendarIcon = styled(SuffixIcon)`
-  opacity: 1;
-`;
-
-const InputContainer = styled.div.attrs({
-  className: "ant-picker-input",
-})`
-  position: relative;
-  flex: 1;
-  display: flex;
-  align-items: center;
-
-  &:hover ${ClearIcon} {
-    opacity: 1;
-  }
-
-  &:hover ${CalendarIcon} {
-    opacity: 0;
-    pointer-events: none;
-  }
-`;
-
-// Hidden picker container - only shows the dropdown, input is invisible
-const HiddenPickerWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  overflow: hidden;
-
-  /* Hide the picker input completely - use visibility:hidden instead of opacity
-     to ensure it doesn't interfere with selectors while still rendering the dropdown */
-  > .ant-picker {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    visibility: hidden;
-    pointer-events: none;
-  }
-
-  /* Ensure the dropdown (rendered in portal) remains visible */
-  .ant-picker-dropdown {
-    visibility: visible;
-  }
-`;
-
-const DateMaskedInput: React.FC<DateMaskedInputProps> = (
+const DateMaskedInputComponent = memo(function DateMaskedInput(
   props: DateMaskedInputProps,
-) => {
+): React.ReactElement {
   const {
     type,
     value,
@@ -226,20 +70,17 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
   const inputRef = useRef<HTMLInputElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const skipNextFocusRef = useRef(false);
-  // Track if click originated from our input area to prevent picker close/reopen flicker
   const clickedInsideRef = useRef(false);
   const [pickerOpen, setPickerOpen] = useState(false);
   const [parseError, setParseError] = useState<string | null>(null);
-  // Use undefined to mean "show displayValue", empty string means "user cleared"
   const [inputValue, setInputValue] = useState<string | undefined>(undefined);
 
   const datePickerLocale = useDatePickerLocale();
   const requiredStyle = useRequiredStyle(required, readOnly);
   const effectivePlaceholder = placeholder || config.placeholder;
 
-  // Check if the value prop is valid (for detecting invalid incoming values)
   const isValuePropValid = useMemo(() => {
-    if (!value) return true; // Empty is valid (no error state)
+    if (!value) return true;
 
     if (type === "time") {
       try {
@@ -260,17 +101,14 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
     }
   }, [value, timezone, type, config]);
 
-  // Set error state when value prop is invalid (like DateInput does)
   useEffect(() => {
     if (value && !isValuePropValid) {
       setParseError("Invalid date format");
     } else if (isValuePropValid && !inputValue) {
-      // Only clear error when value becomes valid AND there's no pending user input
       setParseError(null);
     }
   }, [value, isValuePropValid, inputValue]);
 
-  // Convert internal value to display format
   const displayValue = useMemo(() => {
     if (!value) return "";
 
@@ -291,11 +129,34 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
     );
   }, [value, timezone, type, config]);
 
-  // Use nullish coalescing: undefined = show displayValue, "" = show empty (user cleared)
   const currentInputValue = inputValue ?? displayValue;
 
-  // Convert value to picker format
   const pickerValue = useMemo(() => {
+    if (inputValue !== undefined && inputValue !== "") {
+      try {
+        if (type === "time") {
+          const parsed = dayjs(
+            `2000-01-01 ${inputValue}`,
+            "YYYY-MM-DD HH:mm:ss",
+          );
+          return parsed.isValid() ? parsed : undefined;
+        }
+        const parsed = dayjs(inputValue, config.displayFormat);
+        if (parsed.isValid()) {
+          return timezone
+            ? dayjs.tz(
+                parsed.format(config.internalFormat),
+                config.internalFormat,
+                timezone,
+              )
+            : parsed;
+        }
+        return undefined;
+      } catch {
+        return undefined;
+      }
+    }
+
     if (!value) return undefined;
     try {
       if (type === "time") {
@@ -309,14 +170,18 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
     } catch {
       return undefined;
     }
-  }, [value, timezone, type, config]);
+  }, [value, inputValue, timezone, type, config]);
+
+  const clearError = useCallback(() => {
+    setInputValue(undefined);
+    setParseError(null);
+  }, []);
 
   const handleAccept = useCallback((maskedValue: string) => {
     setInputValue(maskedValue);
     setParseError(null);
   }, []);
 
-  // Autocomplete based on type
   const autocompleteFn = useCallback(
     (maskedValue: string) => {
       switch (type) {
@@ -333,7 +198,6 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
 
   const commitValue = useCallback(
     (maskedValue: string) => {
-      // Treat empty, no digits, or placeholder-only values as clearing the field
       const isEmpty =
         !maskedValue ||
         !hasAnyDigits(maskedValue) ||
@@ -341,17 +205,14 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
 
       if (isEmpty) {
         onChange?.(null);
-        setInputValue(undefined);
-        setParseError(null);
+        clearError();
         return;
       }
 
       if (isCompleteValue(maskedValue, effectivePlaceholder)) {
         if (type === "time") {
-          // Time values are stored as-is (HH:mm:ss)
           onChange?.(maskedValue);
-          setInputValue(undefined);
-          setParseError(null);
+          clearError();
         } else {
           const internalValue = parseDisplayToInternal(
             maskedValue,
@@ -361,8 +222,7 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
           );
           if (internalValue) {
             onChange?.(internalValue);
-            setInputValue(undefined);
-            setParseError(null);
+            clearError();
           } else {
             setParseError(`Invalid ${type} format`);
           }
@@ -373,14 +233,29 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
       const autocompleted = autocompleteFn(maskedValue);
       if (autocompleted) {
         onChange?.(autocompleted.internalValue);
-        setInputValue(undefined);
-        setParseError(null);
+        clearError();
       } else {
         setParseError(`Invalid ${type} format`);
       }
     },
-    [onChange, effectivePlaceholder, type, config, autocompleteFn],
+    [
+      onChange,
+      effectivePlaceholder,
+      type,
+      config,
+      autocompleteFn,
+      timezone,
+      clearError,
+    ],
   );
+
+  const autocompleteEmpty = useCallback(() => {
+    const autocompleted = autocompleteFn("");
+    if (autocompleted) {
+      onChange?.(autocompleted.internalValue);
+      clearError();
+    }
+  }, [autocompleteFn, onChange, clearError]);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -389,14 +264,8 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
         const input = e.target as HTMLInputElement;
         const maskedValue = input.value;
 
-        // On Enter, if no digits entered, autocomplete to current date/time
         if (!hasAnyDigits(maskedValue)) {
-          const autocompleted = autocompleteFn("");
-          if (autocompleted) {
-            onChange?.(autocompleted.internalValue);
-            setInputValue(undefined);
-            setParseError(null);
-          }
+          autocompleteEmpty();
           return;
         }
 
@@ -426,10 +295,8 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
         setPickerOpen(false);
         commitValue(input.value);
 
-        // Blur current input and move focus to next/previous focusable element
         input.blur();
 
-        // Use requestAnimationFrame to ensure DOM has updated
         requestAnimationFrame(() => {
           const focusableSelector =
             'input:not([disabled]):not([tabindex="-1"]), ' +
@@ -442,7 +309,6 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
             document.querySelectorAll(focusableSelector),
           ).filter((el) => {
             const htmlEl = el as HTMLElement;
-            // Must be visible and not inside picker dropdown
             return (
               htmlEl.offsetParent !== null &&
               !el.closest(".ant-picker-dropdown") &&
@@ -466,7 +332,7 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
         });
       }
     },
-    [commitValue, onChange, autocompleteFn],
+    [commitValue, autocompleteEmpty],
   );
 
   const handleDoubleClick = useCallback(
@@ -474,27 +340,18 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
       const input = e.target as HTMLInputElement;
       const maskedValue = input.value;
 
-      // On double-click, if no digits entered, autocomplete to current date/time
-      // (same behavior as Enter key)
       if (!hasAnyDigits(maskedValue)) {
-        const autocompleted = autocompleteFn("");
-        if (autocompleted) {
-          onChange?.(autocompleted.internalValue);
-          setInputValue(undefined);
-          setParseError(null);
-        }
+        autocompleteEmpty();
         return;
       }
 
       commitValue(maskedValue);
     },
-    [commitValue, autocompleteFn, onChange],
+    [commitValue, autocompleteEmpty],
   );
 
   const handleBlur = useCallback(
     (e: React.FocusEvent<HTMLInputElement>) => {
-      // Check if focus is moving to an element inside the picker dropdown
-      // If so, don't close the picker (user is interacting with it)
       const relatedTarget = e.relatedTarget as HTMLElement | null;
       if (relatedTarget?.closest(".ant-picker-dropdown")) {
         return;
@@ -520,101 +377,226 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
       e.stopPropagation();
       e.preventDefault();
       setPickerOpen(false);
-      setInputValue(undefined);
-      setParseError(null);
+      clearError();
       onChange?.(null);
     },
-    [onChange],
+    [onChange, clearError],
   );
 
-  // Handle picker change (when user selects from dropdown)
   const handlePickerChange = useCallback(
     (date: Dayjs | null) => {
       if (!date) {
         onChange?.(null);
-        setInputValue(undefined);
+        clearError();
         return;
       }
 
-      if (type === "time") {
-        onChange?.(date.format("HH:mm:ss"));
-      } else {
-        onChange?.(date.format(config.internalFormat));
-      }
-      setInputValue(undefined);
-      setParseError(null);
-
-      // For date-only mode, close picker after selection
       if (type === "date") {
+        onChange?.(date.format(config.internalFormat));
+        clearError();
         setPickerOpen(false);
         skipNextFocusRef.current = true;
-        setTimeout(() => {
-          inputRef.current?.focus();
-        }, 50);
+        setTimeout(() => inputRef.current?.focus(), 50);
       }
     },
-    [type, config, onChange],
+    [type, config, onChange, clearError],
   );
 
-  // Handle OK button click in datetime/time mode
+  const updateInputFromDate = useCallback(
+    (date: Dayjs) => {
+      setInputValue(date.format(config.displayFormat));
+      setParseError(null);
+    },
+    [config],
+  );
+
+  const handleDateCellClick = useCallback(
+    (date: Dayjs) => {
+      const currentTime = pickerValue || dayjs();
+      const newDateTime = date
+        .hour(currentTime.hour())
+        .minute(currentTime.minute())
+        .second(currentTime.second());
+      updateInputFromDate(newDateTime);
+    },
+    [pickerValue, updateInputFromDate],
+  );
+
+  const handleMonthCellClick = useCallback(
+    (month: number) => {
+      const currentDate = pickerValue || dayjs();
+      updateInputFromDate(currentDate.month(month));
+    },
+    [pickerValue, updateInputFromDate],
+  );
+
+  const handleYearCellClick = useCallback(
+    (year: number) => {
+      const currentDate = pickerValue || dayjs();
+      updateInputFromDate(currentDate.year(year));
+    },
+    [pickerValue, updateInputFromDate],
+  );
+
+  const cellRender: React.ComponentProps<typeof AntDatePicker>["cellRender"] =
+    useCallback(
+      (
+        current: string | number | Dayjs,
+        info: { type: string; originNode: React.ReactNode },
+      ) => {
+        if (
+          info.type === "date" &&
+          dayjs.isDayjs(current) &&
+          type === "datetime"
+        ) {
+          return (
+            <div
+              className="ant-picker-cell-inner"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleDateCellClick(current);
+              }}
+            >
+              {current.date()}
+            </div>
+          );
+        }
+        if (info.type === "month" && dayjs.isDayjs(current)) {
+          return (
+            <div onClick={() => handleMonthCellClick(current.month())}>
+              {info.originNode}
+            </div>
+          );
+        }
+        if (info.type === "year" && dayjs.isDayjs(current)) {
+          return (
+            <div onClick={() => handleYearCellClick(current.year())}>
+              {info.originNode}
+            </div>
+          );
+        }
+        return info.originNode;
+      },
+      [handleDateCellClick, handleMonthCellClick, handleYearCellClick, type],
+    );
+
+  const panelRender = useCallback(
+    (originPanel: React.ReactNode) => {
+      const handlePanelClick = (e: React.MouseEvent) => {
+        const target = e.target as HTMLElement;
+        const timeCell = target.closest(
+          ".ant-picker-time-panel-cell",
+        ) as HTMLElement;
+        if (!timeCell) return;
+
+        const column = timeCell.closest(".ant-picker-time-panel-column");
+        if (!column) return;
+
+        const panel = e.currentTarget as HTMLElement;
+        const columns = Array.from(
+          panel.querySelectorAll(".ant-picker-time-panel-column"),
+        );
+        const columnIndex = columns.indexOf(column);
+
+        const cellValue = parseInt(
+          timeCell.querySelector(".ant-picker-time-panel-cell-inner")
+            ?.textContent || "0",
+          10,
+        );
+
+        const currentDate = pickerValue || dayjs();
+        let newDateTime: Dayjs;
+        if (columnIndex === 0) {
+          newDateTime = currentDate.hour(cellValue);
+        } else if (columnIndex === 1) {
+          newDateTime = currentDate.minute(cellValue);
+        } else {
+          newDateTime = currentDate.second(cellValue);
+        }
+
+        updateInputFromDate(newDateTime);
+      };
+
+      return <div onClick={handlePanelClick}>{originPanel}</div>;
+    },
+    [pickerValue, updateInputFromDate],
+  );
+
   const handleOk = useCallback(
     (date: Dayjs) => {
-      if (type === "time") {
-        onChange?.(date.format("HH:mm:ss"));
-      } else {
-        onChange?.(date.format(config.internalFormat));
-      }
-      setInputValue(undefined);
-      setParseError(null);
+      const format = type === "time" ? "HH:mm:ss" : config.internalFormat;
+      onChange?.(date.format(format));
+      clearError();
       setPickerOpen(false);
       skipNextFocusRef.current = true;
-      setTimeout(() => {
-        inputRef.current?.focus();
-      }, 50);
+      setTimeout(() => inputRef.current?.focus(), 50);
     },
-    [type, config, onChange],
+    [type, config, onChange, clearError],
   );
 
-  // Determine which icon to show
   const Icon = type === "time" ? ClockCircleOutlined : CalendarOutlined;
 
-  // Handle mousedown on our input area - prevents picker close/reopen flicker
   const handleWrapperMouseDown = useCallback(() => {
     clickedInsideRef.current = true;
-    // Reset after a short delay (after onOpenChange would have been called)
     setTimeout(() => {
       clickedInsideRef.current = false;
     }, 100);
   }, []);
 
-  // Render the appropriate picker based on type
+  const handleWrapperClick = useCallback(() => {
+    if (!readOnly) {
+      setPickerOpen(true);
+      inputRef.current?.focus();
+    }
+  }, [readOnly]);
+
+  const handleIconClick = useCallback(() => {
+    if (!readOnly) {
+      setPickerOpen(true);
+      inputRef.current?.focus();
+    }
+  }, [readOnly]);
+
+  const handleClearMouseDown = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  }, []);
+
+  const handleOpenChange = useCallback((open: boolean) => {
+    if (!open && !clickedInsideRef.current) {
+      setPickerOpen(false);
+    }
+  }, []);
+
+  const getPopupContainer = useCallback(() => document.body, []);
+
+  const pickerStyle = useMemo(() => ({ width: "100%", height: "100%" }), []);
+  const wrapperStyle = useMemo(() => ({ position: "relative" as const }), []);
+  const inputPaddingStyle = useMemo(() => ({ paddingRight: 30 }), []);
+  const iconStyle = useMemo(() => ({ fontSize: 14 }), []);
+  const clearIconStyle = useMemo(() => ({ fontSize: 12 }), []);
+  const opacityStyle = useMemo(() => ({ opacity: 1 }), []);
+
   const renderPicker = () => {
     const commonProps = {
       open: pickerOpen,
-      onOpenChange: (open: boolean) => {
-        if (!open) {
-          // Don't close if the click was on our input area
-          if (clickedInsideRef.current) {
-            return;
-          }
-          setPickerOpen(false);
-        }
-      },
+      onOpenChange: handleOpenChange,
       value: pickerValue,
       onChange: handlePickerChange,
       locale: datePickerLocale,
-      getPopupContainer: () => document.body,
+      getPopupContainer,
       showNow: false,
       showToday: false,
       allowClear: false,
       inputReadOnly: true,
-      style: { width: "100%", height: "100%" },
+      style: pickerStyle,
     };
 
     if (type === "time") {
       return (
         <AntTimePicker
           {...commonProps}
+          panelRender={panelRender}
           onOk={handleOk}
           popupClassName="date-masked-input-picker-dropdown"
         />
@@ -625,6 +607,8 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
       <AntDatePicker
         {...commonProps}
         showTime={type === "datetime"}
+        cellRender={cellRender}
+        panelRender={type === "datetime" ? panelRender : undefined}
         onOk={type === "datetime" ? handleOk : undefined}
         popupClassName="date-masked-input-picker-dropdown"
       />
@@ -640,19 +624,14 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
         color={token.colorError}
         placement="topLeft"
       >
-        <div style={{ position: "relative" }} ref={wrapperRef}>
+        <div style={wrapperStyle} ref={wrapperRef}>
           <InputWrapper
             $required={requiredStyle}
             $disabled={readOnly}
             $hasError={!!parseError}
             $colorBgContainer={token.colorBgContainer}
             onMouseDown={handleWrapperMouseDown}
-            onClick={() => {
-              if (!readOnly) {
-                setPickerOpen(true);
-                inputRef.current?.focus();
-              }
-            }}
+            onClick={handleWrapperClick}
           >
             <InputContainer>
               <StyledInput
@@ -681,7 +660,7 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
                 $colorTextDisabled={token.colorTextDisabled}
                 $colorBgContainerDisabled={token.colorBgContainerDisabled}
                 placeholder={effectivePlaceholder}
-                style={{ paddingRight: 30 }}
+                style={inputPaddingStyle}
               />
               {!readOnly && (
                 <CalendarIcon
@@ -689,13 +668,10 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
                   $allowClear={false}
                   $colorTextQuaternary={token.colorTextQuaternary}
                   $colorTextSecondary={token.colorTextSecondary}
-                  onClick={() => {
-                    setPickerOpen(true);
-                    inputRef.current?.focus();
-                  }}
-                  style={value ? undefined : { opacity: 1 }}
+                  onClick={handleIconClick}
+                  style={value ? undefined : opacityStyle}
                 >
-                  <Icon style={{ fontSize: 14 }} />
+                  <Icon style={iconStyle} />
                 </CalendarIcon>
               )}
               {!readOnly && value && (
@@ -706,25 +682,21 @@ const DateMaskedInput: React.FC<DateMaskedInputProps> = (
                   $colorTextSecondary={token.colorTextSecondary}
                   data-testid="clear-button"
                   onClick={handleClear}
-                  onMouseDown={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                  }}
+                  onMouseDown={handleClearMouseDown}
                 >
-                  <CloseCircleFilled style={{ fontSize: 12 }} />
+                  <CloseCircleFilled style={clearIconStyle} />
                 </ClearIcon>
               )}
             </InputContainer>
           </InputWrapper>
 
-          {/* Hidden picker - only used for its dropdown */}
           <HiddenPickerWrapper>{renderPicker()}</HiddenPickerWrapper>
         </div>
       </Tooltip>
     </>
   );
-};
+});
 
-DateMaskedInput.displayName = "DateMaskedInput";
+DateMaskedInputComponent.displayName = "DateMaskedInput";
 
-export { DateMaskedInput };
+export { DateMaskedInputComponent as DateMaskedInput };
