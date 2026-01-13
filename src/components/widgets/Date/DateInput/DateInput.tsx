@@ -10,6 +10,15 @@ import {
 import { useDatePickerHandlers } from "./hooks/useDatePickerHandlers";
 import { DateInputProps } from "./DateInput.types";
 import { useRequiredStyle } from "@/hooks/useRequiredStyle";
+import { createGlobalStyle } from "styled-components";
+
+// Hide the picker footer (OK button) for legacy DateInput component
+// Uses createGlobalStyle because the dropdown is rendered in a portal outside the component tree
+const DateInputPickerStyles = createGlobalStyle`
+  .date-input-picker-dropdown .ant-picker-footer {
+    display: none !important;
+  }
+`;
 
 const DateInput: React.FC<DateInputProps> = memo((props: DateInputProps) => {
   const {
@@ -91,29 +100,33 @@ const DateInput: React.FC<DateInputProps> = memo((props: DateInputProps) => {
   );
 
   return (
-    <Tooltip
-      title={parseError}
-      open={!!parseError}
-      color="#ff4d4f"
-      placement="topLeft"
-    >
-      <AntDatePicker
-        {...pickerConfig}
-        id={id}
-        disabled={readOnly}
-        picker="date"
-        showTime={showTime}
-        value={dateValue}
-        defaultPickerValue={dateValue}
-        onChange={handleChange}
-        onBlur={(e) => handleBlur(e as any)}
-        onKeyDown={(e) => handleKeyDown(e as any)}
-        showNow={false}
-        showToday={false}
-        locale={datePickerLocale}
-        status={parseError ? "error" : undefined}
-      />
-    </Tooltip>
+    <>
+      <DateInputPickerStyles />
+      <Tooltip
+        title={parseError}
+        open={!!parseError}
+        color="#ff4d4f"
+        placement="topLeft"
+      >
+        <AntDatePicker
+          {...pickerConfig}
+          id={id}
+          disabled={readOnly}
+          picker="date"
+          showTime={showTime}
+          value={dateValue}
+          defaultPickerValue={dateValue}
+          onChange={handleChange}
+          onBlur={(e) => handleBlur(e as any)}
+          onKeyDown={(e) => handleKeyDown(e as any)}
+          showNow={false}
+          showToday={false}
+          locale={datePickerLocale}
+          status={parseError ? "error" : undefined}
+          popupClassName="date-input-picker-dropdown"
+        />
+      </Tooltip>
+    </>
   );
 });
 

@@ -16,7 +16,7 @@
     "storybook",
     "library"
   ],
-  "version": "1.19.1",
+  "version": "1.20.0",
   "module": "./dist/react-formiga-components.es.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -39,7 +39,10 @@
     "check": "lint-staged",
     "analyze": "vite-bundle-visualizer",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "test:playwright": "playwright test",
+    "test:playwright:ui": "playwright test --ui",
+    "test:playwright:headed": "playwright test --headed"
   },
   "dependencies": {
     "@ant-design/icons": "^6.0.0",
@@ -48,9 +51,11 @@
     "classnames": "^2.5.1",
     "dompurify": "^3.0.11",
     "file-type-buffer-browser": "git+ssh://git@github.com/mguellsegarra/file-type-buffer-browser.git",
+    "imask": "^7.6.0",
     "interweave": "^13.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-imask": "^7.6.0",
     "styled-components": "5.3.5",
     "use-deep-compare": "^1.2.1",
     "validator": "^13.6.0"
@@ -66,6 +71,7 @@
   "devDependencies": {
     "@commitlint/cli": "^18.4.3",
     "@gisce/commitlint-rules": "1.1.0",
+    "@playwright/test": "^1.57.0",
     "@semantic-release/exec": "6.0.3",
     "@semantic-release/git": "10.0.1",
     "@semantic-release/npm": "10.0.4",
