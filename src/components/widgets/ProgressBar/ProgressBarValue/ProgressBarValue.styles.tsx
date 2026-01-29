@@ -6,7 +6,7 @@ const indeterminateAnimation = keyframes`
     transform: translateX(-100%);
   }
   100% {
-    transform: translateX(400%);
+    transform: translateX(500%);
   }
 `;
 
