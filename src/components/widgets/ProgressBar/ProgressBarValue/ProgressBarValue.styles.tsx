@@ -1,12 +1,30 @@
 import { Progress } from "antd";
-import styled from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 
-export const StyledProgress = styled(Progress)`
-.ant-progress-outer {
-  margin-right: 0px;
-  padding-right: 0px;
-}
-.ant-progress-text {
-  display: none;
-}
+const indeterminateAnimation = keyframes`
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(500%);
+  }
+`;
+
+export const StyledProgress = styled(Progress)<{ $isIndeterminate?: boolean }>`
+  .ant-progress-outer {
+    margin-right: 0px;
+    padding-right: 0px;
+  }
+  .ant-progress-text {
+    display: none;
+  }
+
+  ${(props) =>
+    props.$isIndeterminate &&
+    css`
+      .ant-progress-bg {
+        width: 25% !important;
+        animation: ${indeterminateAnimation} 1.5s ease-in-out infinite;
+      }
+    `}
 `;
